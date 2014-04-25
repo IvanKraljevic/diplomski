@@ -1,0 +1,97 @@
+\chapter{Odašiljači iBeacon}
+Ovdje ću malo pisati općenito o iBeacon specifikaciji i dotičnim uređajima. Sva testiranja su rađena na Kontakt.io Beacon uređajima.
+
+\section*{Kontakt.io Beacon}
+Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem BLE tehnologije te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
+Uz to, uređaji se jednostavno nadograđuju i kloniraju, imaju visoku razinu sigurnosti te malu energetsku potrošnju.
+%Ostale značajke su jednostavna nadogradnja i kloniranje uređaja, visoka razina sigurnosti te mala energetska potrošnja.
+\\
+Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, proximity UUID \engl{Universally unique identifier}, \textit{major} i \textit{minor} vrijednosti, \textit{transmisssion power level} te interval odašiljanja poruka.
+\\
+Kod primanja podatkovnih paketa uređaj može precizno odrediti relativnu udaljenost od pošiljitelja bez korištenja dodatnih, često skupih, sustava koji uzrokuju povećanju potrošnju energije (npr. GPS).
+\\
+Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca.
+Raspon odašiljanja ovisi o \textit{transmisssion power level} te okolini u kojoj je postavljen (zbog difrakcije i apsorpcije signala).
+
+\subsection*{Struktura paketa}
+Uređaj odašilje dvije vrste paketa podataka: \textit{advertising} i \textit{scan response}.
+\\
+Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj način se "oglašava" okolnim uređajima. Drugi tip paketa, \textit{scan response}, šalje se nakon što je neki uređaj primio \textit{advertising} paket i zahtjeva dodatne informacije od Beacon uređaja. Nakon što je Beacon uređaj poslao \textit{scan response} paket, on opet počinje slati \textit{advertising} pakete.
+\\
+
+Struktura \textit{advertising} paketa je prikazana u tablici TODO:
+\\
+% TODO insert table
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Byte & Pretpostavljena (engl. default) vrijednost & Opis & Svojstvo \\ 
+\hline 
+1 & 02 & Duljina podataka & constant preamble \\ 
+\hline 
+2 & 01 & Tip podataka - flags & constant preamble \\ 
+\hline 
+3 & 06 & LE, BF/EDR zastavice & constant preamble \\ 
+\hline 
+4 & 1a & Duljina podataka* & constant preamble \\ 
+\hline 
+5 & ff & Tip podataka* & constant preamble \\ 
+\hline 
+6 & 4c & Podaci o proizvođaču & constant preamble \\ 
+\hline 
+7 & 00 & Podaci o proizvođaču & constant preamble \\ 
+\hline 
+8 & 02 & Podaci o proizvođaču & constant preamble \\ 
+\hline 
+9 & 15 & Podaci o proizvođaču & constant preamble \\ 
+\hline 
+10 & f7 & Proximity UUID 1. bajt & user UUID \\ 
+\hline 
+11 & 82 & Proximity UUID 2. bajt & user UUID \\ 
+\hline 
+12 & 6d & Proximity UUID 3. bajt & user UUID \\ 
+\hline 
+13 & a6 & Proximity UUID 4. bajt & user UUID \\ 
+\hline 
+14 & 4f & Proximity UUID 5. bajt & user UUID \\ 
+\hline 
+15 & a2 & Proximity UUID 6. bajt & user UUID \\ 
+\hline 
+16 & 4e & Proximity UUID 7. bajt & user UUID \\ 
+\hline 
+17 & 98 & Proximity UUID 8. bajt & user UUID \\ 
+\hline 
+18 & 80 & Proximity UUID 9. bajt & user UUID \\ 
+\hline 
+19 & 24 & Proximity UUID 10. bajt & user UUID \\ 
+\hline 
+20 & bc & Proximity UUID 11. bajt & user UUID \\ 
+\hline 
+21 & 5b & Proximity UUID 12. bajt & user UUID \\ 
+\hline 
+22 & 71 & Proximity UUID 13. bajt & user UUID \\ 
+\hline 
+23 & e0 & Proximity UUID 14. bajt & user UUID \\ 
+\hline 
+24 & 89 & Proximity UUID 15. bajt & user UUID \\ 
+\hline 
+25 & 3e & Proximity UUID 16. bajt & user UUID \\ 
+\hline 
+26 & xx & Major 1. bajt & major value \\ 
+\hline 
+27 & xx & Major 2. bajt & major value \\ 
+\hline 
+28 & xx & Minor 1. bajt & minor value \\ 
+\hline 
+29 & xx & Minor 2. bajt & minor value \\ 
+\hline 
+30 & b3 & Jakost signala & signal power value \\ 
+\hline 
+\end{tabular} 
+\textit{Advertising} paketi zadovoljavaju Apple iBeacon\textsuperscript{\texttrademark} standard.
+\\
+Prvih devet bajtova paketa su unaprijed poznate konstante (poput informacije o proizvođaču). Njih slijedi šesnaest bajtova koji čine proximity UUID, dva bajta za \textit{major} vrijednost, dva bajta za \textit{minor} vrijednost, a posljednji bajt predstavlja RSSI vrijednost (engl. \textit{Recived Signal Strength Indication}) izmjeren jedan metar od Beacon uređaja.
+\\
+
+Struktura \textit{scan response} paketa je prikazana u tablici TODO:
+
+% TODO ispisati txPowerValues
