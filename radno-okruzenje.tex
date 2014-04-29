@@ -1,5 +1,6 @@
 \chapter{Radno okruženje Apache Cordova}
-Radno okruženje Apache Cordova je skup aplikacijsko programskih sučelja \engl{application programming interface, API} koji omogućavaju da razvijatelj mobilnih aplikacija pristupa osnovnim funkcijama mobilnog uređaja, poput kamere, sustava za pohranu podataka i telefonskog imenika, preko JavaScript jezika. 
+
+Radno okruženje Apache Cordova je skup aplikacijsko programskih sučelja \engl{application programming interface, API} koji omogućavaju da razvijatelj mobilnih aplikacija pristupa osnovnim funkcijama mobilnog uređaja, poput kamere, sustava za pohranu podataka i telefonskog imenika preko JavaScript jezika. 
 U kombinaciji sa radnim okruženjima poput Sencha Touch, Dojo Mobile i Ionic aplikacije za pametne telefone mogu se razvijati korištenjem samo HTML, CSS i JavaScript programskog jezika.
 \\
 
@@ -7,54 +8,68 @@ Korištenjem Apache Cordove programer je oslobođen pisanja aplikacija u nativni
 Bez obzira na to što aplikacije nisu napisane u nativnim jezicima, Apache Cordova aplikacije se kompajliraju i pakiraju pomoću SDK \engl{software development kit, SDK} željene platforme stoga se aplikacije mogu i postaviti na trgovine aplikacija \engl{app store} dotične platforme. 
 \\
 
-Cordova nudi skup uniformnih JavaScript biblioteka koje programer može pozivati. 
-Te biblioteke imaju podršku za povezivanje sa specifičnim platormama. Cordova je trenutno dostupna za sljedeće platforme: Android, iOS, Blackberry,Windows Phone, Palm WebOS, Bada i Symbian.
+Cordova nudi skup uniformnih JavaScript biblioteka čije funkcije programer može pozivati. 
+One imaju podršku za povezivanje sa specifičnim platormama. Cordova je trenutno dostupna za sljedeće platforme: Android, iOS, Blackberry,Windows Phone, Palm WebOS, Bada i Symbian.
 \\
-Službene Cordova JavaScript biblioteke navedene su u TODO, dok je oko dvije stotine dodatnih biblioteka dostupno na službenom repozitoriju koji se nalazi na \url{http://plugins.cordova.io}.
+Službene Cordova JavaScript biblioteke navedene su u \ref{cordovaLib}, dok je oko dvije stotine dodatnih biblioteka dostupno na službenom repozitoriju\footnote{\url{http://plugins.cordova.io}}. %TODO srediti \ref{cordovaLib} 
 \\
-Za pristup \textit{Bluetooth Low Energy} funkcijama mobilnog uređaja korištena je \textbf{Cordova BLE} biblioteka koja je dostupna na \url{https://github.com/evothings/cordova-ble}.
+Za pristup \textit{Bluetooth Low Energy} funkcijama mobilnog uređaja korištena je \textbf{Cordova BLE} biblioteka\footnote{\url{https://github.com/evothings/cordova-ble}}.
+\\
 
-\begin{center}
-    \begin{description}
-        % TODO
+\fbox{
+\begin{minipage}{0.9\textwidth}
+\begin{description}[style=nextline]
+        \label{cordovaLib}
         \captionof{figure}{Službene Cordova biblioteke}
-	    \item[Battery Status] \hfill \\
+	    \item[Battery Status]
 	        Omogućava nadgledanje stanja baterije uređaja.
-	    \item[Camera] \hfill \\
+	    \item[Camera]
 	        Omogućava pristup kameri uređaja.
-	    \item[Contacts] \hfill \\
+	    \item[Contacts]
 	        Omogućava pristup telefonskom imeniku uređaja.
-	    \item[Device] \hfill \\
+	    \item[Device]
 	        Omogućava pristup specifičnim informacijama uređaja (npr. ime uređaja, operacijski sustav).
-	    \item[Device Motion (Accelerometer)] \hfill \\
-	        Omogućava pristup senzoru brzine.
-	    \item[Device Orientation (Compass)] \hfill \\
+	    \item[Device Motion (Accelerometer)]
+	        Omogućava pristup senzoru ubrzanja (akcelerometar).
+	    \item[Device Orientation (Compass)]
 	        Omogućava pristup kompasu uređaja.
-	    \item[Dialogs] \hfill \\
+	    \item[Dialogs]
 	        Omogućava korištenje sustava obavijesti uređaja.
-	    \item[FileSystem] \hfill \\
+	    \item[FileSystem]
 	        Omogućava korištenje datotečnog sustava uređaja.
-	    \item[FileTransfer] \hfill \\
+	    \item[FileTransfer]
 	        Omogućava pristup sustavu za prijenos datoteka.
-	    \item[Geolocation] \hfill \\
+	    \item[Geolocation]
 	        Omogućava pristup prema geolokacijskom sustavu. 
-	    \item[Globalizationg] \hfill \\
-	        Omogućava reprezentaciju objekata specifičan lokaciji.
-	    \item[InAppBrowser] \hfill \\
-	        Omogućava otvaranje URL-ova u novoj instanci \textit{in-app} web-preglednika uređaja.
-	    \item[Media] \hfill \\
+	    \item[Globalizationg]
+	        Omogućava različite reprezentacije objekata ovisno o postavkama lokacije uređaja.
+	    \item[InAppBrowser]
+	        Omogućava otvaranje URL-ova u novoj instanci web-preglednika uređaja.
+	    \item[Media]
 	        Omogućava snimanje i reprodukciju audio datoteka.
-	    \item[Media Capture] \hfill \\
+	    \item[Media Capture]
 	        Omogućava snimanje audio i video datoteka.
-	    \item[Network Information (Connection)] \hfill \\
+	    \item[Network Information (Connection)]
 	        Omogućava pristup informacijama o stanju mreže uređaja.
-	    \item[Splashscreen] \hfill \\
+	    \item[Splashscreen]
 	        Omogućava manipuliranje početnog zaslona aplikacije.
-	    \item[Vibration] \hfill \\
-	        Omogućava korištenje funkcija vibriranja uređaja (ukoliko je ono dostupno).
-
+	    \item[Vibration]
+	        Omogućava korištenje mehanizma za vibriranje uređaja.
     \end{description}
-\end{center}
+\end{minipage}
+}    
 
 \section*{Radno okruženje Ionic}
-Ionic je radno okruženje napisano sa HTML, CSS i JavaScript programskim jezikom čiji je cilj olakšati razvoj hibridnih* mobilnih aplikacija. Ionic je primarno okrenut prema olakšanju izrade korisničkog sučelja, odnosno nudi cijeli niz funkcija koje razvijatelju olakšavaju izradu velikih i složenih mobilnih aplikacija. U pozadini, Ionic koristi danas sve popularnije JavaScript \textit{frontend} radno okruženje AngularJS koje je namjenjeno izradi \textit{single-page} web aplikacija*. Korištenjem AngularJS u Ionic je dodan cijeli niz direktiva*, filtera*, servisa i ostalih 
+
+Ionic je radno okruženje napisano sa HTML, CSS i JavaScript programskim jezikom čiji je cilj olakšati razvoj hibridnih mobilnih aplikacija\footnote{Aplikacije napravljene korištenjem web tehnologija. Pokreću se unutar posebnog spremnika uređaja te koriste funkcije web preglednika za prikaz HTML sadržaja i izvođenje JavaScript k\^oda} stoga je ono jako dobar izbor prilikom izrade Cordova aplikacija. 
+Ionic je primarno okrenut prema olakšanju izrade korisničkog sučelja, odnosno nudi cijeli niz funkcija koje razvijatelju olakšavaju izradu velikih i složenih mobilnih aplikacija. 
+U pozadini, Ionic koristi danas sve popularnije JavaScript \textit{frontend} radno okruženje AngularJS koje je namjenjeno izradi \textit{single-page} web aplikacija. 
+Korištenjem AngularJSa u Ionic je dodan cijeli niz direktiva\footnote{Posebne oznake DOM elemenata koje obavještavaju AngularJS HTML prevoditelja da transformira elemente ili im doda novo ponašanje.}, filtera\footnote{Funkcije za obradu ili transformaciju podataka koji se prikazuju korisniku. Npr. mogu se koristiti za abecedni prikaz elemenata liste, prikaz teksta isključivo velikim slovom itd.}, servisa\footnote{Jedinstveni objekti \engl{singleton} koji se koriste za dijeljenje funkcija i resursa unutar aplikacije.} i drugih funkcija koje programeru rješavaju cijeli niz problema poput osjetljivog dizajna \engl{responsive design}, hvatanja raznih korisnikovih interakcija (dodiri s jedim ili više prstiju, povlačenje \engl{swipe} stavki, stezanju i širenju stavki \engl{pinch} i cijeli niz drugih). 
+\\
+
+Ionic se sastoji od dva temeljna dijela. Prvi dio čine CSS i Sass datoteke čija je svrha da razvijateljima olakšaju izradu vizualnog dizajna aplikacije. 
+Drugi dio čine JavaScript datoteke i HTML predlošci koji pojednostavljuju izradu aplikacija složene arhitekture te programerima nude cijeli niz pomoćnih funkcija.
+\\
+
+Ionic je relativno novo radno okruženje i u vrijeme pisanja ovog rada je u beta verziji. Unatoč tome, veliki broj funkcija već je implementiran i samo njihovim korištenjem mogu se napraviti velike, složene i vizualno privlačne mobilne aplikacije. 
+Uz to, Ionic je izdan pod MIT licencom i njegov izvorni kod je javno dostupan na službenom Github repozitoriju\footnote{\url{https://github.com/driftyco/ionic}}.

@@ -1,28 +1,42 @@
 \chapter{Odašiljači iBeacon}
-Općenito o iBeacon specifikaciji i dotičnim uređajima (odašiljačima). Sva testiranja su rađena na Kontakt.io i BlueCats iBeacon uređajima.
+
+Odašiljači iBeacon su jeftini uređaji, niske potrošnje energije koji korištenjem BLE tehnologije obavještavaju obližnje uređaje o svojoj prisutnosti. 
+Obližnji uređaji (poput mobilnih uređaja i tableta) se mogu pretplatiti na notifikacije odašiljača te mogu primati razne sadržaje (poput teksta, slika ili URL adresa) od njih. 
+Krajem 2013. godine iBeacon tehnologiju patentirala je američka multinacionalna korporacija Apple Inc.
+\\
+
+iBeacon se može konfigurirati tako da se sadržaj šalje samo kad se uređaj približi odašiljaču na određenu udaljenost. 
+Pri tome su definirana tri parametra udaljenosti: neposredna \textit{immediate}, mala \textit{near} i velika \textit{far} udaljenost. 
+Neposredna udaljenost je do nekoliko centimetara, mala je do nekoliko metara, dok je velika udaljenost iznad deset metara. 
+Ove vrijednosti nisu precizno specificirane jer ovisno točne vrijednosti ovise o stvarnim uvjetima u kojima su odašiljači postavljeni (zbog ometanja signala u zatvorenom prostoru).
+\\
+
+Neki od zanimljivih načina primjene iBeacon tehnologije su u muzejima, trgovinama, bolnicama i ostalim ustanovama gdje se sadržaj mijenja ovisno o položaju u prostoriji. 
+Posjetitelj muzeja može na na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ispred), uz to, mogu se pratiti koji su objekti ili egzibicije najgledaniji i slično. 
+U bolnici se može primjeniti na način da kada se liječnik približi pacijentovoj sobi ili krevetu dobije sve podatke o njemu, od povijesti bolesti do trenutne dijagnoze. 
+U trgovini se može iskoristiti tako da se kupca obavijesti o predmetima na popustu u blizi. 
+Također, iBeacon odašiljači mogu se iskoristiti i kao sustav plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}} tehnologija koristi.
 
 \section*{Kontakt.io Beacon}
+
 Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem BLE tehnologije te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
-Uz to, uređaji se jednostavno nadograđuju i kloniraju, imaju visoku razinu sigurnosti te malu energetsku potrošnju.
-%Ostale značajke su jednostavna nadogradnja i kloniranje uređaja, visoka razina sigurnosti te mala energetska potrošnja.
+Uz to, uređaji se mogu jednostavno klonirati i nadograditi, imaju visoku razinu sigurnosti te malu energetsku potrošnju.
 \\
-Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, proximity UUID \engl{Universally unique identifier}, \textit{major} i \textit{minor} vrijednosti, \textit{transmisssion power level} te interval odašiljanja poruka.
+Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, \textit{proximityUUID} \engl{Universally unique identifier}, \textit{major} i \textit{minor} vrijednosti, \textit{transmisssion power level} te interval odašiljanja poruka.
 \\
-Kod primanja podatkovnih paketa uređaj može precizno odrediti relativnu udaljenost od pošiljitelja bez korištenja dodatnih, često skupih, sustava koji uzrokuju povećanju potrošnju energije (npr. GPS).
-\\
-Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca.
+Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca. %TODO referencirati službenu kontakt-io dokumentaciju
 Raspon odašiljanja ovisi o \textit{transmisssion power level} te okolini u kojoj je postavljen (zbog difrakcije i apsorpcije signala).
 
 \subsection*{Struktura paketa}
 Uređaj odašilje dvije vrste paketa podataka: \textit{advertising} i \textit{scan response}.
 \\
-Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj način se "oglašava" okolnim uređajima. Drugi tip paketa, \textit{scan response}, šalje se nakon što je neki uređaj primio \textit{advertising} paket i zahtjeva dodatne informacije od Beacon uređaja. Nakon što je Beacon uređaj poslao \textit{scan response} paket, on opet počinje slati \textit{advertising} pakete.
+Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj način se "oglašava" okolnim uređajima. Drugi tip paketa, \textit{scan response}, šalje se odmah nakon \textit{advertising} paketa i sadrži dodatne informacije o odašiljaču, poput imena odašiljača, stanja baterije i slično.
 \\
 
-Struktura \textit{advertising} paketa je prikazana u tablici TODO:
+Struktura \textit{advertising} paketa je prikazana u tablici \ref{tbl:advertising}.
 \\
-% TODO insert table
 \begin{table}
+\label{tbl:advertising}
 \begin{tabular}{|c|c|c|c|}
 \hline 
 Byte & Pretpostavljena (engl. default) vrijednost & Opis & Svojstvo \\ 
@@ -94,6 +108,9 @@ Byte & Pretpostavljena (engl. default) vrijednost & Opis & Svojstvo \\
 Prvih devet bajtova paketa su unaprijed poznate konstante (poput informacije o proizvođaču). Njih slijedi šesnaest bajtova koji čine proximity UUID, dva bajta za \textit{major} vrijednost, dva bajta za \textit{minor} vrijednost, a posljednji bajt predstavlja RSSI vrijednost (engl. \textit{Recived Signal Strength Indication}) izmjeren jedan metar od Beacon uređaja.
 \\
 
-Struktura \textit{scan response} paketa je prikazana u tablici TODO:
+Struktura \textit{scan response} paketa je prikazana u tablici \ref{tbl:scanResponse}.
 
+\begin{table}
+    \label{tbl:scanResponse}
+\end{table}
 % TODO ispisati txPowerValues
