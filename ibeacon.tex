@@ -1,5 +1,5 @@
 \chapter{Odašiljači iBeacon}
-Ovdje ću malo pisati općenito o iBeacon specifikaciji i dotičnim uređajima. Sva testiranja su rađena na Kontakt.io Beacon uređajima.
+Općenito o iBeacon specifikaciji i dotičnim uređajima (odašiljačima). Sva testiranja su rađena na Kontakt.io i BlueCats iBeacon uređajima.
 
 \section*{Kontakt.io Beacon}
 Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem BLE tehnologije te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
@@ -22,6 +22,7 @@ Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj n
 Struktura \textit{advertising} paketa je prikazana u tablici TODO:
 \\
 % TODO insert table
+\begin{table}
 \begin{tabular}{|c|c|c|c|}
 \hline 
 Byte & Pretpostavljena (engl. default) vrijednost & Opis & Svojstvo \\ 
@@ -87,6 +88,7 @@ Byte & Pretpostavljena (engl. default) vrijednost & Opis & Svojstvo \\
 30 & b3 & Jakost signala & signal power value \\ 
 \hline 
 \end{tabular} 
+\end{table}
 \textit{Advertising} paketi zadovoljavaju Apple iBeacon\textsuperscript{\texttrademark} standard.
 \\
 Prvih devet bajtova paketa su unaprijed poznate konstante (poput informacije o proizvođaču). Njih slijedi šesnaest bajtova koji čine proximity UUID, dva bajta za \textit{major} vrijednost, dva bajta za \textit{minor} vrijednost, a posljednji bajt predstavlja RSSI vrijednost (engl. \textit{Recived Signal Strength Indication}) izmjeren jedan metar od Beacon uređaja.

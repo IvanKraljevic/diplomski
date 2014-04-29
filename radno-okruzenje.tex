@@ -1,13 +1,60 @@
 \chapter{Radno okruženje Apache Cordova}
-Radno okruženje Apache Cordova je skup aplikacijsko programskih sučelja \engl{application programming interface, API} koji omogućavaju da razvijatelj mobilnih aplikacija pristupa osnovnim funkcijama mobilnog uređaja, poput kamere i telefonskog imenika, preko JavaScript jezika. 
-U kombinaciji sa radnim okruženjima poput Sencha Touch, Dojo Mobile i Ionic aplikacije za pametne telefone se mogu razvijati korištenjem samo HTML, CSS i JavaScript programskog jezika.
+Radno okruženje Apache Cordova je skup aplikacijsko programskih sučelja \engl{application programming interface, API} koji omogućavaju da razvijatelj mobilnih aplikacija pristupa osnovnim funkcijama mobilnog uređaja, poput kamere, sustava za pohranu podataka i telefonskog imenika, preko JavaScript jezika. 
+U kombinaciji sa radnim okruženjima poput Sencha Touch, Dojo Mobile i Ionic aplikacije za pametne telefone mogu se razvijati korištenjem samo HTML, CSS i JavaScript programskog jezika.
 \\
 
-Korištenjem Apache Cordove programer je oslobođen pisanja aplikacija u nativnim???? jezicima uređaja (npr. Java za Android, Objective-C za iOS), već se koriste isključivo prethodno spomenute web tehnologije. 
-Bez obzira na to što aplikacije nisu napisane u nativnim???? jezicima, Apache Cordova aplikacije se kompajliraju i pakiraju pomoću SDK??? željene platforme stoga se aplikacije mogu i postaviti na trgovine aplikacija \engl{app store} dotične platforme. 
+Korištenjem Apache Cordove programer je oslobođen pisanja aplikacija u nativnim jezicima uređaja (npr. Java za Android, Objective-C za iOS), već se koriste isključivo prethodno spomenute web tehnologije. 
+Bez obzira na to što aplikacije nisu napisane u nativnim jezicima, Apache Cordova aplikacije se kompajliraju i pakiraju pomoću SDK \engl{software development kit, SDK} željene platforme stoga se aplikacije mogu i postaviti na trgovine aplikacija \engl{app store} dotične platforme. 
 \\
 
+Cordova nudi skup uniformnih JavaScript biblioteka koje programer može pozivati. 
+Te biblioteke imaju podršku za povezivanje sa specifičnim platormama. Cordova je trenutno dostupna za sljedeće platforme: Android, iOS, Blackberry,Windows Phone, Palm WebOS, Bada i Symbian.
+\\
+Službene Cordova JavaScript biblioteke navedene su u TODO, dok je oko dvije stotine dodatnih biblioteka dostupno na službenom repozitoriju koji se nalazi na \url{http://plugins.cordova.io}.
+\\
+Za pristup \textit{Bluetooth Low Energy} funkcijama mobilnog uređaja korištena je \textbf{Cordova BLE} biblioteka koja je dostupna na \url{https://github.com/evothings/cordova-ble}.
 
+\begin{center}
+    \begin{description}
+        % TODO
+        \captionof{figure}{Službene Cordova biblioteke}
+	    \item[Battery Status] \hfill \\
+	        Omogućava nadgledanje stanja baterije uređaja.
+	    \item[Camera] \hfill \\
+	        Omogućava pristup kameri uređaja.
+	    \item[Contacts] \hfill \\
+	        Omogućava pristup telefonskom imeniku uređaja.
+	    \item[Device] \hfill \\
+	        Omogućava pristup specifičnim informacijama uređaja (npr. ime uređaja, operacijski sustav).
+	    \item[Device Motion (Accelerometer)] \hfill \\
+	        Omogućava pristup senzoru brzine.
+	    \item[Device Orientation (Compass)] \hfill \\
+	        Omogućava pristup kompasu uređaja.
+	    \item[Dialogs] \hfill \\
+	        Omogućava korištenje sustava obavijesti uređaja.
+	    \item[FileSystem] \hfill \\
+	        Omogućava korištenje datotečnog sustava uređaja.
+	    \item[FileTransfer] \hfill \\
+	        Omogućava pristup sustavu za prijenos datoteka.
+	    \item[Geolocation] \hfill \\
+	        Omogućava pristup prema geolokacijskom sustavu. 
+	    \item[Globalizationg] \hfill \\
+	        Omogućava reprezentaciju objekata specifičan lokaciji.
+	    \item[InAppBrowser] \hfill \\
+	        Omogućava otvaranje URL-ova u novoj instanci \textit{in-app} web-preglednika uređaja.
+	    \item[Media] \hfill \\
+	        Omogućava snimanje i reprodukciju audio datoteka.
+	    \item[Media Capture] \hfill \\
+	        Omogućava snimanje audio i video datoteka.
+	    \item[Network Information (Connection)] \hfill \\
+	        Omogućava pristup informacijama o stanju mreže uređaja.
+	    \item[Splashscreen] \hfill \\
+	        Omogućava manipuliranje početnog zaslona aplikacije.
+	    \item[Vibration] \hfill \\
+	        Omogućava korištenje funkcija vibriranja uređaja (ukoliko je ono dostupno).
+
+    \end{description}
+\end{center}
 
 \section*{Radno okruženje Ionic}
-ionic
+Ionic je radno okruženje napisano sa HTML, CSS i JavaScript programskim jezikom čiji je cilj olakšati razvoj hibridnih* mobilnih aplikacija. Ionic je primarno okrenut prema olakšanju izrade korisničkog sučelja, odnosno nudi cijeli niz funkcija koje razvijatelju olakšavaju izradu velikih i složenih mobilnih aplikacija. U pozadini, Ionic koristi danas sve popularnije JavaScript \textit{frontend} radno okruženje AngularJS koje je namjenjeno izradi \textit{single-page} web aplikacija*. Korištenjem AngularJS u Ionic je dodan cijeli niz direktiva*, filtera*, servisa i ostalih 
