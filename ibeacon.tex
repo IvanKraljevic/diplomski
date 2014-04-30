@@ -5,17 +5,69 @@ Obližnji uređaji (poput mobilnih uređaja i tableta) se mogu pretplatiti na no
 Krajem 2013. godine iBeacon tehnologiju patentirala je američka multinacionalna korporacija Apple Inc.
 \\
 
-iBeacon se može konfigurirati tako da se sadržaj šalje samo kad se uređaj približi odašiljaču na određenu udaljenost. 
-Pri tome su definirana tri parametra udaljenosti: neposredna \textit{immediate}, mala \textit{near} i velika \textit{far} udaljenost. 
-Neposredna udaljenost je do nekoliko centimetara, mala je do nekoliko metara, dok je velika udaljenost iznad deset metara. 
-Ove vrijednosti nisu precizno specificirane jer ovisno točne vrijednosti ovise o stvarnim uvjetima u kojima su odašiljači postavljeni (zbog ometanja signala u zatvorenom prostoru).
+Neki od zanimljivih načina primjene iBeacon tehnologije su u muzejima, trgovinama, bolnicama i ostalim ustanovama gdje se sadržaj mijenja ovisno o položaju u prostoriji. 
+Posjetitelj muzeja može na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ispred), uz to, mogu se pratiti koji su objekti najgledaniji i slično. 
+U bolnici se može primijeniti tako da liječnik dobije sve podatke o pacijentu, od povijesti bolesti do trenutne dijagnoze, kada se približi njegovoj sobi ili krevetu. 
+U trgovini se može iskoristiti tako da kupca obavijesti o predmetima na popustu u blizini. 
+Također, iBeacon odašiljači mogu se iskoristiti i kao sustav plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}} tehnologija koristi.
+Ovo su samo najjednostavniji i najopćenitiji slučajevi gdje se iBeacon tehnologija može ukomponirati, broj načina korištenja tehnologije je ogroman.
 \\
 
-Neki od zanimljivih načina primjene iBeacon tehnologije su u muzejima, trgovinama, bolnicama i ostalim ustanovama gdje se sadržaj mijenja ovisno o položaju u prostoriji. 
-Posjetitelj muzeja može na na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ispred), uz to, mogu se pratiti koji su objekti ili egzibicije najgledaniji i slično. 
-U bolnici se može primjeniti na način da kada se liječnik približi pacijentovoj sobi ili krevetu dobije sve podatke o njemu, od povijesti bolesti do trenutne dijagnoze. 
-U trgovini se može iskoristiti tako da se kupca obavijesti o predmetima na popustu u blizi. 
-Također, iBeacon odašiljači mogu se iskoristiti i kao sustav plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}} tehnologija koristi.
+iBeacon se može konfigurirati tako da se sadržaj šalje samo kad se uređaj približi odašiljaču na određenu udaljenost. 
+Pri tome su definirana tri parametra udaljenosti: neposredna (\textit{immediate}), mala (\textit{near}) i velika (\textit{far}) udaljenost. 
+Neposredna udaljenost je do nekoliko centimetara, mala je do nekoliko metara, dok je velika udaljenost iznad deset metara. 
+Ove vrijednosti su aproksimativne jer ovisno o stvarnim uvjetima u kojima su odašiljači postavljeni signal može dosta varirati pa precizne vrijednosti nisu upotrebljive.
+\\
+
+Pošto je iBeacon tehnologija relativno nova, detaljna specifikacija nije javno dostupna stoga su gotovo svi proizvođači iBeacon odašiljača reverznim inženjerstvom otkrili značajan dio iBeacon bluetooth profila.
+\\
+Kada je Apple predstavio iBeacon tehnologiju objavili su aplikaciju AirLocate pomoću koje se iPhone ili iPad koji podržava BLE može ponašati kao iBeacon odašiljač. 
+Također, pomoću iste aplikacije je moguće podesiti sve parametre odašiljača. 
+Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaja koji može snimati Bluetooth Low Energy pakete (poput računala sa ugrađenim Texas Instruments CC2540 čipom) istraživači uključujući i \cite{radiusReverseEng} su došli do strukture \textit{advertising} paketa koja je prikazana u tablici \ref{tbl:iBeacon}.
+
+\begin{table}[H]
+\centering
+\caption{Struktura \textit{advertising} paketa iBeacon odašiljača}
+\label{tbl:iBeacon}
+	\begin{tabular}{*{3}{c}}
+	\hline 
+	Bajt & Vrijednost & Opis \\ 
+	\hline 
+	1. & 02 & Duljina podataka - 2 bajta \\ 
+	2. & 01 & Tip podataka - zastavice \\ 
+	3. & X & LE i BR/ERD zastavice \\ 
+	4. & 1a & Duljina podataka - 26 bajtova \\ 
+	5. & ff & Podaci o proizvođaču \\ 
+	6. & 4c & Podaci o proizvođaču - Apple \\ 
+	7. & 00 & Podaci o proizvođaču - Apple \\ 
+	8. & 02 & Tip podataka \\ 
+	9. & 15 & Duljina podataka - 15 bajta \\ 
+	10. & X & Proximity UUID 1. bajt \\ 
+	11. & X & Proximity UUID 2. bajt \\ 
+	12. & X & Proximity UUID 3. bajt \\ 
+	13. & X & Proximity UUID 4. bajt \\ 
+	14. & X & Proximity UUID 5. bajt \\ 
+	15. & X & Proximity UUID 6. bajt \\ 
+	16. & X & Proximity UUID 7. bajt \\ 
+	17. & X & Proximity UUID 8. bajt \\ 
+	18. & X & Proximity UUID 9. bajt \\ 
+	19. & X & Proximity UUID 10. bajt \\ 
+	20. & X & Proximity UUID 11. bajt \\ 
+	21. & X & Proximity UUID 12. bajt \\  
+	22. & X & Proximity UUID 13. bajt \\ 
+	23. & X & Proximity UUID 14. bajt \\  
+	24. & X & Proximity UUID 15. bajt \\ 
+	25. & X & Proximity UUID 16. bajt \\ 
+	26. & X & Major 1. bajt \\ 
+	27. & X & Major 1. bajt \\ 
+	28. & X & Minor 1. bajt \\  
+	29. & X & Minor 2. bajt \\ 
+	30. & X & RSSI na udaljenosti od 1m \\ 
+	\hline 
+	\multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača
+	\end{tabular}
+\end{table}
+%TODO objasniti bytove
 
 \section*{Kontakt.io Beacon}
 
@@ -24,93 +76,56 @@ Uz to, uređaji se mogu jednostavno klonirati i nadograditi, imaju visoku razinu
 \\
 Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, \textit{proximityUUID} \engl{Universally unique identifier}, \textit{major} i \textit{minor} vrijednosti, \textit{transmisssion power level} te interval odašiljanja poruka.
 \\
-Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca. %TODO referencirati službenu kontakt-io dokumentaciju
-Raspon odašiljanja ovisi o \textit{transmisssion power level} te okolini u kojoj je postavljen (zbog difrakcije i apsorpcije signala).
+Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca \cite{kontaktDatasheet}. 
+Raspon odašiljanja ovisi o snazi odašiljanja signala (parametar \textit{transmisssion power level}) te okolini u kojoj je odašiljač postavljen. 
+Pri standardnoj tvorničkoj snazi odašiljanja iznosa \SI{-4}{~dBm}, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa \SI{4}{dBm}, odašiljač se može prepoznati i na udaljenosti većoj od 15 metara.
 
 \subsection*{Struktura paketa}
 Uređaj odašilje dvije vrste paketa podataka: \textit{advertising} i \textit{scan response}.
 \\
-Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj način se "oglašava" okolnim uređajima. Drugi tip paketa, \textit{scan response}, šalje se odmah nakon \textit{advertising} paketa i sadrži dodatne informacije o odašiljaču, poput imena odašiljača, stanja baterije i slično.
+Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj obavještava okolne uređaje o svojoj prisutnosti. 
+Drugi tip paketa, \textit{scan response} paket, šalje se odmah nakon \textit{advertising} paketa i sadrži dodatne informacije o odašiljaču, poput imena odašiljača, stanja baterije i slično.
 \\
 
-Struktura \textit{advertising} paketa je prikazana u tablici \ref{tbl:advertising}.
+Struktura \textit{advertising} paketa odgovara strukturi iBeacon \textit{advertising} paketa navedenog u tablici \ref{tbl:iBeacon}, dok je struktura \textit{scan response} paketa navedena u tablici \ref{tbl:scanResponse}.
 \\
-\begin{table}
-\label{tbl:advertising}
-\begin{tabular}{|c|c|c|c|}
-\hline 
-Byte & Pretpostavljena (engl. default) vrijednost & Opis & Svojstvo \\ 
-\hline 
-1 & 02 & Duljina podataka & constant preamble \\ 
-\hline 
-2 & 01 & Tip podataka - flags & constant preamble \\ 
-\hline 
-3 & 06 & LE, BF/EDR zastavice & constant preamble \\ 
-\hline 
-4 & 1a & Duljina podataka* & constant preamble \\ 
-\hline 
-5 & ff & Tip podataka* & constant preamble \\ 
-\hline 
-6 & 4c & Podaci o proizvođaču & constant preamble \\ 
-\hline 
-7 & 00 & Podaci o proizvođaču & constant preamble \\ 
-\hline 
-8 & 02 & Podaci o proizvođaču & constant preamble \\ 
-\hline 
-9 & 15 & Podaci o proizvođaču & constant preamble \\ 
-\hline 
-10 & f7 & Proximity UUID 1. bajt & user UUID \\ 
-\hline 
-11 & 82 & Proximity UUID 2. bajt & user UUID \\ 
-\hline 
-12 & 6d & Proximity UUID 3. bajt & user UUID \\ 
-\hline 
-13 & a6 & Proximity UUID 4. bajt & user UUID \\ 
-\hline 
-14 & 4f & Proximity UUID 5. bajt & user UUID \\ 
-\hline 
-15 & a2 & Proximity UUID 6. bajt & user UUID \\ 
-\hline 
-16 & 4e & Proximity UUID 7. bajt & user UUID \\ 
-\hline 
-17 & 98 & Proximity UUID 8. bajt & user UUID \\ 
-\hline 
-18 & 80 & Proximity UUID 9. bajt & user UUID \\ 
-\hline 
-19 & 24 & Proximity UUID 10. bajt & user UUID \\ 
-\hline 
-20 & bc & Proximity UUID 11. bajt & user UUID \\ 
-\hline 
-21 & 5b & Proximity UUID 12. bajt & user UUID \\ 
-\hline 
-22 & 71 & Proximity UUID 13. bajt & user UUID \\ 
-\hline 
-23 & e0 & Proximity UUID 14. bajt & user UUID \\ 
-\hline 
-24 & 89 & Proximity UUID 15. bajt & user UUID \\ 
-\hline 
-25 & 3e & Proximity UUID 16. bajt & user UUID \\ 
-\hline 
-26 & xx & Major 1. bajt & major value \\ 
-\hline 
-27 & xx & Major 2. bajt & major value \\ 
-\hline 
-28 & xx & Minor 1. bajt & minor value \\ 
-\hline 
-29 & xx & Minor 2. bajt & minor value \\ 
-\hline 
-30 & b3 & Jakost signala & signal power value \\ 
-\hline 
-\end{tabular} 
-\end{table}
-\textit{Advertising} paketi zadovoljavaju Apple iBeacon\textsuperscript{\texttrademark} standard.
-\\
-Prvih devet bajtova paketa su unaprijed poznate konstante (poput informacije o proizvođaču). Njih slijedi šesnaest bajtova koji čine proximity UUID, dva bajta za \textit{major} vrijednost, dva bajta za \textit{minor} vrijednost, a posljednji bajt predstavlja RSSI vrijednost (engl. \textit{Recived Signal Strength Indication}) izmjeren jedan metar od Beacon uređaja.
-\\
+%Prvih devet bajtova paketa su unaprijed poznate konstante (poput informacije o proizvođaču). Njih slijedi šesnaest bajtova koji čine proximity UUID, dva bajta za \textit{major} vrijednost, dva bajta za \textit{minor} vrijednost, a posljednji bajt predstavlja RSSI vrijednost (engl. \textit{Recived Signal Strength Indication}) izmjeren jedan metar od iBeacon uređaja.
 
-Struktura \textit{scan response} paketa je prikazana u tablici \ref{tbl:scanResponse}.
-
-\begin{table}
+\begin{table}[H]
+    \centering
+    \caption{Struktura \textit{scan response} paketa}
     \label{tbl:scanResponse}
+    \begin{tabular}{ccc}
+    \hline 
+    Bajt & Vrijednost & Opis \\ 
+    \hline 
+    1. & 08* & Duljina podataka - 8 bajta \\ 
+    2. & 09 & Tip podatka - Complete Local Name \\ 
+    3. & 4B* & Lokalno ime uređaja \\ 
+    4. & 6F* & Lokalno ime uređaja \\ 
+    5. & 6E* & Lokalno ime uređaja \\ 
+    6. & 74* & Lokalno ime uređaja \\ 
+    7. & 61* & Lokalno ime uređaja \\ 
+    8. & 6B* & Lokalno ime uređaja \\ 
+    9. & 74* & Lokalno ime uređaja \\ 
+    10. & 02 & Duljina podataka - 2 bajta \\ 
+    11. & 0A & Tip podataka - Tx Power Value \\ 
+    12. & F4 & Tx Power Value \\ 
+    13. & 0A & Duljina podataka - 10 bajta \\ 
+    14. & 16 & Tip podataka - service data \\ 
+    15. & 0D & Service UUID 1. bajt \\ 
+    16. & D0 & Service UUID 2. bajt \\ 
+    17. & X & Identifikator odašiljača 1. bajt \\ 
+    18. & X & Identifikator odašiljača 2. bajt \\ 
+    19. & X & Identifikator odašiljača 3. bajt \\ 
+    20. & X & Identifikator odašiljača 4. bajt \\ 
+    21. & X & Firmware version 1. bajt \\ 
+    22. & X & Firmware version 2. bajt \\ 
+    23. & X & Razina baterije \\ 
+    \hline
+    \multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača \\
+    \multicolumn{3}{p{2pt}}* - varijabilne duljine, ovisi o duljini postavljenog imena odašiljača (max. 15 bajtova)
+    \end{tabular} 
 \end{table}
-% TODO ispisati txPowerValues
+
+%TODO ispisati txPowerValues
