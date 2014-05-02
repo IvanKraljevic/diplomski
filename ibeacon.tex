@@ -22,7 +22,7 @@ Ove vrijednosti su aproksimativne jer ovisno o stvarnim uvjetima u kojima su oda
 Pošto je iBeacon tehnologija relativno nova, detaljna specifikacija nije javno dostupna stoga su gotovo svi proizvođači iBeacon odašiljača reverznim inženjerstvom otkrili značajan dio iBeacon bluetooth profila.
 \\
 Kada je Apple predstavio iBeacon tehnologiju objavili su aplikaciju AirLocate pomoću koje se iPhone ili iPad koji podržava BLE može ponašati kao iBeacon odašiljač. 
-Također, pomoću iste aplikacije je moguće podesiti sve parametre odašiljača. 
+Također, pomoću iste aplikacije moguće je podesiti sve parametre odašiljača. 
 Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaja koji može snimati Bluetooth Low Energy pakete (poput računala sa ugrađenim Texas Instruments CC2540 čipom) istraživači uključujući i \cite{radiusReverseEng} su došli do strukture \textit{advertising} paketa koja je prikazana u tablici \ref{tbl:iBeacon}.
 
 \begin{table}[H]
@@ -36,9 +36,9 @@ Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaj
 	1. & 02 & Duljina podataka - 2 bajta \\ 
 	2. & 01 & Tip podataka - zastavice \\ 
 	3. & X & LE i BR/ERD zastavice \\ 
-	4. & 1a & Duljina podataka - 26 bajtova \\ 
-	5. & ff & Podaci o proizvođaču \\ 
-	6. & 4c & Podaci o proizvođaču - Apple \\ 
+	4. & 1A & Duljina podataka - 26 bajtova \\ 
+	5. & FF & Podaci o proizvođaču \\ 
+	6. & 4C & Podaci o proizvođaču - Apple \\ 
 	7. & 00 & Podaci o proizvođaču - Apple \\ 
 	8. & 02 & Tip podataka \\ 
 	9. & 15 & Duljina podataka - 15 bajta \\ 
@@ -58,16 +58,24 @@ Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaj
 	23. & X & Proximity UUID 14. bajt \\  
 	24. & X & Proximity UUID 15. bajt \\ 
 	25. & X & Proximity UUID 16. bajt \\ 
-	26. & X & Major 1. bajt \\ 
-	27. & X & Major 1. bajt \\ 
-	28. & X & Minor 1. bajt \\  
-	29. & X & Minor 2. bajt \\ 
+	26. & X & Major value 1. bajt \\ 
+	27. & X & Major value 1. bajt \\ 
+	28. & X & Minor value 1. bajt \\  
+	29. & X & Minor value 2. bajt \\ 
 	30. & X & RSSI na udaljenosti od 1m \\ 
 	\hline 
 	\multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača
 	\end{tabular}
 \end{table}
-%TODO objasniti bytove
+
+Izuzev trećeg bajta sa LE (\textit{skraćeno od Low Energy}) i BR/ERD (\textit{skraćeno od Bluetooth Radio/Enhanced Data Rate}) zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
+Nakon toga slijedi šesnaest bajtova koji čine \textit{Proximity UUID} parametar, dva bajta koji čine \textit{Major value} parametar, dva bajta koja čine \textit{Minor value} parametar te posljednji, trideseti, bajt koji sadrži RSSI\footnote{received signal strength indicator TODO} izmjeren na udaljenosti od jednog metra. %TODO objasniti rssi!
+\\
+Konfigurabilni parametari \textit{Proximity UUID}, \textit{Major value} i \textit{Minor value} koriste se za identifikaciju pojedinog odašiljača. 
+Preporuča se korištenje tih vrijednosti na način da Proximity UUID bude nekakav globalni identifikator, a \textit{Major value} i \textit{Minor value} specifičniji identifikatori. 
+Konkretno, \textit{Proximity UUID} može biti oznaka konkretnog trgovačkog lanca, \textit{Major value} oznaka konkretne trgovine, dok \textit{Minor value} može biti oznaka konkretne kategorije u trgovini.
+\\
+Posljednji bajt \textit{advertising} paketa sadrži RSSI izmjeren na udaljenosti od jednog metra. On se koristi kod određivanja udaljenosti od odašiljača.
 
 \section*{Kontakt.io Beacon}
 
@@ -79,6 +87,10 @@ Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, \textit{
 Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca \cite{kontaktDatasheet}. 
 Raspon odašiljanja ovisi o snazi odašiljanja signala (parametar \textit{transmisssion power level}) te okolini u kojoj je odašiljač postavljen. 
 Pri standardnoj tvorničkoj snazi odašiljanja iznosa \SI{-4}{~dBm}, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa \SI{4}{dBm}, odašiljač se može prepoznati i na udaljenosti većoj od 15 metara.
+
+\subsection*{Tehnička specifikacija}
+
+TODO
 
 \subsection*{Struktura paketa}
 Uređaj odašilje dvije vrste paketa podataka: \textit{advertising} i \textit{scan response}.
