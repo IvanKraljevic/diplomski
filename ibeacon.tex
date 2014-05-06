@@ -65,8 +65,9 @@ Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaj
 	29. & X & \textit{Minor value} 2. bajt \\ 
 	30. & X & RSSI na udaljenosti od 1m \\ 
 	\hline 
-	\multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača
+	%\multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača	
 	\end{tabular}
+	\caption*{X - vrijednosti ovise o postavkama konkretnog odašiljača}
 \end{table}
 
 Izuzev trećeg bajta sa LE (\textit{skraćeno od Low Energy}) i BR/ERD (\textit{skraćeno od Bluetooth Radio/Enhanced Data Rate}) zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
@@ -159,7 +160,11 @@ Struktura \textit{advertising} paketa odgovara strukturi iBeacon \textit{adverti
     22. & X & Firmware version 2. bajt \\ 
     23. & X & Razina baterije \\ 
     \hline
-    \multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača \\
-    \multicolumn{3}{p{2pt}}* - varijabilne duljine, ovisi o duljini postavljenog imena odašiljača (max. 15 bajtova)
-    \end{tabular} 
+    %\multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača \\
+    %\multicolumn{3}{p{2pt}}* - varijabilne duljine, ovisi o duljini postavljenog imena odašiljača (max. 15 bajtova)
+    \end{tabular}
+    \caption*{
+        X - vrijednosti ovise o postavkama konkretnog odašiljača \\
+        * - varijabilne duljine, ovisi o duljini postavljenog imena odašiljača (max. 15 bajtova)
+    } 
 \end{table}
