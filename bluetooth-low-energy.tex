@@ -16,11 +16,20 @@ Sredinom 2010. godine Bluetooth SIG objavljuje Bluetooth 4.0 specifikaciju koja 
 Glavne odlike tehnologije su izuzetno niska potrošnja energije, mogućnost višegodišnjeg rada na malom izvoru energije (poput \textit{button-cell} ili AAA baterije), mala veličina i niska cijena, kompatibilnost sa mobilnim uređajima, tabletima i računalima. 
 \\
 Za ugradnju BLE tehnologije u uređaje Bluetooth 4.0 specifikacija uvodi dva načina rada: \textit{single-mode} i \textit{dual-mode}. 
-\textit{Single-mode} način rada obuhvaća integraciju samo BLE funkcionalnosti na kontroler, dok \textit{dual-mode} načina rada omogućava integraciju BLE funkcionalnost u standardni \textit{Classic Bluetooth} kontroler. 
+\textit{Single-mode} način rada obuhvaća integraciju samo BLE funkcionalnosti na kontroler, dok \textit{dual-mode} načina rada omogućava integraciju BLE funkcionalnost u standardni Bluetooth kontroler. 
 Proizvođači uređaja imaju na raspolaganju te dvije opcije i pri tome je važno napomenuti da uređaji sa \textit{single-mode} načinom rada ne mogu komunicirati sa uređajima koji koriste klasični Bluetooth protokol.
 \\
 
-Bluetooth SIG predviđa da će do 2018. godine devedeset posto Bluetooth uređaja na pametnim telefonima podržavati i BLE. 
+Danas se velika većina mobilnih uređaja proizvodi sa podrškom i za standardni Bluetooth i za BLE, tj. u uređaje se ugrađuje Bluetooth mikrokontroler sa \textit{dual-mode} načinom rada. 
+Mobilni operacijski sustavi koji trenutno podržavaju BLE su:
+
+\begin{itemize}
+    \item Android 4.3 i novije
+    \item iOS 5 i novije
+    \item Windows Phone 8.1
+    \item Blackberry 10
+\end{itemize}
+%Bluetooth SIG predviđa da će do 2018. godine devedeset posto Bluetooth uređaja na pametnim telefonima podržavati i BLE. 
 %BLE je osmišljen tako da ga mogu koristiti uređaji sa malim napajanjem (npr. AAA ili CR2032 baterije). 
 Bitno je napomenuti da BLE nije i ne pokušava biti optimizirana verzija \textit{Bluetooth classic} tehnologije, već cilja na sasvim nove načine primjene. 
 Predviđene primjene su u sportu, zdravstvu, trgovini, turizmu, mjerenju udaljenosti i druge.
@@ -29,20 +38,37 @@ Predviđene primjene su u sportu, zdravstvu, trgovini, turizmu, mjerenju udaljen
 \section*{Tehničke značajke}
 
 \textit{Bluetooth Low Energy} tehnologija temelji se na profilima i \textit{Generic Attribute Profile} (GATT) specifikaciji. 
-GATT definira način na koji se šalju i primaju podaci kratke duljine (često zvani atributi) preko BLE veze.
 \\
-GATT koristi \textit{Attribute} protokol (ATT) koji ima sličnu funkcionialnost kao SDP\footnote{\textit{Service discovery protocol}, omogućava uređajima da mađusobno saznaju koje servise podržavaju i koje parametre trebaju koristiti pri stvaranju podatkovne veze} protokol kod standardnog Bluetootha, samo što je optimiziran i pojednostavljen za korištenje u uređajima male potrošnje. 
-GATT definira na koji način su ATT atributi grupirani tako da čine konkretne servise.
-\\
-
 BLE profili su posebne specifikacije koje definiraju servise koji se koriste u određenim scenarijima. 
-Od proizvođača konkretnih uređaja se očekuje da zadovolje određen profil kako bi se osigurala međusobna kompatibilnost između raznih uređaja (npr. ako uređaj koji prati krvni tlak zadovolji HRP profil svi uređaji će moći čitati  . 
+Od proizvođača konkretnih uređaja se očekuje da zadovolje određen profil kako bi se osigurala međusobna kompatibilnost između raznih uređaja (npr. ako uređaj koji prati krvni tlak osobe zadovoljava HRP profil svi uređaji mogu uniformno čitati njegove servise). 
+Popularniji standardizirani profili su:
+\begin{itemize}
+    \item HTP (\textit{Health Thermometer Profile}) - omogućava uređaju spajanje i interakciju sa termometrom
+    \item GLP (\textit{Glucose Profile}) - omogućava uređaju spajanje i interakciju sa senzorom glukoze
+    \item BLP (\textit{Blood Pressure Profile}) - omogućava uređaju spajanje i interakciju sa senzorom koji mjeri krvni tlak osobe 
+    \item HRP (\textit{Heart Rate Profile}) - omogućava uređaju spajanje i interakciju sa senzorom rada srca 
+    \item FMP (\textit{Find Me Profile}) - definira ponašanje gdje pritisak gumba na jednom uređaju šalje obavijest drugom uređaju
+    \item PXP (\textit{Proximity Profile}) - omogućava praćenje udaljenosti između dva uređaja
+    \item LNP (\textit{Location and Navigation Profile}) - omogućava uređaju spajanje i interakciju sa senzorom navigacije
+\end{itemize}
+Ostali profili se mogu naći na službenim stranica\footnote{\url{https://developer.bluetooth.org/gatt/profiles/}}. Svi BLE profili su definirani na temelju GATT specifikacije.
+\\
 
-
-
-
-
-%TODO BLE značajniji profili, spomenuti da su svi profili temeljeni na gattu
-%TODO nešto malo o strukturi paketa, servisima, karakteristikama, opisnicima
-%TODO spomenuti koji uređaji imaju podrušku za ble i slično
-TODO
+GATT specifikacija definira način na koji se šalju i primaju podaci kratke duljine (često zvani atributi) preko BLE veze. 
+GATT koristi \textit{Attribute} protokol (ATT) koji ima sličnu funkcionalnost kao SDP\footnote{\textit{Service discovery protocol}, omogućava uređajima da međusobno saznaju koje servise podržavaju i koje parametre trebaju koristiti pri stvaranju podatkovne veze} protokol kod standardnog Bluetootha, samo što je optimiziran i pojednostavljen za korištenje u uređajima male potrošnje. 
+GATT definira na koji način su ATT atributi grupirani tako da čine konkretne servise. 
+Bitni koncepti kod GATT specifikacije su:
+\begin{description}[style=nextline]
+    \item[Klijent] 
+        Uređaj koji pokreće komunikaciju te šalje zahtjeve i prima odgovore (npr. mobilni uređaj ili računalo).
+    \item[Server] 
+        Uređaj koji prima zahtjeve i šalje odgovore (npr. senzor temperature ili iBeacon odašiljač).
+    \item[Servis] 
+        Kolekcija povezanih karakteristika koje zajedno čine nekakvu funkciju (npr. \textit{Health Thermometer} servis uključuje                     karakteristike za vrijednost temperature, interval čitanja i mjernu jedinicu temperature). 
+        Svaki servis može imati proizvoljan broj karakteristika.
+    \item[Karakteristika\footnote{engl. \textit{Characteristic}}] 
+        Vrijednost koja se izmjenjuje između klijenta i servera (npr. krvni tlak osobe ili trenutno stanje baterije). 
+        Svaka karakteristika može imati proizvoljan broj opisnika.
+    \item[Opisnik\footnote{engl. \textit{Descriptor}}] 
+        Vrijednost koja pobliže opisuje neku karakteristiku (npr. minimalna i maksimalna vrijednost karakteristike ili mjerna jedinica karakteristike).
+\end{description}
