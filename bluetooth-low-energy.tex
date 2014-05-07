@@ -1,19 +1,20 @@
 \chapter{Tehnologija Bluetooth Low Energy}
-
+%TODO pisati o "The internet of things"?
+    
 Tehnologija Bluetooth je standard bežične komunikacije koji se koristi za razmjenu podataka na maloj udaljenosti. 
 Bluetooth je razvijen 1994. godine u Ericssonu, a 1998. godine Ericsson, IBM, Intel, Nokia i Toshiba osnivaju posebno nadležno tijelo, Bluetooth Special Interest Group (SIG). 
 Uloga nadležnog tijela je unaprijeđenje standarda, ispravna implementacija i licenciranje Bluetooth tehnologije.
 \\
 
 Glavne odlike Bluetooth tehnologije su niska cijena Bluetooth uređaja, niska potrošnja energije, niski domet, robusnost te korištenje na globalnoj razini. 
-Bluetooth omogućava brzinu prijenosa reda veličine \SI{1}{Mbit/s} te koristi nelicencirani frekvencijski pojas od $2.4$ do \SI{2.485}{GHz}, odnosno koristi ISM područje \engl{industrial, scientific and medical} koje je frekvencijski usklađeno na globalnoj razini. 
+Bluetooth omogućava brzinu prijenosa reda veličine 1 Mbit/s te koristi nelicencirani frekvencijski pojas od 2.4 do 2.485 GHz, odnosno koristi ISM područje \engl{industrial, scientific and medical} koje je frekvencijski usklađeno na globalnoj razini. 
 Uz to, Bluetooth nudi radijsku vezu prema drugim sustavima, uređaji različitih proizvođača su međusobno kompatibilni i dopuštena je komutacija paketa i kanala.
-\\
+\\% \SI{1}{Mbit/s}  \SI{2.485}{GHz}
 
 Sredinom 2010. godine Bluetooth SIG objavljuje Bluetooth 4.0 specifikaciju koja uključuje \textit{Classic Bluetooth}, \textit{Bluetooth high speed} i \textit{Bluetooth low energy} protokole.
 \\
 \textit{Bluetooth low energy} (u daljenjem tekstu BLE), poznat i pod nazivom \textit{Bluetooth Smart}, je tehnologija koja je optimizirana tako da ima veoma nisku potrošnju energije. 
-Glavne odlike tehnologije su izuzetno niska potrošnja energije, mogućnost višegodišnjeg rada na malom izvoru energije (poput \textit{button-cell} ili AAA baterije), mala veličina i niska cijena, kompatibilnost sa mobilnim uređajima, tabletima i računalima. 
+Uz izuzetno nisku potrošnju energije, glavne odlike tehnologije su mogućnost višegodišnjeg rada na malom izvoru energije (poput \textit{button-cell} ili AAA baterije), mala veličina i niska cijena te kompatibilnost sa mobilnim uređajima, tabletima i računalima. 
 \\
 Za ugradnju BLE tehnologije u uređaje Bluetooth 4.0 specifikacija uvodi dva načina rada: \textit{single-mode} i \textit{dual-mode}. 
 \textit{Single-mode} način rada obuhvaća integraciju samo BLE funkcionalnosti na kontroler, dok \textit{dual-mode} načina rada omogućava integraciju BLE funkcionalnost u standardni Bluetooth kontroler. 
@@ -24,8 +25,8 @@ Danas se velika većina mobilnih uređaja proizvodi sa podrškom i za standardni
 Mobilni operacijski sustavi koji trenutno podržavaju BLE su:
 
 \begin{itemize}
-    \item Android 4.3 i novije
-    \item iOS 5 i novije
+    \item Android 4.3 i noviji
+    \item iOS 5 i noviji
     \item Windows Phone 8.1
     \item Blackberry 10
 \end{itemize}
@@ -37,21 +38,21 @@ Predviđene primjene su u sportu, zdravstvu, trgovini, turizmu, mjerenju udaljen
 
 \section*{Tehničke značajke}
 
-\textit{Bluetooth Low Energy} tehnologija temelji se na profilima i \textit{Generic Attribute Profile} (GATT) specifikaciji. 
+\textit{Bluetooth Low Energy} tehnologija temelji se na profilima i \textit{Generic Attribute Profile} (u daljnjem tekstu GATT) specifikaciji. 
 \\
 BLE profili su posebne specifikacije koje definiraju servise koji se koriste u određenim scenarijima. 
 Od proizvođača konkretnih uređaja se očekuje da zadovolje određen profil kako bi se osigurala međusobna kompatibilnost između raznih uređaja (npr. ako uređaj koji prati krvni tlak osobe zadovoljava HRP profil svi uređaji mogu uniformno čitati njegove servise). 
 Popularniji standardizirani profili su:
 \begin{itemize}
     \item HTP (\textit{Health Thermometer Profile}) - omogućava uređaju spajanje i interakciju sa termometrom
-    \item GLP (\textit{Glucose Profile}) - omogućava uređaju spajanje i interakciju sa senzorom glukoze
-    \item BLP (\textit{Blood Pressure Profile}) - omogućava uređaju spajanje i interakciju sa senzorom koji mjeri krvni tlak osobe 
+    \item GLP (\textit{Glucose Profile}) - omogućava uređaju spajanje i interakciju sa senzorom koji mjeri razinu glukoze u krvi osobe
+    \item BLP (\textit{Blood Pressure Profile}) - omogućava uređaju spajanje i interakciju sa senzorom koji mjeri krvni tlak osobe
     \item HRP (\textit{Heart Rate Profile}) - omogućava uređaju spajanje i interakciju sa senzorom rada srca 
     \item FMP (\textit{Find Me Profile}) - definira ponašanje gdje pritisak gumba na jednom uređaju šalje obavijest drugom uređaju
     \item PXP (\textit{Proximity Profile}) - omogućava praćenje udaljenosti između dva uređaja
     \item LNP (\textit{Location and Navigation Profile}) - omogućava uređaju spajanje i interakciju sa senzorom navigacije
 \end{itemize}
-Ostali profili se mogu naći na službenim stranica\footnote{\url{https://developer.bluetooth.org/gatt/profiles/}}. Svi BLE profili su definirani na temelju GATT specifikacije.
+Ostali profili mogu se naći na službenim Bluetooth stranica\footnote{\url{https://developer.bluetooth.org/gatt/profiles/}}. Svi BLE profili su definirani na temelju GATT specifikacije.
 \\
 
 GATT specifikacija definira način na koji se šalju i primaju podaci kratke duljine (često zvani atributi) preko BLE veze. 

@@ -9,7 +9,7 @@ Neki od zanimljivih načina primjene iBeacon tehnologije su u muzejima, trgovina
 Posjetitelj muzeja može na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ili slici), uz to, osoblje muzeja može pratiti koji su objekti najgledaniji i slično. 
 U bolnici se može primijeniti tako da liječnik dobije sve podatke o pacijentu, od povijesti bolesti do trenutne dijagnoze, kada se približi njegovoj sobi ili krevetu. 
 U trgovini se može iskoristiti tako da kupca obavijesti o predmetima na popustu u blizini. 
-Također, iBeacon odašiljači mogu se iskoristiti i kao sustav plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}, bežična tehnologija jako kratkog dometa korištena za komunikaciju između dva krajnja uređaja} tehnologija koristi (npr. beskontaktna plaćanja).
+Također, iBeacon odašiljači mogu se iskoristiti i kao sustav beskontaktnog plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}, bežična tehnologija jako kratkog dometa korištena za komunikaciju između dva krajnja uređaja} tehnologija koristi.
 Ovo su samo najjednostavniji i najopćenitiji slučajevi gdje se iBeacon tehnologija može ukomponirati, broj načina korištenja tehnologije je ogroman.
 \\
 
@@ -19,7 +19,7 @@ Neposredna udaljenost je do nekoliko centimetara, mala do nekoliko metara, dok j
 Ove vrijednosti su aproksimativne jer ovisno o stvarnim uvjetima u kojima su odašiljači postavljeni signal može dosta varirati pa precizne vrijednosti nisu upotrebljive.
 \\
 
-Pošto je iBeacon tehnologija relativno nova, detaljna specifikacija nije javno dostupna stoga su gotovo svi proizvođači iBeacon odašiljača reverznim inženjerstvom otkrili značajan dio iBeacon Bluetooth profila.
+Pošto je iBeacon tehnologija relativno nova, detaljna specifikacija nije javno dostupna stoga su gotovo svi proizvođači iBeacon odašiljača reverznim inženjeringom otkrili značajan dio iBeacon Bluetooth profila.
 \\
 Kada je Apple predstavio iBeacon tehnologiju objavili su aplikaciju AirLocate pomoću koje se iPhone ili iPad koji podržava BLE može ponašati kao iBeacon odašiljač. 
 Također, pomoću iste aplikacije moguće je podesiti sve parametre odašiljača. 
@@ -70,8 +70,8 @@ Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaj
 	\caption*{X - vrijednosti ovise o postavkama konkretnog odašiljača}
 \end{table}
 
-Izuzev trećeg bajta sa LE (\textit{skraćeno od Low Energy}) i BR/ERD (\textit{skraćeno od Bluetooth Radio/Enhanced Data Rate}) zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
-Nakon toga slijedi šesnaest bajtova koji čine \textit{Proximity UUID\footnote{\textit{Universally unique identifier}}} parametar, dva bajta koji čine \textit{Major value} parametar, dva bajta koja čine \textit{Minor value} parametar te posljednji, trideseti, bajt koji sadrži RSSI\footnote{\textit{received signal strength indicator}, mjera jakosti primljenog signala} izmjeren na udaljenosti od jednog metra.vrijednost
+Izuzev trećeg bajta sa LE\footnote{\textit{Low Energy}} i BR/ERD\footnote{\textit{Bluetooth Radio/Enhanced Data Rate}} zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
+Nakon toga slijedi šesnaest bajtova koji čine \textit{Proximity UUID\footnote{\textit{Universally unique identifier}}} parametar, dva bajta koji čine \textit{Major value} parametar, dva bajta koja čine \textit{Minor value} parametar te posljednji, trideseti, bajt koji sadrži RSSI\footnote{\textit{received signal strength indicator}, mjera jakosti primljenog signala} izmjeren na udaljenosti od jednog metra.
 \\
 Konfigurabilni parametari \textit{Proximity UUID}, \textit{Major value} i \textit{Minor value} koriste se za identifikaciju pojedinog odašiljača. 
 Preporuča se korištenje tih vrijednosti na način da \textit{Proximity UUID} bude nekakav globalni identifikator, a \textit{Major value} i \textit{Minor value} specifičniji identifikatori. 
@@ -89,23 +89,24 @@ Uz to, uređaji se mogu jednostavno klonirati i nadograditi, imaju visoku razinu
 Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, \textit{Proximity UUID}, \textit{major} i \textit{minor} vrijednosti, \textit{transmisssion power level} te interval odašiljanja poruka.
 \\
 Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca \citep{kontaktDatasheet}. 
-Raspon odašiljanja ovisi o snazi odašiljanja signala (parametar \textit{transmisssion power level}) te okolini u kojoj je odašiljač postavljen. 
-Pri standardnoj (tvorničkoj) snazi odašiljanja iznosa \SI{-4}{dBm}, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa \SI{4}{dBm}, odašiljač se može prepoznati i na udaljenosti većoj od 20 metara.
+Raspon odašiljanja signala ovisi o snazi odašiljanja (određena parametrom \textit{transmisssion power level}) te okolini u kojoj je odašiljač postavljen. 
+Pri standardnoj (tvorničkoj) snazi odašiljanja iznosa -4 dBm, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa 4 dBm, odašiljač se može prepoznati i na udaljenosti većoj od dvadeset metara.
+% \SI{-4}{dBm} \SI{4}{dBm}
 
 \subsection*{Tehnička specifikacija}
 
-Dimenzije odašiljača su $\SI{55}{mm} \times \SI{55}{mm} \times \SI{15}{mm}$ te on teži svega $23$ grama. 
-Vanjski okvir je od ABS\footnote{Akrilonitril butadien stiren, izdržljiva plastika koja je pogodna za recikliranje} plastike, a uređaj napaja zamjenjiva CR2477 baterija s kojom odašiljač može raditi više od 24 mjeseca. 
+Dimenzije odašiljača su $\SI{55}{mm} \times \SI{55}{mm} \times \SI{15}{mm}$ te on teži svega 23 grama. 
+Vanjski okvir je od ABS\footnote{Akrilonitril butadien stiren, izdržljiva plastika koja je pogodna za recikliranje} plastike, a uređaj napaja zamjenjiva CR2477 baterija s kojom odašiljač može raditi više od dvije godine. 
 Prema \citep{kontaktTehnical} vrijeme rada može se dodatno povećati na čak šest godina ukoliko se smanje jakost odašiljanja i interval odašiljanja poruka.
 \\
 Ostale karakteristike odašiljača su:
 \begin{itemize}
     \item Bluetooth Smart multiprotocol SOC\footnote{sustav na čipu \engl{System on a chip}} IC\footnote{integrirani krug \engl{integrated circuit}} kojega proizvodi Nordic Semiconductors
-    \item $32$-bitni ARM Cortex M0 procesor
-    \item $\SI{256}{kB}$ flash memorije
-    \item $\SI{16}{kB}$ RAM memorije
-    \item Jakost odašiljanja u rasponu od $\SI{-30}{dBm}$ do $\SI{+4}{dBm}$
-    \item Dozvoljene brzine prijenosa: $\SI{250}{kBs}$, $\SI{1}{Mbs}$ i $\SI{2}{Mbs}$
+    \item 32-bitni ARM Cortex M0 procesor
+    \item 256 kB flash memorije
+    \item 16 kB RAM memorije
+    \item Jakost odašiljanja u rasponu od -30 dBm do +4 dBm 
+    \item Dozvoljene brzine prijenosa: 250 kBs, 1 Mbs i 2 Mbs
 \end{itemize}
 
 \begin{figure}[H]
@@ -114,7 +115,8 @@ Ostale karakteristike odašiljača su:
     \caption{Kontakt.io iBeacon odašiljač}
 \end{figure}
 
-Dozvoljene vrijednosti jakosti odašiljanja su: $\SI{-30}{dBm}$, $\SI{-20}{dBm}$, $\SI{-16}{dBm}$, $\SI{-12}{dBm}$, $\SI{-8}{dBm}$, $\SI{-4}{dBm}$, $\SI{0}{dBm}$ i $\SI{4}{dBm}$.
+Dozvoljene vrijednosti jakosti odašiljanja su: -30, -20, -16, -12, -8, -4, 0 i 4 dBm.
+%$\SI{-30}{dBm}$, $\SI{-20}{dBm}$, $\SI{-16}{dBm}$, $\SI{-12}{dBm}$, $\SI{-8}{dBm}$, $\SI{-4}{dBm}$, $\SI{0}{dBm}$ i $\SI{4}{dBm}$.
 
 
 \subsection*{Struktura paketa}
