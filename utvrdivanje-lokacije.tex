@@ -1,9 +1,24 @@
-\chapter{Utvrđivanje relativne i apsolutne lokacije mobilnog uređaja}
-%TODO utvrđivanje lokacije, kako, zašto,
-%TODO kratka povijest gpsa, korištenje gpsa
-%TODO otkrivanje preko radio antena
-%TODO problemi u zatvorenom prostoru, apsorpcija, difrakcija, reflseksija signala
-%TODO poznate metode: spomenuti određivanje preko wifia, markera, augmented reality, visual guidance (google project tango)
+\chapter{Utvrđivanje relativne i apsolutne lokacije u zatvorenom prostoru}
+
+Tehnologije navigacije i pozicioniranja koje se oslanjaju na udaljene satelite (poput GPS i GNSS tehnologija) nisu pogodne za korištenje u zatvorenim prostorima iz razloga što njihove signale apsorbiraju i reflektiraju krovovi, zidovi i ostali objekti u okolini. 
+Iz istih razloga određivanje lokacije preko mobilnih signala, odnosno preko radio tornjeva nije moguće. 
+\\
+Stoga su za utvrđivanje lokacije u zatvorenom prostoru potrebni sasvim novi i drugačiji pristupi problemu te shodno tome, sasvim nove metode određivanja lokacije. 
+Zbog ogromnog porasta pristupačnosti i popularnosti pametnih telefona, posljednjih nekoliko godina sve je veća potražnja za nekakvim pouzdanim rješenjem problema. 
+Kako ne postoji nikakav \textit{de facto} standard, gotovo sva ponuđena rješenja su međusobno različita i koriste cijeli niz različitih tehnologija, od optičkih (npr. kamera uređaja) i radio (npr. signali obližnje bežične mreže) skroz do akustičnih tehnologija.
+\\
+
+Vjerojatno najznačajniji uspjeh je postignut sa praćenjem signala kojega odašilje obližnja bežična Wi-fi mreža. 
+Velika prednost ove metode je značajan porast bežičnih pristupnih točaka na koje se mobilni i drugi uređaji mogu spojiti. 
+Da bi se ovom metodom odredila lokacija uređaja potrebno je na neki način mapirati dotičnu pristupnu točku te zatim na temelju jakosti primljenog signala utvrditi poziciju mobilnog uređaja u odnosu na nju. 
+Parametri mapiranja uključuju apsolutnu poziciju, SSID\footnote{\textit{service set identification}} i MAC\footnote{\textit{media access control address}} adresu pristupne točke (tj. WLAN uređaja). 
+Neke od poznatijih web aplikacija poput WeFi\footnote{\url{http://www.wefi.com/maps/}} i WiGLE\footnote{\url{https://wigle.net}} sadrže više od sto milijuna mapiranih bežičnih pristupnih točaka. 
+\\
+
+Uz navigaciju i pozicioniranje pomoću Wi-fi mreža, dosta su popularne metode koje se služe tehnikama proširene i virtualne stvarnosti te tehnikama strojnog učenja, raspoznavanja uzoraka i računalnog vida. 
+Jedna od popularnijih tehnika proširene i virtualne stvarnosti je korištenje posebnih oznaka (markera) kojega kamera mobilnog uređaja može prepoznati u prostoru. 
+Vezano za metode strojnog učenja, raspoznavanja uzoraka i računalnog vida bitno je spomenuti ambiciozan projekt Tango\footnote{\url{https://www.google.com/atap/projecttango/}} na kojemu radi tehnološki gigant Google. 
+Cilj projekta je ponuditi rješenje koje će korištenjem kamere i ostalih senzora mobilnog uređaja nuditi pomoć pri navigaciji, pozicioniranju i prepoznavanju okoline u zatvorenom i otvorenom prostoru.
 
 \section*{Utvrđivanje relativne udaljenosti od odašiljača}
 %TODO postupak mjerenja, što sve treba, kako mjeriti, poteškoće
