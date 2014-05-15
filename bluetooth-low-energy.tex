@@ -11,13 +11,12 @@ Bluetooth omogućava brzinu prijenosa reda veličine 1 Mbit/s te koristi nelicen
 Uz to, Bluetooth nudi radijsku vezu prema drugim sustavima, uređaji različitih proizvođača su međusobno kompatibilni i dopuštena je komutacija paketa i kanala.
 \\% \SI{1}{Mbit/s}  \SI{2.485}{GHz}
 
-Sredinom 2010. godine Bluetooth SIG objavljuje Bluetooth 4.0 specifikaciju koja uključuje \textit{Classic Bluetooth}, \textit{Bluetooth high speed} i \textit{Bluetooth low energy} protokole.
-\\
+Sredinom 2010. godine Bluetooth SIG objavljuje Bluetooth 4.0 specifikaciju koja uključuje \textit{Classic Bluetooth}, \textit{Bluetooth high speed} i \textit{Bluetooth low energy} protokole. 
 \textit{Bluetooth low energy} (u daljenjem tekstu BLE), poznat i pod nazivom \textit{Bluetooth Smart}, je tehnologija koja je optimizirana tako da ima veoma nisku potrošnju energije. 
-Uz izuzetno nisku potrošnju energije, glavne odlike tehnologije su mogućnost višegodišnjeg rada na malom izvoru energije (poput \textit{button-cell} ili AAA baterije), mala veličina i niska cijena te kompatibilnost sa mobilnim uređajima, tabletima i računalima. 
+Uz to, glavne odlike tehnologije su mogućnost višegodišnjeg rada na malom izvoru energije (poput \textit{button-cell} ili AAA baterije), mala veličina i niska cijena te kompatibilnost sa mobilnim uređajima, tabletima i računalima. 
 \\
 Za ugradnju BLE tehnologije u uređaje Bluetooth 4.0 specifikacija uvodi dva načina rada: \textit{single-mode} i \textit{dual-mode}. 
-\textit{Single-mode} način rada obuhvaća integraciju samo BLE funkcionalnosti na kontroler, dok \textit{dual-mode} načina rada omogućava integraciju BLE funkcionalnost u standardni Bluetooth kontroler. 
+\textit{Single-mode} način rada obuhvaća integraciju samo BLE funkcionalnosti u kontroler, dok \textit{dual-mode} načina rada omogućava integraciju BLE funkcionalnost u standardni Bluetooth kontroler. 
 Proizvođači uređaja imaju na raspolaganju te dvije opcije i pri tome je važno napomenuti da uređaji sa \textit{single-mode} načinom rada ne mogu komunicirati sa uređajima koji koriste klasični Bluetooth protokol.
 \\
 
@@ -56,7 +55,7 @@ Ostali profili mogu se naći na službenim Bluetooth stranica\footnote{\url{http
 \\
 
 GATT specifikacija definira način na koji se šalju i primaju podaci kratke duljine (često zvani atributi) preko BLE veze. 
-GATT koristi \textit{Attribute} protokol (ATT) koji ima sličnu funkcionalnost kao SDP\footnote{\textit{Service discovery protocol}, omogućava uređajima da međusobno saznaju koje servise podržavaju i koje parametre trebaju koristiti pri stvaranju podatkovne veze} protokol kod standardnog Bluetootha, samo što je optimiziran i pojednostavljen za korištenje u uređajima male potrošnje. 
+GATT koristi \textit{Attribute} protokol (u daljnjem tekstu ATT) koji ima sličnu funkcionalnost kao SDP\footnote{\textit{Service discovery protocol}, omogućava uređajima da međusobno saznaju koje servise podržavaju i koje parametre trebaju koristiti pri stvaranju podatkovne veze} protokol kod standardnog Bluetootha, samo što je optimiziran i pojednostavljen za korištenje u uređajima male potrošnje. 
 GATT definira na koji način su ATT atributi grupirani tako da čine konkretne servise. 
 Bitni koncepti kod GATT specifikacije su:
 \begin{description}[style=nextline]
