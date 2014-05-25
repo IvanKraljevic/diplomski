@@ -1,14 +1,14 @@
 \chapter{Odašiljači iBeacon}
 
 Odašiljači iBeacon su jeftini uređaji, niske potrošnje energije koji korištenjem BLE tehnologije obavještavaju obližnje uređaje o svojoj prisutnosti. 
-Obližnji uređaji (poput mobilnih uređaja i tableta) mogu se pretplatiti na notifikacije odašiljača te mogu primati razne sadržaje (poput teksta, slika ili URL adresa) od njih. 
+Obližnji uređaji (poput mobilnih uređaja i tableta) mogu se pretplatiti na obavijesti (notifikacije, engl. \textit{notifications}) odašiljača te mogu primati razne sadržaje (poput teksta, slika ili URL adresa) od njih. 
 Krajem 2013. godine iBeacon tehnologiju patentirala je američka multinacionalna korporacija Apple Inc.
 \\
 
 Neki od zanimljivih načina primjene iBeacon tehnologije su u muzejima, trgovinama, bolnicama i ostalim ustanovama gdje se sadržaj mijenja ovisno o položaju u prostoriji. 
-Posjetitelj muzeja može na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ili slici), uz to, osoblje muzeja može pratiti koji su objekti najgledaniji i slično. 
-U bolnici se može primijeniti tako da liječnik dobije sve podatke o pacijentu, od povijesti bolesti do trenutne dijagnoze, kada se približi njegovoj sobi ili krevetu. 
-U trgovini se može iskoristiti tako da kupca obavijesti o predmetima na popustu u blizini. 
+Posjetitelj muzeja može na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ili slici). Uz to, osoblje muzeja može pratiti koji su objekti najgledaniji i slično. 
+U bolnici se može primijeniti tako da liječnik na prijenosni tablet dobije sve podatke o pacijentu, od povijesti bolesti do trenutne dijagnoze, kada se približi njegovoj sobi ili krevetu. 
+U trgovini se može iskoristiti tako da kupca obavijesti o predmetima na popustu u blizini i sličnim scenarijima. 
 Također, iBeacon odašiljači mogu se iskoristiti i kao sustav beskontaktnog plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}, bežična tehnologija jako kratkog dometa korištena za komunikaciju između dva krajnja uređaja} tehnologija koristi.
 Ovo su samo najjednostavniji i najopćenitiji slučajevi gdje se iBeacon tehnologija može ukomponirati, broj načina korištenja tehnologije je ogroman.
 \\
@@ -78,18 +78,22 @@ Preporuča se korištenje tih vrijednosti na način da \textit{Proximity UUID} b
 Konkretno, \textit{Proximity UUID} može biti oznaka konkretnog trgovačkog lanca, \textit{Major value} oznaka konkretne trgovine, dok \textit{Minor value} može biti oznaka konkretne kategorije u trgovini.
 \\
 Posljednji bajt \textit{advertising} paketa sadrži RSSI izmjeren na udaljenosti od jednog metra od odašiljača. 
-On se koristi kod određivanja udaljenosti od odašiljača. 
+On se često koristi kod određivanja udaljenosti od odašiljača. 
 Pošto jakost signala na nekoj udaljenosti ovisi o okolini u kojoj je uređaj postavljen, radi pouzdanijeg određivanja relativne udaljenosti od odašiljača preporuča se prije početka korištenja odašiljača izmjeriti RSSI na udaljenosti od jednog metra te pohraniti tu vrijednost u sam odašiljač.
+\\
+
+Za određivanje lokacije korišteni su Kontakt.io\footnote{\url{http://kontakt.io}} i Bluecats\footnote{\url{http://www.bluecats.com}} iBeacon odašiljači. 
+U nastavku je navedena specifikacija Kontakt.io odašiljača, dok za vrijeme pisanja rada detaljna specifikacija Bluecats odašiljača nije uopće objavljena. 
+Iz tog razloga kod većeg dijela istraživanja koristili su se Kontakt.io odašiljači jer su vrijednosti nekih parametara Bluecats odašiljača nepoznate. 
+Npr. jakost odašiljanja signala \engl{transmisssion power level} se može postaviti na vrijednosti poput \textit{loud} i \textit{silent}, ali numeričke vrijednosti koju ti izrazi opisuju su nepoznati stoga nam je taj parametar neprimjenjiv.
 
 \section*{Kontakt.io Beacon}
 
 Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem BLE tehnologije te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
 Uz to, uređaji se mogu jednostavno klonirati i nadograditi, imaju visoku razinu sigurnosti te malu energetsku potrošnju.
 \\
-Pojedini uređaj ima nekoliko konfigurabilnih parametara: ime uređaja, \textit{Proximity UUID}, \textit{major} i \textit{minor} vrijednosti, \textit{transmisssion power level} te interval odašiljanja poruka.
-\\
-Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca \citep{kontaktDatasheet}. 
-Raspon odašiljanja signala ovisi o snazi odašiljanja (određena parametrom \textit{transmisssion power level}) te okolini u kojoj je odašiljač postavljen. 
+Pojedini uređaj ima nekoliko konfigurabilnih parametara: \textit{Proximity UUID}, \textit{major} i \textit{minor} vrijednosti, ime uređaja, jakost odašiljanja signala te interval odašiljanja poruka.
+Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca \citep{kontaktDatasheet}.  
 Pri standardnoj (tvorničkoj) snazi odašiljanja iznosa -4 dBm, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa 4 dBm, odašiljač se može prepoznati i na udaljenosti većoj od dvadeset metara.
 % \SI{-4}{dBm} \SI{4}{dBm}
 
@@ -101,7 +105,7 @@ Prema \citep{kontaktTehnical} vrijeme rada može se dodatno povećati na čak š
 \\
 Ostale karakteristike odašiljača su:
 \begin{itemize}
-    \item Bluetooth Smart multiprotocol SOC\footnote{sustav na čipu \engl{System on a chip}} IC\footnote{integrirani krug \engl{integrated circuit}} kojega proizvodi Nordic Semiconductors
+    \item Nordic Semiconductors Bluetooth Smart multiprotokol SOC\footnote{sustav na čipu \engl{System on a chip}} IC\footnote{integrirani krug \engl{integrated circuit}}
     \item 32-bitni ARM Cortex M0 procesor
     \item 256 kB flash memorije
     \item 16 kB RAM memorije
@@ -139,7 +143,7 @@ Struktura \textit{advertising} paketa odgovara strukturi iBeacon \textit{adverti
     Bajt & Vrijednost & Opis \\ 
     \hline 
     1. & 08* & Duljina podataka - 8 bajta \\ 
-    2. & 09 & Tip podatka - Complete Local Name \\ 
+    2. & 09 & Tip podatka - Lokalno ime uređaja \\ 
     3. & 4B* & Lokalno ime uređaja \\ 
     4. & 6F* & Lokalno ime uređaja \\ 
     5. & 6E* & Lokalno ime uređaja \\ 
@@ -148,18 +152,18 @@ Struktura \textit{advertising} paketa odgovara strukturi iBeacon \textit{adverti
     8. & 6B* & Lokalno ime uređaja \\ 
     9. & 74* & Lokalno ime uređaja \\ 
     10. & 02 & Duljina podataka - 2 bajta \\ 
-    11. & 0A & Tip podataka - Tx Power Value \\ 
-    12. & F4 & Tx Power Value \\ 
+    11. & 0A & Tip podataka - Jakost odašiljanja signala \\ 
+    12. & F4 & Jakost odašiljanja signala \\ 
     13. & 0A & Duljina podataka - 10 bajta \\ 
     14. & 16 & Tip podataka - service data \\ 
-    15. & 0D & Service UUID 1. bajt \\ 
-    16. & D0 & Service UUID 2. bajt \\ 
+    15. & 0D & \textit{Service UUID} 1. bajt \\ 
+    16. & D0 & \textit{Service UUID} 2. bajt \\ 
     17. & X & Identifikator odašiljača 1. bajt \\ 
     18. & X & Identifikator odašiljača 2. bajt \\ 
     19. & X & Identifikator odašiljača 3. bajt \\ 
     20. & X & Identifikator odašiljača 4. bajt \\ 
-    21. & X & Firmware version 1. bajt \\ 
-    22. & X & Firmware version 2. bajt \\ 
+    21. & X & \textit{Firmware version} 1. bajt \\ 
+    22. & X & \textit{Firmware version} 2. bajt \\ 
     23. & X & Razina baterije \\ 
     \hline
     %\multicolumn{3}{p{2pt}}X - vrijednosti ovise o postavkama konkretnog odašiljača \\
