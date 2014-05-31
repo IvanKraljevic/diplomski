@@ -45,8 +45,8 @@ Uz to, prvi prototipovi mobilnih uređaja i tableta već su dostupni partnerima 
 \end{figure}
 %TODO referencirati youtube video u captionu
 
-U nastavku je opisana nova i drugačija metoda za određivanje lokacije u zatvorenom prostoru koja se temelji na BLE tehnologiji i iBeacon odašiljačima. 
-Za rješavanje problema prvo je potrebno sa što većom preciznošću odrediti relativnu poziciju uređaja u odnosu na odašiljač/odašiljače. 
+U nastavku su opisane relativno nove metode za određivanje lokacije u zatvorenom prostoru koje se temelje na BLE tehnologiji i iBeacon odašiljačima.
+Za rješavanje problema prvo je potrebno sa što većom preciznošću odrediti relativnu poziciju uređaja u odnosu na odašiljač/odašiljače stoga je glavni fokus istraživanja usmjeren baš na taj dio. 
 Nakon toga uz poznavanje relativne pozicije uređaja i apsolutne pozicije odašiljača možemo odrediti apsolutni položaj uređaja.
 
 \section*{Utvrđivanje relativne udaljenosti od odašiljača}
@@ -109,27 +109,32 @@ Njihovo rješenje može se isprobati tako da se funkciju \eqref{eq:rnFunkcija} u
 \\
 Empirijskom testiranjem aplikacije primjetio sam kako i za male pomake u iznosu od nekoliko desetaka centimetara detektirani pomak aplikacije je nerijetko bio u iznosu većem od deset metara. 
 Stoga se može zaključiti kako ni rješenje koje su ponudili inženjeri Radius Networksa nije pouzdano, a ni primjenjivo na stvarnim problemima. 
-Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa izuzetno pomažu oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljačima.
+Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa izuzetno pomažu oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljača.
+\\
 
-%Uzrok tako neprecizne procjene udaljenosti može biti zato što u prostoru gdje se aplikacija testirala možda ima puno više ometanja signala nego u prostoru gdje su inženjeri Radius Networksa vršili vlastita istraživanja stoga njihova funkcija za procjenu udaljenosti jednostavno ne daje dobre rezultate. 
+Pomoću prethodno opisanih metoda i njihovih ograničenja može se zaključiti kako se problem procjene udaljenosti može opisati kao što je prikazano na slici TODO.
+%TODO slika
 
+Ulaz u sustav procjene udaljenosti je RSSI, odnosno jakost primljenog signala, opcionalni ulazni parametri su jakost odašiljanja signala te RSSI izmjeren na udaljenosti od jednog metra od odašiljača, a izlaz sustava je procjena udaljenosti izražena u metrima.
+\\
+Sustav procjene udaljenosti može biti funkcija \eqref{eq:procjenaUdaljenosti}, ili funkcija \eqref{eq:rnFunkcija}, ili bilo koja druga funkcija. 
+Prethodno je utvrđeno da \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} ne daju precizne rezultate, stoga idući cilj je napraviti model sustava koji će moći sa većom preciznošću procijeniti udaljenost. 
+Kako na signal djeluje velik broj vanjskih smetnji, predloženi sustav će morati biti otporan na šum u podacima, a također će morati biti i relativno brz te imati nisku složenost zbog toga što mu je primarna namjena korištenje u mobilnim uređajima i tabletima ograničene procesorske snage. 
+\\
 
+Kao model sustava možemo iskoristiti umjetnu neuronsku mrežu \engl{artificial neural network}.  
+Smatram da su neuronske mreže dobar model za rješavanje problema iz razloga što one mogu uspješno rješavati zahtjevne probleme gdje je tražena funkcija nepoznata, a uz to otporne su otporne na šum u podacima. 
+Daljnji rad će se zasnivati na korištenju unaprijedne neuronske mreže, iako bi se za rješavanje problema mogla koristiti i neizrazita neuronska mreža.
+\\
 
-%TODO postupak mjerenja, što sve treba, kako mjeriti, poteškoće
-%TODO postupci: matematički, best fit curve, neuronska mreža i poteškoće, spomeniti genetsko programiranje
-%TODO mjerenja udaljenosti
-%TODO zaključak
-
-
-
-
-
-
-
+Neuronska mreža će se trenirati na prethodno prikupljenim podacima. 
+Prve tri skupine podataka uzorokovane su na na udaljenostima od \SI{50}{cm} do \SI{8}{m} s korakom od \SI{50}{cm}, po dvije stotine uzoraka za svaku udaljenosti. 
+Ukupno prve tri skupine sastoje se od $brojSkupina \cdot brojUdaljenosti \cdot brojUzoraka = 3 \cdot 16 \cdot 200 = 9600$ uzoraka. 
+Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indoorKontaktDefaultTx}, \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault}.
 
 \begin{table}[H]
 	\centering
-	\caption{TODO}
+	\caption{Uzorci koje je KontaktIO iBeacon saTODO}
 	\label{tbl:indoorKontaktDefaultTx}
 	\begin{tabular}{ccccc}
 	\hline
@@ -211,7 +216,8 @@ Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim
 	\end{tabular}
 \end{table}
 
-
+%TODO postupci: matematički, best fit curve, neuronska mreža i poteškoće, spomeniti genetsko programiranje
+%TODO zaključak
 %TODO grafički prikaz svake tablice
 %TODO mjerenja na većoj udaljenosti - tablica + graf
 
