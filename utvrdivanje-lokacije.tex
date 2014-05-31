@@ -18,7 +18,8 @@ Neke od poznatijih web aplikacija poput WeFi\footnote{\url{http://www.wefi.com/m
 \begin{figure}
     \centering
     \includegraphics[scale=0.3]{pictures/WiGLE}
-    \caption{Prikaz mapiranih bežičnih pristupnih točaka kojega pruža sučelje WiGLE web aplikacije}
+    \caption{Prikaz mapiranih bežičnih pristupnih točaka preko sučelja WiGLE web aplikacije}    
+    %\caption{Prikaz mapiranih bežičnih pristupnih točaka kojega pruža sučelje WiGLE web aplikacije}
 \end{figure}
 
 Uz navigaciju i pozicioniranje pomoću Wi-fi mreža, dosta su popularne metode koje se služe tehnikama proširene i virtualne stvarnosti te tehnikama strojnog učenja, raspoznavanja uzoraka i računalnog vida.
@@ -29,7 +30,7 @@ Jedna od popularnijih tehnika proširene \engl{augmented} i virtualne stvarnosti
 Iz područja strojnog učenja, raspoznavanja uzoraka i računalnog vida vjerojatno najistaknutiji i najambiciozniji projekt je projekt Tango\footnote{\url{https://www.google.com/atap/projecttango/}} kojega razvija tehnološki gigant Google. 
 Cilj projekta je ponuditi rješenje koje će korištenjem kamere i ostalih senzora mobilnog uređaja nuditi pomoć pri navigaciji, pozicioniranju i prepoznavanju okoline, odnosno 3D mapiranje, u zatvorenom i otvorenom prostoru. 
 Unatoč tome što je projekt još u ranoj fazi razvoja, razvojni tim je ostvario vidljiv napredak te inicijalni rezultati upućuju na preciznost od jednog centimetra. 
-Uz to, prvi prototipovi mobilnih uređaja i tableta već dostupni partnerima koji sudjeluju u razvoju i na internetu se polako objavljuju nove zanimljive informacije o projektu. 
+Uz to, prvi prototipovi mobilnih uređaja i tableta već su dostupni partnerima koji sudjeluju u razvoju i na internetu se polako objavljuju nove i zanimljive informacije o projektu. 
 
 \begin{figure}[H]
     \centering
@@ -62,13 +63,14 @@ $P_t$ predstavlja jakost odašiljanja signala, $P_r$ jakost primljenog signala, 
 
 Ukoliko se ista jednadžba zapiše po varijabli $d$ dobiva se formula koja je prikazana u \eqref{eq:procjenaUdaljenosti}. 
 Uz poznate vrijednosti svih ostalih parametara ta formula se može iskoristiti za procjenu udaljenosti između prijamnika i odašiljača.
+Uz to, zbog relativno niske složenosti dotična formula je idealan kandidat za ugradnju u mobilnu aplikaciju.
 
 \begin{equation}
 	\label{eq:procjenaUdaljenosti}
 	d = 10^{-\frac{P_r - P_t - 20\log{\frac{\lambda}{4\pi}}}{10n}}
 \end{equation}
 
-
+Problem formule \eqref{eq:procjenaUdaljenosti} je što ona zanemaruje bilo kakva ometanja signala, odnosno ona je ona primjenjiva samo u idealnim uvjetima, a kao što je prethodno već rečeno, na signal u zatvorenom prostoru utječe (tj. ometa ga) velik broj parametara. 
 Na stabilnost signala koji putuje zatvorenim prostorom najvećim dijelom djeluju apsorpcija i refleksija signala, dok razašiljanje i difrakcija djeluju manjom mjerom.
 \\
 Zbog refleksije signala dio elektromagnetskog vala se odbija (reflektira) od površinu s kojom se sudario, a zbog apsorpcije signala dio elektromagnetskog vala se apsorbira te se val nastavlja gibati sa prigušenjem. 
@@ -76,18 +78,41 @@ Zbog refleksije signala dio elektromagnetskog vala se odbija (reflektira) od pov
 Smetnje uzrokovane refleksijom mogu se smanjiti povećanjem frekvencije, dok apsorpcija ovisi o dubini prodiranja i udaljenosti granice između dva sredstva. 
 \\
 
-U zatvorenom prostoru smetnje koje uzrokuju prethodno opisani faktori su često prevelike. 
-Procjena udaljenosti temeljena na \eqref{eq:procjenaUdaljenosti} nije precizna na tako nestabilnom signalu stoga nam je za rješavanje problema nam je potreban drugačiji pristup.
+U zatvorenom prostoru smetnje koje uzrokuju prethodno opisani faktori su često prevelike i u velikoj većini slučajeva na to se ne može utjecati. 
+Zaključak je da procjena udaljenosti temeljena na \eqref{eq:procjenaUdaljenosti} nije precizna na tako nestabilnom signalu stoga je za rješavanje problema potreban drugačiji pristup.
 \\
 
 Kao što je navedeno u iBeacon poglavlju, Apple je za procjenu udaljenosti od odašiljača namijenio tri izraza: neposredna blizina (\textit{immediate}), mala (\textit{near}) i velika \textit{far} udaljenost.
-Zajedno s tim u Apple Core Location radno okruženje dodana je funkcija koja na temelju jakosti primljenog signala (RSSI) i jakosti signala na udaljenosti jednog metra od odašiljača (trideseti bajt \textit{advertising} paketa iBeacon odašiljača) određuje relativnu udaljenost od odašiljača. 
+Zajedno s tim u radno okruženje Apple Core Location dodana je funkcija koja na temelju jakosti primljenog signala (RSSI) i jakosti signala na udaljenosti jednog metra od odašiljača (trideseti bajt \textit{advertising} paketa iBeacon odašiljača) određuje relativnu udaljenost od odašiljača. 
 Sam kôd funkcije nije javno dostupan i nije poznata metoda koju su Appleovi inženjeri upotrijebili, no ne preporučuju da se ona koristi u situacijama gdje je potreban precizan rezultat, odnosno precizna procjena udaljenosti. 
 Stoga se nameće zaključak kako ni Appleovi inženjeri nisu uspjeli zaobići prethodno spomenute smetnje koje djeluju na signal.
 \\
-%TODO Radius network i best fit curve.
-  
-%\[d = 10\exp{(-\frac{P_r - P_t - 20\log{\frac{\lambda}{4\pi}}}{10n})}\]
+
+Inženjeri američke kompanije Radius Networks su za vrijeme izrade svoje neslužbene slobodno dostupne Android iBeacon biblioteke\footnote{\url{https://github.com/RadiusNetworks/android-ibeacon-service}} pristupili problemu procjene udaljenosti tako da su napravili veliki broj RSSI mjerenja na poznatim udaljenostima i rezultate opisali funkcijom najbolje sličnosti \citep{stackoverflowRadiusDistancing}. 
+Dotična funkcija navedena je u \eqref{eq:rnFunkcija}.
+
+\begin{equation}
+	\label{eq:rnFunkcija}
+	f(x,y) = 
+	\begin{cases}	
+	0.89976 {\dfrac{x}{y}}^{7.7095} + 0.111 & \text{ako } \dfrac{x}{y} \geq 1 \\
+	{\dfrac{x}{y}}^{10} & \text{ako } 0 < \dfrac{x}{y} < 1 \\
+	-1 & \text{ako } x = 0 	
+	\end{cases}
+\end{equation}
+\\
+
+Parametar $x$ je RSSI primljenog signala, dok $y$ predstavlja RSSI na udaljenosti od jednog metra od odašiljača. 
+\\
+
+Njihovo rješenje može se isprobati tako da se funkciju \eqref{eq:rnFunkcija} ugradi u vlastitu aplikaciju, a može se iskoristiti i njihova besplatna Android aplikacija koja je dostupna na Google Play Storeu\footnote{\url{https://play.google.com/store/apps/details?id=com.radiusnetworks.ibeaconlocate}}.
+\\
+Empirijskom testiranjem aplikacije primjetio sam kako i za male pomake u iznosu od nekoliko desetaka centimetara detektirani pomak aplikacije je nerijetko bio u iznosu većem od deset metara. 
+Stoga se može zaključiti kako ni rješenje koje su ponudili inženjeri Radius Networksa nije pouzdano, a ni primjenjivo na stvarnim problemima. 
+Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa izuzetno pomažu oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljačima.
+
+%Uzrok tako neprecizne procjene udaljenosti može biti zato što u prostoru gdje se aplikacija testirala možda ima puno više ometanja signala nego u prostoru gdje su inženjeri Radius Networksa vršili vlastita istraživanja stoga njihova funkcija za procjenu udaljenosti jednostavno ne daje dobre rezultate. 
+
 
 
 %TODO postupak mjerenja, što sve treba, kako mjeriti, poteškoće
@@ -95,37 +120,100 @@ Stoga se nameće zaključak kako ni Appleovi inženjeri nisu uspjeli zaobići pr
 %TODO mjerenja udaljenosti
 %TODO zaključak
 
+
+
+
+
+
+
+
 \begin{table}[H]
-    \centering
-    \caption{Rezultat mjerenja signala u zatvorenom prostoru}
-    \label{tbl:indoor}
-	    \begin{tabular}{|c|cccc||cccc|}%||cccc}
-	    \cline{2-9}
-	    \multicolumn{1}{!{\vrule width 0pt}c!{\vrule width 1pt}}{} & \multicolumn{4}{c||}{$Odašiljač_1$} & \multicolumn{4}{c|}{$Odašiljač_2$} \\ %& \multicolumn{4}{c}{Beacon3} \\ 
-	\hline 
-	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\ %& $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\ 
-	\hline 
-	$0.5$ & $-81.075$ & $2.426$ & $-88$ & $-74$ & $-65.165$ & $2.546$ & $-76$ & $-56$ \\ %& -89.550 & 3.526 & -98 & -83 \\ 
-	$1.0$ & $-80.320$ & $2.799$ & $-86$ & $-76$ & $-66.250$ & $2.316$ & $-73$ & $-59$ \\ %& -90.895 & 2.101 & -96 & -86 \\ 
-	$1.5$ & $-75.575$ & $3.298$ & $-80$ & $-70$ & $-62.695$ & $4.324$ & $-69$ & $-57$ \\ %& -91.350 & 3.162 & -101 & -86 \\ 
-	$2.0$ & $-73.990$ & $2.558$ & $-79$ & $-68$ & $-58.750$ & $1.982$ & $-62$ & $-53$ \\ %& -91.695 & 2.134 & -99 & -86 \\ 
-	$2.5$ & $-78.725$ & $0.907$ & $-81$ & $-74$ & $-63.595$ & $0.875$ & $-66$ & $-59$ \\ %& -89.630 & 1.583 & -99 & -86 \\ 
-	$3.0$ & $-82.470$ & $4.053$ & $-91$ & $-74$ & $-67.810$ & $2.619$ & $-73$ & $-62$ \\ %& -93.385 & 2.156 & -100 & -88 \\ 
-	$3.5$ & $-81.685$ & $2.892$ & $-87$ & $-77$ & $-71.620$ & $3.537$ & $-80$ & $-65$ \\ %& - & - & - & - \\ 
-	$4.0$ & $-83.115$ & $1.903$ & $-88$ & $-77$ & $-68.720$ & $2.000$ & $-73$ & $-65$ \\ %& - & - & - & - \\ 
-	$4.5$ & $-91.125$ & $3.057$ & $-98$ & $-85$ & $-74.975$ & $3.065$ & $-81$ & $-68$ \\ %& - & - & - & - \\ 
-	$5.0$ & $-88.705$ & $2.198$ & $-93$ & $-83$ & $-72.445$ & $3.485$ & $-78$ & $-65$ \\ %& - & - & - & - \\ 
-	$5.5$ & $-88.935$ & $3.487$ & $-97$ & $-83$ & $-79.920$ & $6.883$ & $-93$ & $-68$ \\ %& - & - & - & - \\ 
-	$6.0$ & $-92.450$ & $2.399$ & $-99$ & $-87$ & $-82.175$ & $5.896$ & $-98$ & $-71$ \\ %& - & - & - & - \\ 
-	$6.5$ & $-93.610$ & $1.691$ & $-99$ & $-90$ & $-74.085$ & $2.977$ & $-80$ & $-68$ \\ %& - & - & - & - \\ 
-	$7.0$ & - & - & - & - & $-71.700$ & $2.858$ & $-77$ & $-65$ \\ %& - & - & - & - \\ 
-	$7.5$ & - & - & - & - & $-76.065$ & $2.241$ & $-80$ & $-71$ \\ %& - & - & - & - \\ 
-	$8.0$ & - & - & - & - & $-78.295$ & $4.926$ & $-91$ & $-71$ \\ %& - & - & - & - \\ 
-	\hline 
+	\centering
+	\caption{TODO}
+	\label{tbl:indoorKontaktDefaultTx}
+	\begin{tabular}{ccccc}
+	\hline
+	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\
+	\hline
+	0.5 & -81.075 & 2.426 & -88 & -74 \\
+	1.0 & -80.320 & 2.799 & -86 & -76 \\
+	1.5 & -75.575 & 3.298 & -80 & -70 \\
+	2.0 & -73.990 & 2.558 & -79 & -68 \\
+	2.5 & -78.725 & 0.907 & -81 & -74 \\
+	3.0 & -82.470 & 4.053 & -91 & -74 \\
+	3.5 & -81.685 & 2.892 & -87 & -77 \\
+	4.0 & -83.115 & 1.903 & -88 & -77 \\
+	4.5 & -91.125 & 3.057 & -98 & -85 \\
+	5.0 & -88.705 & 2.198 & -93 & -83 \\
+	5.5 & -88.935 & 3.487 & -97 & -83 \\
+	6.0 & -92.450 & 2.399 & -99 & -87 \\
+	6.5 & -93-610 & 1.691 & -99 & -90 \\
+	7.0 & - & - & - & - \\
+	7.5 & - & - & - & - \\
+	8.0 & - & - & - & - \\
+	\hline
 	\end{tabular}
-	\caption*{}
 \end{table}
 
+\begin{table}
+	\centering
+	\caption{TODO}
+	\label{tbl:indoorKontaktMaxTx}
+	\begin{tabular}{ccccc}
+	\hline 
+	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\ 
+	\hline 
+	0.5 & -65.165 & 2.546 & -76 & -56 \\
+	1.0 & -66.250 & 2.316 & -73 & -59 \\
+	1.5 & -62.695 & 4.3238 & -69 & -57 \\
+	2.0 & -58.750 & 1.982 & -62 & -53 \\
+	2.5 & -63.595 & 0.875 & -66 & -59 \\
+	3.0 & -67.810 & 2.619 & -73 & -62 \\
+	3.5 & -71.620 & 3.537 & -80 & -65 \\
+	4.0 & -68.72 & 2.000 & -73 & -65 \\
+	4.5 & -74.975 & 3.065 & -81 & -68 \\
+	5.0 & -72.445 & 3.485 & -78 & -65 \\
+	5.5 & -79.920 & 6.883 & -93 & -68 \\
+	6.0 & -82.175 & 5.896 & -98 & -71 \\
+	6.5 & -74.085 & 2.977 & -80 & -68 \\
+	7.0 & -71.700 & 2.858 & -77 & -65 \\
+	7.5 & -76.065 & 2.241 & -80 & -71 \\
+	8.0 & -78.295 & 4.926 & -91 & -71 \\
+	\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\centering
+	\caption{TODO}
+	\label{tbl:blucatsDefault}
+	\begin{tabular}{ccccc}
+	\hline
+	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\
+	\hline
+	0.5 & -89.550 & 3.526 & -98 & -83 \\
+	1.0 & -90.895 & 2.101 & -96 & -86 \\
+	1.5 & -91.350 & 3.162 & -101 & -86 \\
+	2.0 & -91.695 & 2.134 & -99 & -86 \\
+	2.5 & -89.630 & 1.583 & -99 & -86 \\
+	3.0 & -93.385 & 2.156 & -100 & -88 \\
+	3.5 & - & - & - & - \\
+	4.0 & - & - & - & - \\
+	4.5 & - & - & - & - \\
+	5.0 & - & - & - & - \\
+	5.5 & - & - & - & - \\
+	6.0 & - & - & - & - \\
+	6.5 & - & - & - & - \\
+	7.0 & - & - & - & - \\
+	7.5 & - & - & - & - \\
+	8.0 & - & - & - & - \\
+	\hline
+	\end{tabular}
+\end{table}
+
+
+%TODO grafički prikaz svake tablice
+%TODO mjerenja na većoj udaljenosti - tablica + graf
 
 \section*{Utvrđivanje apsolutne lokacije}
 %TODO općenito o utvrđivanju apsolutne lokacije
