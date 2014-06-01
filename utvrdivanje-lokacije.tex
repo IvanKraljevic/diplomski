@@ -112,8 +112,14 @@ Stoga se može zaključiti kako ni rješenje koje su ponudili inženjeri Radius 
 Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa izuzetno pomažu oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljača.
 \\
 
-Pomoću prethodno opisanih metoda i njihovih ograničenja može se zaključiti kako se problem procjene udaljenosti može opisati kao što je prikazano na slici TODO.
-%TODO slika
+Pomoću prethodno opisanih metoda i njihovih ograničenja može se zaključiti kako se problem procjene udaljenosti može opisati kao što je prikazano na slici \ref{fig:sustavZaProcjenuUdaljenosti}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.68]{pictures/sustav-za-procjenu-udaljenosti}
+    \caption{Sustav za procjenu udaljenosti}
+    \label{fig:sustavZaProcjenuUdaljenosti}
+\end{figure}
 
 Ulaz u sustav procjene udaljenosti je RSSI, odnosno jakost primljenog signala, opcionalni ulazni parametri su jakost odašiljanja signala te RSSI izmjeren na udaljenosti od jednog metra od odašiljača, a izlaz sustava je procjena udaljenosti izražena u metrima.
 \\
@@ -129,7 +135,7 @@ Daljnji rad će se zasnivati na korištenju unaprijedne neuronske mreže, iako b
 
 Neuronska mreža će se trenirati na prethodno prikupljenim podacima. 
 Prve tri skupine podataka uzorokovane su na na udaljenostima od \SI{50}{cm} do \SI{8}{m} s korakom od \SI{50}{cm}, po dvije stotine uzoraka za svaku udaljenosti. 
-Ukupno prve tri skupine sastoje se od $brojSkupina \cdot brojUdaljenosti \cdot brojUzoraka = 3 \cdot 16 \cdot 200 = 9600$ uzoraka. 
+Ukupno prve tri skupine sastoje se od $brojSkupina \cdot brojUdaljenosti \cdot brojUzoraka = 3 \cdot 16 \cdot 200 = 9600$ nezavisnih uzoraka. 
 Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indoorKontaktDefaultTx}, \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault}.
 
 \begin{table}[H]
@@ -160,6 +166,8 @@ Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indo
 	\end{tabular}
 \end{table}
 
+%TODO opisati rezultat tablice, priložiti pripadni graf, obrazložiti graf
+
 \begin{table}
 	\centering
 	\caption{TODO}
@@ -187,6 +195,8 @@ Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indo
 	\hline
 	\end{tabular}
 \end{table}
+
+%TODO opisati rezultat tablice, priložiti pripadni graf, obrazložiti graf
 
 \begin{table}
 	\centering
@@ -216,10 +226,40 @@ Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indo
 	\end{tabular}
 \end{table}
 
+%TODO opisati rezultat tablice, priložiti pripadni graf, obrazložiti graf
+
+
+%TODO mjerenja na većoj udaljenosti - tablica + graf
+
+\begin{table}
+    \centering
+    \caption{TODO}
+    \label{tbl:velikaUdaljenost}
+    \begin{tabular}{ccccc}
+    \hline 
+    Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\ 
+    \hline 
+    2 & -63.720 & 1.371 & -66 & -59 \\ 
+    4 & -72.755 & 4.294 & -80 & -67 \\ 
+    6 & -74.450 & 6.894 & -89 & -65 \\ 
+    8 & -77.300 & 2.112 & -83 & -71 \\ 
+    10 & -83.905 & 4.691 & -92 & -77 \\ 
+    12 & -84.265 & 3.489 & -95 & -77 \\ 
+    14 & -85.580 & 2.430 & -90 & -81 \\ 
+    16 & -90.560 & 2.846 & -97 & -85 \\ 
+    18 & -92.555 & 1.787 & -98 & -88 \\ 
+    20 & -87.395 & 3.157 & -93 & -83 \\ 
+    22 & -92.375 & 2.7988 & -99 & -86 \\ 
+    24 & -91.53 & 1.407 & -95 & -88 \\ 
+    \hline 
+    \end{tabular} 
+\end{table}
+
+
 %TODO postupci: matematički, best fit curve, neuronska mreža i poteškoće, spomeniti genetsko programiranje
 %TODO zaključak
-%TODO grafički prikaz svake tablice
-%TODO mjerenja na većoj udaljenosti - tablica + graf
+
+
 
 \section*{Utvrđivanje apsolutne lokacije}
 %TODO općenito o utvrđivanju apsolutne lokacije
