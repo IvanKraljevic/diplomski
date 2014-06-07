@@ -40,7 +40,7 @@ Uz to, za gotovo svaki aspekt sustava dostupan je skup aplikacijsko programskih 
 
 Spree je podijeljen na nekoliko ključnih komponenti (tj. Ruby Gemova):
 \begin{description}[style=nextline]
-    \item[spree\_api] Skup aplikacijsko programskih sučelja koji zadovoljavaju REST\footnote{\textit{Representational State Transfer}, \url{http://en.wikipedia.org/wiki/Representational_state_transfer}} principe.
+    \item[spree\_api] Skup aplikacijsko programskih sučelja koji zadovoljavaju REST\footnote{\textit{Representational State Transfer}} principe.
     \item[spree\_frontend] Komponente korisničkog sučelja.
     \item[spree\_backend] Komponente korisničkog sučelja administratora aplikacije.
     \item[spree\_cmd] Komponente sučelja naredbenog retka \engl{command-line interface, CLI}.
@@ -49,8 +49,15 @@ Spree je podijeljen na nekoliko ključnih komponenti (tj. Ruby Gemova):
 \end{description}
 
 Ako programer želi dodati neku od Spree komponenti u svoju postojeću aplikaciju, sve što treba napraviti je dodati željene komponente u Gemfile\footnote{datoteka koja sadrži popis svih Ruby Gemova koji se koriste u projektu} te pokrenuti instalaciju.
+\\
+Najkraći način za instalaciju Spree gema, stvaranje novoga Ruby on Rails projekta i dodavanja Spreea u novostvoreni projekt prikazan je u nastavku (pretpostavlja se da su Ruby i Ruby on Rails prethodno instalirani i ispravno konfigurirani).
+\\
 
-%TODO instalacija railsa i spreea 
+\begin{lstlisting}[language=bash, frame=single]
+    $ gem install spree
+    $ rails _4.0.5_ new moj_projekt
+    $ spree install moj_projekt
+\end{lstlisting}
 
 
 %TODO dijelovi spreea
