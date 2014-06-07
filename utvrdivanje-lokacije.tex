@@ -1,4 +1,5 @@
 \chapter{Utvrđivanje relativne i apsolutne lokacije u zatvorenom prostoru}
+\label{chap:procjenaLokacije}
 
 Tehnologije navigacije i pozicioniranja koje se oslanjaju na udaljene satelite (poput GPS i GNSS tehnologija) nisu pogodne za korištenje u zatvorenim prostorima iz razloga što njihove signale apsorbiraju i reflektiraju krovovi, zidovi i ostali objekti u okolini. 
 Iz istih razloga određivanje lokacije preko mobilnih signala, odnosno preko radio tornjeva nije moguće. 
@@ -82,9 +83,25 @@ U zatvorenom prostoru smetnje koje uzrokuju prethodno opisani faktori su često 
 Zaključak je da procjena udaljenosti temeljena na \eqref{eq:procjenaUdaljenosti} nije precizna na tako nestabilnom signalu stoga je za rješavanje problema potreban drugačiji pristup.
 \\
 
+Sustav za procjenu udaljenosti od iBeacon odašiljača može se opisati kao što je prikazano na slici\ref{fig:sustavZaProcjenuUdaljenosti}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.68]{pictures/sustav-za-procjenu-udaljenosti}
+    \caption{Sustav za procjenu udaljenosti}
+    \label{fig:sustavZaProcjenuUdaljenosti}
+\end{figure}
+
+Ulaz u sustav procjene udaljenosti je RSSI, odnosno jakost primljenog signala, opcionalni ulazni parametri su jakost odašiljanja signala te RSSI izmjeren na udaljenosti od jednog metra od odašiljača, a izlaz sustava je procjena udaljenosti izražena u metrima.
+\\
+Sustav procjene udaljenosti može biti funkcija \eqref{eq:procjenaUdaljenosti} ili bilo koja druga funkcija.
+\\
+Kako na signal djeluje velik broj vanjskih smetnji, predloženi sustav će morati biti otporan na šum u podacima, a također će morati biti i relativno brz te imati nisku složenost zbog toga što mu je primarna namjena korištenje u mobilnim uređajima i tabletima ograničene procesorske snage. 
+\\
+
 Kao što je navedeno u iBeacon poglavlju, Apple je za procjenu udaljenosti od odašiljača namijenio tri izraza: neposredna blizina (\textit{immediate}), mala (\textit{near}) i velika \textit{far} udaljenost.
 Zajedno s tim u radno okruženje Apple Core Location dodana je funkcija koja na temelju jakosti primljenog signala (RSSI) i jakosti signala na udaljenosti jednog metra od odašiljača (trideseti bajt \textit{advertising} paketa iBeacon odašiljača) određuje relativnu udaljenost od odašiljača. 
-Sam kôd funkcije nije javno dostupan i nije poznata metoda koju su Appleovi inženjeri upotrijebili, no ne preporučuju da se ona koristi u situacijama gdje je potreban precizan rezultat, odnosno precizna procjena udaljenosti. 
+Sam kôd funkcije nije javno dostupan i nije poznata metoda koju su Appleovi inženjeri upotrijebili, no \textbf{ne preporučuju} da se ona koristi u situacijama gdje je potreban precizan rezultat, odnosno precizna procjena udaljenosti. 
 Stoga se nameće zaključak kako ni Appleovi inženjeri nisu uspjeli zaobići prethodno spomenute smetnje koje djeluju na signal.
 \\
 
@@ -107,25 +124,9 @@ Parametar $x$ je RSSI primljenog signala, dok $y$ predstavlja RSSI na udaljenost
 
 Njihovo rješenje može se isprobati tako da se funkciju \eqref{eq:rnFunkcija} ugradi u vlastitu aplikaciju, a može se iskoristiti i njihova besplatna Android aplikacija koja je dostupna na Google Play Storeu\footnote{\url{https://play.google.com/store/apps/details?id=com.radiusnetworks.ibeaconlocate}}.
 \\
-Empirijskom testiranjem aplikacije primjetio sam kako i za male pomake u iznosu od nekoliko desetaka centimetara detektirani pomak aplikacije je nerijetko bio u iznosu većem od deset metara. 
+Empirijskim testiranjem aplikacije primjetio sam kako i za male pomake u iznosu od nekoliko desetaka centimetara detektirani pomak aplikacije nerijetko bio u iznosu većem od deset metara. 
 Stoga se može zaključiti kako ni rješenje koje su ponudili inženjeri Radius Networksa nije pouzdano, a ni primjenjivo na stvarnim problemima. 
-Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa izuzetno pomažu oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljača.
-\\
-
-Pomoću prethodno opisanih metoda i njihovih ograničenja može se zaključiti kako se problem procjene udaljenosti može opisati kao što je prikazano na slici \ref{fig:sustavZaProcjenuUdaljenosti}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.68]{pictures/sustav-za-procjenu-udaljenosti}
-    \caption{Sustav za procjenu udaljenosti}
-    \label{fig:sustavZaProcjenuUdaljenosti}
-\end{figure}
-
-Ulaz u sustav procjene udaljenosti je RSSI, odnosno jakost primljenog signala, opcionalni ulazni parametri su jakost odašiljanja signala te RSSI izmjeren na udaljenosti od jednog metra od odašiljača, a izlaz sustava je procjena udaljenosti izražena u metrima.
-\\
-Sustav procjene udaljenosti može biti funkcija \eqref{eq:procjenaUdaljenosti}, ili funkcija \eqref{eq:rnFunkcija}, ili bilo koja druga funkcija. 
-Prethodno je utvrđeno da \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} ne daju precizne rezultate, stoga idući cilj je napraviti model sustava koji će moći sa većom preciznošću procijeniti udaljenost. 
-Kako na signal djeluje velik broj vanjskih smetnji, predloženi sustav će morati biti otporan na šum u podacima, a također će morati biti i relativno brz te imati nisku složenost zbog toga što mu je primarna namjena korištenje u mobilnim uređajima i tabletima ograničene procesorske snage. 
+Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa su izuzetno pomogle oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljača.
 \\
 
 Kao model sustava možemo iskoristiti umjetnu neuronsku mrežu \engl{artificial neural network}.  
