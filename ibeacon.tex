@@ -71,7 +71,7 @@ Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaj
 	\caption*{X - vrijednosti ovise o postavkama konkretnog odašiljača}
 \end{table}
 
-Izuzev trećeg bajta sa LE\footnote{\textit{Low Energy}} i BR/ERD\footnote{\textit{Bluetooth Radio/Enhanced Data Rate}} zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
+Izuzev trećeg bajta sa LE\footnote{\textit{Low Energy}} i BR/EDR\footnote{\textit{Bluetooth Radio/Enhanced Data Rate}} zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
 Nakon toga slijedi šesnaest bajtova koji čine \textit{Proximity UUID\footnote{\textit{Universally unique identifier}}} parametar, dva bajta koji čine \textit{Major value} parametar, dva bajta koja čine \textit{Minor value} parametar te posljednji, trideseti, bajt koji sadrži RSSI\footnote{\textit{received signal strength indicator}, mjera jakosti primljenog signala} izmjeren na udaljenosti od jednog metra.
 \\
 Konfigurabilni parametari \textit{Proximity UUID}, \textit{Major value} i \textit{Minor value} koriste se za identifikaciju pojedinog odašiljača. 
@@ -88,7 +88,7 @@ U nastavku je navedena specifikacija Kontakt.io odašiljača, dok za vrijeme pis
 Iz tog razloga kod većeg dijela istraživanja koristili su se Kontakt.io odašiljači jer su vrijednosti nekih parametara Bluecats odašiljača nepoznate. 
 Npr. jakost odašiljanja signala \engl{transmisssion power level} se može postaviti na vrijednosti poput \textit{loud} i \textit{silent}, ali numeričke vrijednosti koju ti izrazi opisuju su nepoznati stoga nam je taj parametar neprimjenjiv.
 
-\section*{Kontakt.io Beacon}
+\section{Kontakt.io Beacon}
 
 Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem BLE tehnologije te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
 Uz to, uređaji se mogu jednostavno klonirati i nadograditi, imaju visoku razinu sigurnosti te malu energetsku potrošnju.
@@ -98,13 +98,14 @@ Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi vi�
 Pri standardnoj (tvorničkoj) snazi odašiljanja iznosa -4 dBm, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa 4 dBm, odašiljač se može prepoznati i na udaljenosti većoj od dvadeset metara.
 % \SI{-4}{dBm} \SI{4}{dBm}
 
-\subsection*{Tehnička specifikacija}
+\subsection{Tehnička specifikacija}
 
 Dimenzije odašiljača su $\SI{55}{mm} \times \SI{55}{mm} \times \SI{15}{mm}$ te on teži svega 23 grama. 
 Vanjski okvir je od ABS\footnote{Akrilonitril butadien stiren, izdržljiva plastika koja je pogodna za recikliranje} plastike, a uređaj napaja zamjenjiva CR2477 baterija s kojom odašiljač može raditi više od dvije godine. 
 Prema \citep{kontaktTehnical} vrijeme rada može se dodatno povećati na čak šest godina ukoliko se smanje jakost odašiljanja i interval odašiljanja poruka.
 \\
 Ostale karakteristike odašiljača su:
+
 \begin{itemize}
     \item Nordic Semiconductors Bluetooth Smart multiprotokol SOC\footnote{sustav na čipu \engl{System on a chip}} IC\footnote{integrirani krug \engl{integrated circuit}}
     \item 32-bitni ARM Cortex M0 procesor
@@ -124,7 +125,8 @@ Dozvoljene vrijednosti jakosti odašiljanja su: -30, -20, -16, -12, -8, -4, 0 i 
 %$\SI{-30}{dBm}$, $\SI{-20}{dBm}$, $\SI{-16}{dBm}$, $\SI{-12}{dBm}$, $\SI{-8}{dBm}$, $\SI{-4}{dBm}$, $\SI{0}{dBm}$ i $\SI{4}{dBm}$.
 
 
-\subsection*{Struktura paketa}
+\subsection{Struktura paketa}
+
 Uređaj odašilje dvije vrste paketa podataka: \textit{advertising} i \textit{scan response}.
 \\
 Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj obavještava okolne uređaje o svojoj prisutnosti. 

@@ -35,13 +35,14 @@ Bitno je napomenuti da BLE nije i ne pokušava biti optimizirana verzija \textit
 Predviđene primjene su u sportu, zdravstvu, trgovini, turizmu, mjerenju udaljenosti i druge.
 
 
-\section*{Tehničke značajke}
+\section{Tehničke značajke}
 
 \textit{Bluetooth Low Energy} tehnologija temelji se na profilima i \textit{Generic Attribute Profile} (u daljnjem tekstu GATT) specifikaciji. 
 \\
 BLE profili su posebne specifikacije koje definiraju servise koji se koriste u određenim scenarijima. 
 Od proizvođača konkretnih uređaja se očekuje da zadovolje određen profil kako bi se osigurala međusobna kompatibilnost između raznih uređaja (npr. ako uređaj koji prati krvni tlak osobe zadovoljava HRP profil svi uređaji mogu uniformno čitati njegove servise). 
 Popularniji standardizirani profili su:
+
 \begin{itemize}
     \item HTP (\textit{Health Thermometer Profile}) - omogućava uređaju spajanje i interakciju sa termometrom
     \item GLP (\textit{Glucose Profile}) - omogućava uređaju spajanje i interakciju sa senzorom koji mjeri razinu glukoze u krvi osobe
@@ -58,6 +59,7 @@ GATT specifikacija definira način na koji se šalju i primaju podaci kratke dul
 GATT koristi \textit{Attribute} protokol (u daljnjem tekstu ATT) koji ima sličnu funkcionalnost kao SDP\footnote{\textit{Service discovery protocol}, omogućava uređajima da međusobno saznaju koje servise podržavaju i koje parametre trebaju koristiti pri stvaranju podatkovne veze} protokol kod standardnog Bluetootha, samo što je optimiziran i pojednostavljen za korištenje u uređajima male potrošnje. 
 GATT definira na koji način su ATT atributi grupirani tako da čine konkretne servise. 
 Bitni koncepti kod GATT specifikacije su:
+
 \begin{description}[style=nextline]
     \item[Klijent] 
         Uređaj koji pokreće komunikaciju te šalje zahtjeve i prima odgovore (npr. mobilni uređaj ili računalo).
