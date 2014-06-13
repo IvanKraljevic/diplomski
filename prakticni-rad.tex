@@ -69,7 +69,7 @@ $ rails server
     \label{pic:spree}
 \end{figure}
 
-%TODO dijelovi spreea
+%dijelovi spreea
 %Glavna komponenta bilo kojega sustava elektroničke trgovine, a tako i Spreea, je proizvod.
 %\\
 %U Spreeu svaki proizvod može imati varijante koje se međusobno razlikuju po jednom ili više svojstava (npr. veličini ili boji). 
@@ -187,6 +187,25 @@ $ rails server
 
 \section{Klijentska aplikacija}
 
+Za prevođenje neke od klijentskih aplikacija potrebno je imati instaliranu i konfiguriranu biblioteku za razvoj programske podrške željene mobilne platforme te Cordova sučelje naredbenog retka.
+\\
+Upute za instalaciju biblioteke za razvoj programske podrške dostupne su službene Cordova upute\footnote{http://cordova.apache.org/docs/en/edge/guide\_platforms\_index.md.html\#Platform\%20Guides}, a mogu se koristiti i službene upute proizvođača mobilne platforme.
+\\
+Cordova sučelje naredbenog retka se može instalirati sljedećom naredbom (pretpostavlja se da je \texttt{npm} instaliran i ispravno konfiguriran):
+\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+$ sudo npm install -g cordova
+\end{lstlisting}
+
+\subsection{Eksperimentalna aplikacija}
+
+Za istraživanje i testiranje iBeacon odašiljača razvijena je posebna aplikacija. 
+Aplikacija detektira obližnje iBeacon odašiljače, obrađuje primljene \textit{advertising} pakete i ispisuje osnovne informacije o odašiljaču, a može ispisati sve servise, karakteristike i opisnike odašiljača. 
+Uz to, pomoću aplikacije se mogu prikupljati podaci od određenog odašiljača i ta funkcionalnost se može iskoristiti za kalibriranje određenog odašiljača, a i za izračun određenih informacija (poput srednje vrijednosti, standardne devijacije te minimalne i maksimalne jakosti primljenog signala). 
+Također, određeni odašiljači se mogu blokirati tako da se informacije o njima ne prikazuju korisniku te u aplikaciju su ugrađene funkcije \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} koje se mogu iskoristiti za (nepouzdanu) procjenu udaljenosti.
+
+%TODO screenshotovi
+
+\subsection{Spree mobilna aplikacija}
 %TODO uvod
 %TODO integriranje aplikacije sa ibeaconima, use caseovi
 %TODO spajanje aplikacije sa serverom
