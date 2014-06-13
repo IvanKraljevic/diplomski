@@ -80,11 +80,11 @@ $ rails server
 Modularna arhitektura Spree platforme omogućava jednostavno izmjenu, uklanjanje ili dodavanje novih funkcija u sustav, a kako bi korisničko sučelje bilo optimalno prikazano krajnjim korisnicima Spree nudi i osjetljivi dizajn. 
 Postojeći dizajn je također modularan i željeno korisničko sučelje se može jednostavno ostvariti.
 \\
-Razvijatelji Spree sustava ne preporučuju prethodno spomenuti način prilagođavanja Spreea svojim potrebama, odnosno ne preporuča se izravna izmjena postojećeg programskog kôda Spreea.
+Razvijatelji Spree sustava ne preporučuju prethodno spomenuti način prilagođavanja Spreea svojim potrebama, odnosno ne preporuča se izravna izmjena postojećeg programskog kôda Spreea. 
 Preporučeni način prilagođavanja i nadogradnje Spree sustava je korištenjem takozvanih Spree ekstenzija.
-
+\\
 Spree ekstenzija nije ništa drugo nego zasebni Ruby gem kojega se dodaje u Gemfile postojećeg projekta. 
-Primjer stvaranja i instaliranja Spree ekstenzije naveden je u nastavku. 
+Primjer stvaranja i instaliranja Spree ekstenzije naveden je u nastavku.
 \\
 
 Stvaranje Spree ekstenzije:
@@ -103,15 +103,14 @@ $ bundle install
 $ bundle exec rails g moja_ekstenzija:install
 \end{lstlisting}
 
-Nadogradnja modela i kontrolera je krajnje jednostavna i ne zahtjeva ponovno pisanje postojećih metoda pojedinih razreda, već se pišu samo nove metode ili metode čiji se sadržaj mijenja. 
+Nadogradnja modela i kontrolera je krajnje jednostavna i ne zahtjeva ponovno pisanje postojećih metoda pojedinih razreda, već se pišu samo nove metode ili metode čiji se sadržaj mijenja.
 \\
 Za nadogradnju postojećih pogleda Spree razvojni tim je razvio Deface. 
 Deface je biblioteka za jednostavno nadograđivanje, izmjenu i uklanjanje komponenti iz postojećih predložaka. 
 Instaliranjem Spree gema, automatski se instalira i Deface. 
 Korištenjem Deface biblioteke programer ne mora kompletno mijenjati sve predloške koje njegova ekstenzija nadograđuje, već na elegantan način može dohvaćati pojedine komponente predloška i mijenjati njihov sadržaj.
 \\
-
-Prednost ektenzija nad izravnom izmjenom izvornog kôda Spreea je ta što se ostvaruje bolja modularnost kôda, olakšano je ponovno korištenje ekstenzija u drugim projektima te održavanje i nadogradnja sustava sa novim verzijama Spreea je puno jednostavnije. 
+Prednost ektenzija nad izravnom izmjenom izvornog kôda Spreea je ta što se ostvaruje bolja modularnost kôda, olakšano je ponovno korištenje ekstenzija u drugim projektima te održavanje i nadogradnja sustava sa novim verzijama Spreea je puno jednostavnija. 
 Uz to, Spree tim održava i službeni repozitorij\footnote{\url{http://spreecommerce.com/extensions}} gdje se može pronaći veliki broj besplatnih ekstenzija.
 \\
 
@@ -130,9 +129,13 @@ GET /api/products?q[taxons_ref_id_in][]=beaconId1
 	&q[taxons_ref_id_in][]=beaconId2
 \end{lstlisting}
 
-Poslužitelj će kao odgovor poslati JSON objekt sa proizvodima koje pripadni odašiljač (ili odašiljači) referenciraju.
+Poslužitelj će kao odgovor poslati JSON objekt sa proizvodima koje pripadni odašiljač (ili odašiljači) referencira.
 
-%TODO slika sučelja za dodjelu/izmjenu ref_id
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.36]{pictures/spree_taxon_webservice}
+    \caption{Sučelje za izmjenu \textit{reference id} atributa kategorije proizvoda}
+\end{figure}
 
 \subsection{Instalacija i pokretanje poslužiteljske aplikacije}
 
