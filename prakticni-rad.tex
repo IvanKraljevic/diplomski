@@ -43,14 +43,14 @@ Ako programer želi dodati neku od Spree komponenti u svoju postojeću aplikacij
 Najkraći način za instalaciju Spree gema, stvaranje novoga Ruby on Rails projekta i dodavanja Spreea u novostvoreni projekt prikazan je u nastavku (pretpostavlja se da su Ruby i Ruby on Rails prethodno instalirani i ispravno konfigurirani).
 
 % caption=Instalacija Spree projekta, captionpos=t]
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ gem install spree
 $ rails _4.0.5_ new moj_projekt
 $ spree install moj_projekt
 \end{lstlisting}
 
 Spree projekt se pokreće tako da se pozicioniramo u direktorij projekta i tamo pokrenemo server:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ cd moj_projekt
 $ rails server
 \end{lstlisting}
@@ -88,17 +88,17 @@ Primjer stvaranja i instaliranja Spree ekstenzije naveden je u nastavku.
 \\
 
 Stvaranje Spree ekstenzije:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ spree extension moja_ekstenzija
 \end{lstlisting}
 
 Za dodavanje ekstenzije u postojeći Spree projekt potrebno je dodati ime i putanju ekstenzije u Gemfile projekta:
-\begin{lstlisting}[language=ruby, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=ruby]
 gem 'moja_ekstenzija', path: '../moja_ekstenzija'
 \end{lstlisting}
 
 I nakon toga instalirati ekstenziju:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ bundle install
 $ bundle exec rails g moja_ekstenzija:install
 \end{lstlisting}
@@ -119,12 +119,12 @@ Na taj način će se ovisno o vrijednostima identifikatora obližnjeg iBeacon od
 \\
 
 Sada mobilni uređaj nakon identifikacije obližnjeg odašiljača može poslati poslužitelju HTTP zahtjev sa pripadnim sadržajem:
-\begin{lstlisting}[frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}
 GET /api/products?q[taxons_ref_id_eq]=beaconId
 \end{lstlisting}
 
 U slučaju da je detektirano više odašiljača sadržaj zahtjva je:
-\begin{lstlisting}[frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}
 GET /api/products?q[taxons_ref_id_in][]=beaconId1
 	&q[taxons_ref_id_in][]=beaconId2
 \end{lstlisting}
@@ -141,36 +141,36 @@ Poslužitelj će kao odgovor poslati JSON objekt sa proizvodima koje pripadni od
 
 Prije instaliranja i podešavanja poslužiteljske aplikacije potrebno je imati ispravno instaliran i konfiguriran Ruby te instalirane Ruby on Rails, Spree i Bundler Ruby gemove. 
 Nakon toga se može stvoriti novi Ruby on Rails projekt i u njega ugraditi funkcionalnost Spree sustava:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ rails new spree_server_app
 $ spree install spree_server_app
 $ cd spree_server_app
 \end{lstlisting}
 
 Nakon toga je potrebno dodati Spree Taxon Webservice ekstenziju u Gemfile projekta:
-\begin{lstlisting}[language=ruby, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=ruby]
 gem 'spree_taxon_webservice', path: '../spree_taxon_webservice'
 \end{lstlisting}
 
 I instalirati dotičnu ekstenziju:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ bundle install
 $ bundle exec rails g spree_taxon_webservice:install
 \end{lstlisting}
 
 Nakon toga, potrebno je dodati CORS\footnote{\textit{Cross-origin resource sharing}} mehanizam u aplikaciju, kako bi se sadržaj poslužiteljske aplikacije mogao slati vanjskim aplikacijama (tj. aplikacijama iz druge domene). 
 Najlakši način za rješavanje dotičnog problema je instalacija \textit{Rack CORS Middleware}\footnote{\url{https://github.com/cyu/rack-cors}} gema:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ gem install rack-cors
 \end{lstlisting}
 
 Dodavanje dotičnog gema u Gemfile projekta:
-\begin{lstlisting}[language=ruby, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=ruby]
 gem 'rack-cors', :require => 'rack/cors'
 \end{lstlisting}
 
 I konačno, omogućiti \textit{cross-origin} zahtjeve u projektu dodavanjem sljedećeg odsječka u \texttt{Application} razred koji se nalazi u \texttt{app/config/application.rb} datoteci:
-\begin{lstlisting}[language=ruby, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=ruby]
 config.middleware.use Rack::Cors do
   allow do
     origins '*'
@@ -180,7 +180,7 @@ end
 \end{lstlisting}
 
 Ukoliko su svi prethodni koraci uspješno izvedeni, aplikacija se može pokrenuti sa sljedećom naredbom:
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ rails server
 \end{lstlisting}
 
@@ -192,7 +192,7 @@ Za prevođenje neke od klijentskih aplikacija potrebno je imati instaliranu i ko
 Upute za instalaciju biblioteke za razvoj programske podrške dostupne su službene Cordova upute\footnote{http://cordova.apache.org/docs/en/edge/guide\_platforms\_index.md.html\#Platform\%20Guides}, a mogu se koristiti i službene upute proizvođača mobilne platforme.
 \\
 Cordova sučelje naredbenog retka se može instalirati sljedećom naredbom (pretpostavlja se da je \texttt{npm} instaliran i ispravno konfiguriran):
-\begin{lstlisting}[language=bash, frame=leftline, backgroundcolor=\color{backcolour}, basicstyle=\footnotesize]
+\begin{lstlisting}[language=bash]
 $ sudo npm install -g cordova
 \end{lstlisting}
 
@@ -203,7 +203,36 @@ Aplikacija detektira obližnje iBeacon odašiljače, obrađuje primljene \textit
 Uz to, pomoću aplikacije se mogu prikupljati podaci od određenog odašiljača i ta funkcionalnost se može iskoristiti za kalibriranje određenog odašiljača, a i za izračun određenih informacija (poput srednje vrijednosti, standardne devijacije te minimalne i maksimalne jakosti primljenog signala). 
 Također, određeni odašiljači se mogu blokirati tako da se informacije o njima ne prikazuju korisniku te u aplikaciju su ugrađene funkcije \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} koje se mogu iskoristiti za (nepouzdanu) procjenu udaljenosti.
 
-%TODO screenshotovi
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.15]{pictures/experimental1}
+        \caption{Skeniranje obližnjih odašiljača}
+        \label{fig:exp1}
+    \end{subfigure}
+     ~
+     \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.15]{pictures/experimental2}
+        \caption{Prikaz informacija o odašiljaču}
+        \label{fig:exp2}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.15]{pictures/experimental3}
+        \caption{Prikupljanje podataka od odašiljača}
+        \label{fig:exp3}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.15]{pictures/experimental4}
+        \caption{Procjena udaljenosti}
+        \label{fig:exp4}
+    \end{subfigure}
+\end{figure}
 
 \subsection{Spree mobilna aplikacija}
 %TODO uvod

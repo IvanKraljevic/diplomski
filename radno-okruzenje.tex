@@ -54,8 +54,73 @@ Službene Cordova JavaScript biblioteke koje održava Cordova tim su:
 	        Omogućava korištenje mehanizma za vibriranje uređaja.
 \end{description}
 
-\subsection{Biblioteka Cordova BLE}
-%TODO pisati o BLE biblioteci
+\section{Biblioteka Cordova BLE}
+
+Neslužbena Cordova BLE biblioteka omogućava hibridnim mobilnim aplikacijama koje se temelje na Cordovi korištenje BLE funkcionalnosti mobilne platforme bez potrebe za pisanjem nativnog programskog kôda. 
+Preko biblioteke moguće je korištenjem JavaScript programskog jezika skenirati obližnje BLE odašiljače, spajati se na njih, čitati service, karakteristike i opisnike te pisati nove vrijednosti karakteristika i opisnika (ukoliko odašiljač to dopušta). 
+Također, biblioteka omogućava da se aplikacija pretplati na obavijesti od odašiljača te može resetirati Bluetooth sustav mobilnog uređaja. 
+Resetiranje Bluetooth sustava osobito je korisno aplikacijama koje se pokreću na Android operacijskom sustavu iz razloga što raniji Android sustavi imaju popriličan broj pogrešaka u svojoj Bluetooth implementaciji. 
+Dobar dio grešaka ispravlja Android 4.4.3 koji je objavljen početkom lipnja 2014. godine, no dotični operacijski sustav imaju imaju samo noviji moderniji uređaji stoga je korištenje funkcije resetiranja nužno kako bi se osigurao ispravan rad mobilne aplikacije i u nešto starijim Android uređajima.
+\\
+
+Biblioteka funkcionira na način da se ravijatelju aplikacije nudi skup uniformnih funkcija za pristup BLE funkcionalnosti mobilnog uređaja preko JavaScript programskog jezika. 
+U pozadini dotične JavaScript funkcije pozivaju funkcije koje su napisane u nativnom jeziku platforme (tj. operacijskog sustava) mobilnog uređaja na kojem je aplikacija pokrenuta. 
+Nadalje, dotične nativne funkcije pristupaju samoj BLE funkcionalnosti uređaja koje u konačnici obave zadani posao. 
+Na kraju, nativne funkcije šalju odgovore JavaScript sloju preko prethodno predanih asinkronih povratnih\engl{callback} funkcija.
+Konkretno, kompletan tok poziva određene funkcije prikazan je na sljedećem primjeru gdje se pokreće traženje obližnjih BLE odašiljača.
+\\
+
+Iz našeg JavaScript programa pozivamo funkciju za skeniranje obližnjih uređaja:
+\begin{lstlisting}[language=java, morekeywords={var,function}]
+// povratna funkcija koja se poziva kada se pronade odasiljac
+var win = function(device) {
+  //ucini nesto sa pronadenim uredajem
+};
+
+// povratna funkcija ukoliko dode do pogreske
+var fail = function(error) {
+  // obrada pogreske
+};
+
+// pokretanje skeniranja
+evothings.ble.startScan(win, fail);
+\end{lstlisting}
+
+Pozvana funkcija poziva nativnu funkciju i prosljeđuje joj predane povratne funkcije:
+\begin{lstlisting}[language=java, morekeywords={var,function}]
+// ovo je zapravo pozvana evothings.ble.startScan funkcija
+exports.startScan = function(win, fail) {
+	exec(win, fail, 'BLE', 'startScan', []);
+};
+\end{lstlisting}
+
+Na Android platformi gore navedena \texttt{exec} funckija je zapravo \texttt{execute} metoda razreda \texttt{BLE} koji nasljeđuje \texttt{CordovaPlugin} razred te implementira funkcionalnost \texttt{LeScanCallback} sučelja. 
+\begin{lstlisting}[language=java]
+public class BLE extends CordovaPlugin implements LeScanCallback {
+  @Override
+  public boolean execute(String action, CordovaArgs args, 
+    final CallbackContext callbackContext) throws JSONException {
+    if ("startScan".equals(action)) {
+      // poziv startScan funckije napisane u nativnom programskom
+      // jeziku Android platforme
+      startScan(args, callbackContext); 
+      return true;
+    } else if (...) {
+      ...
+    }
+}
+...
+}
+\end{lstlisting}
+
+Svaka Cordova biblioteka mora naslijediti razred \texttt{CordovaPlugin} i nadjačati\engl{override} neku od   izvršnih metoda, odnosno u ovom slučaju nasljeđuje se \texttt{execute} metoda. 
+Sučelje \texttt{LeScanCallback} je nužno zbog pristupa BLE funkcionalnosti Android platforme.
+
+Ako funkcija uspješno obradi zadatak pozvati će se povratna funkcija \texttt{win}, a ako je došlo do pogreške pozvati će se povratna funckija \texttt{fail}. 
+Obe funkcije su pohranjene instancu \texttt{CallbackContext} razreda.
+\\
+
+U vrijeme pisanja rada Cordova BLE biblioteka nudi podršku samo prema iOS i Android operacijskim sustavima.
 
 \section{Radno okruženje Ionic}
 

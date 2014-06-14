@@ -27,7 +27,19 @@
 % used for listings background color
 \usepackage{color}
 
+% used for puting subfloats in a single float
+\usepackage{subcaption}
+
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{commentcolor}{rgb}{0,0.6,0}
+
+\lstset{
+	frame=leftline, 
+	backgroundcolor=\color{backcolour},
+	basicstyle=\footnotesize\ttfamily,
+	commentstyle=\color{commentcolor},
+	keywordstyle=\color{blue}
+}
 
 \begin{document}
 
