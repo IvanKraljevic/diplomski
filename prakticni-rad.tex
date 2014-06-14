@@ -8,6 +8,7 @@ U nastavku poglavlja opisano je kako se tehnologija iBeacon može integrirati u 
 Za integraciju je potrebno imati postavljene iBeacon uređaje u prostoru, mobilni uređaj sa podrškom za BLE i instaliranom aplikacijom koja može prepoznati BLE, odnosno iBeacon, odašiljače te poslužiteljsku aplikaciju s koje će mobilni uređaj dohvaćati relevantne podatke.  
 
 \section{Poslužiteljska aplikacija - Spree Commerce}
+\label{sec:server}
 
 Spree Commerce (u daljnjem tekstu Spree) je elektronička trgovina \engl{e-commerce} otvorenog koda napisana u Ruby on Rails radnom okruženju. 
 Rad na Spreeu je počeo 2007. godine, a danas je jedna od najpopularnijih platformi za elektroničku trgovinu. 
@@ -66,7 +67,7 @@ $ rails server
     \centering
     \includegraphics[scale=0.65]{pictures/spree-admin-small}
     \caption{Početni ekran Spree administratorskog sučelja}
-    \label{pic:spree}
+    \label{pic:spreeAdmin}
 \end{figure}
 
 %dijelovi spreea
@@ -131,7 +132,7 @@ GET /api/products?q[taxons_ref_id_in][]=beaconId1
 
 Poslužitelj će kao odgovor poslati JSON objekt sa proizvodima koje pripadni odašiljač (ili odašiljači) referencira.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.36]{pictures/spree_taxon_webservice}
     \caption{Sučelje za izmjenu \textit{reference id} atributa kategorije proizvoda}
@@ -189,11 +190,16 @@ $ rails server
 
 Za prevođenje neke od klijentskih aplikacija potrebno je imati instaliranu i konfiguriranu biblioteku za razvoj programske podrške željene mobilne platforme te Cordova sučelje naredbenog retka.
 \\
-Upute za instalaciju biblioteke za razvoj programske podrške dostupne su službene Cordova upute\footnote{http://cordova.apache.org/docs/en/edge/guide\_platforms\_index.md.html\#Platform\%20Guides}, a mogu se koristiti i službene upute proizvođača mobilne platforme.
+Za instalaciju biblioteke za razvoj programske podrške dostupne su službene Cordova upute\footnote{http://cordova.apache.org/docs/en/edge/guide\_platforms\_index.md.html\#Platform\%20Guides}, a mogu se koristiti i službene upute proizvođača mobilne platforme.
 \\
-Cordova sučelje naredbenog retka se može instalirati sljedećom naredbom (pretpostavlja se da je \texttt{npm} instaliran i ispravno konfiguriran):
+Cordova sučelje naredbenog retka može se instalirati sljedećom naredbom (pretpostavlja se da je \texttt{npm} instaliran i ispravno konfiguriran):
 \begin{lstlisting}[language=bash]
 $ sudo npm install -g cordova
+\end{lstlisting}
+
+Pojedina aplikacija se pokreće tako da se pozicioniramo u direktorij aplikacije (npr. \texttt{~/dev/cordova/experimental-app}) i  upišemo:
+\begin{lstlisting}[language=bash]
+$ cordova run android # za pokretanje na android uredaju
 \end{lstlisting}
 
 \subsection{Eksperimentalna aplikacija}
@@ -218,7 +224,11 @@ Također, određeni odašiljači se mogu blokirati tako da se informacije o njim
         \caption{Prikaz informacija o odašiljaču}
         \label{fig:exp2}
     \end{subfigure}
-    ~
+    
+    \caption{Dio implementiranih pogleda eksperimentalne aplikaciej}
+\end{figure}
+
+\begin{figure}[H]
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[scale=0.15]{pictures/experimental3}
@@ -232,11 +242,134 @@ Također, određeni odašiljači se mogu blokirati tako da se informacije o njim
         \caption{Procjena udaljenosti}
         \label{fig:exp4}
     \end{subfigure}
+    
+    \caption{Dio implementiranih pogleda eksperimentalne aplikaciej}
 \end{figure}
 
 \subsection{Spree mobilna aplikacija}
-%TODO uvod
-%TODO integriranje aplikacije sa ibeaconima, use caseovi
-%TODO spajanje aplikacije sa serverom
-%TODO instalacija i pokretanje aplikacije
-%TODO eksperimentalna aplikacija
+
+U Spree mobilnu aplikaciju ugrađene su osnovne funkcionalnosti bilo koje elektroničke trgovine, poput pregledavanja proizvoda i kategorija proizvoda, košarica za kupnju te sam proces naplate. 
+Svi elementi trgovine (popis proizvoda, kategorija i slično) dohvaćaju se sa poslužitelja na kojemu je pokrenuta Spree aplikacija obrađena u potpoglavlju \ref{sec:server}.
+\\
+Uz to u aplikaciju je integrirana i Cordova BLE biblioteka te BLE funkcionalnost.
+Ugrađene su dvije BLE funkcije:
+\begin{enumerate}
+    \item uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te od poslužitelja dohvaća sadržaj kojega referencira najbolji odašiljač
+    \item uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te na temelju dva najbliža odašiljača od poslužitelja dohvaća referencirani sadržaj 
+\end{enumerate}
+
+Prva funkcionalnost može se iskoristiti u slučajevima gdje je velika trgovina raspoređena u manje odjele, a jedan odašiljač pokriva jedan odjel. 
+Na primjer, trgovina može biti podijeljena na odjel sa bijelom tehnikom, odjel sa prehrambenim proizvodima i ostale odjele. 
+\\
+Druga funkcionalnost može se iskoristiti kod svakodnevnih trgovina gdje se proizvodi nalaze na policama, po jedna kategorija proizvoda sa svake strane police.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.85]{pictures/BLE-funkcionalnost}
+    \caption{Primjer korištenja druge funkcionalnosti}
+    \label{pic:bleShop}
+\end{figure}
+Na slici \ref{pic:bleShop} pravokutnici predstavljaju police gdje se na desnoj strani lijeve police nalaze torbe, lijevoj strani srednje police šalice, desnoj strane srednje police čaše, a na lijevoj strani desne police obuća. 
+Na svakoj polici se nalazi jedan iBeacon odašiljač. 
+Kupac sa mobilnim uređajem se nalazi između desne i srednje police, s tim da mu je bliža srednja polica, stoga će mu aplikacija prikazati kategoriju sa čašama.
+\\
+
+U slučaju da koristimo prvu funkcionalnost, nakon skeniranja odašiljača mobilna aplikacija će poslužitelju poslati sljedeći zahtjev:
+\begin{lstlisting}
+GET /api/products?q[taxons_ref_id_eq]=bestBeaconMinorValue
+\end{lstlisting}
+gdje parametar \textit{bestBeaconMinorValue} označava \textit{minor value} identifikator najboljeg (tj. najbližeg) odašiljača.
+
+U slučaju da koristimo drugu funkcionalnost, nakon skeniranja odašiljača identifikatori dva najbolja odašiljača se na neki način moraju mapirati u broj koji će poslati poslužitelju:
+\begin{lstlisting}
+GET /api/products?q[taxons_ref_id_eq]=referenceId
+\end{lstlisting}
+Parametar \textit{referenceId} označava mapiranu vrijednost.
+
+Kada se pokrene BLE funkcionalnost aplikacije, aplikacija skenira sve obližnje odašiljače te za svaki novopronađeni odašiljač stvara dinamičko polje u koju se pohrani jakost primljenog signala odašiljača (tj. RSSI odašiljača). 
+Kada se opet primi signal od istoga odašiljača, nova jakost signala se dodaje u istu dinamičku listu. 
+Pošto pojedini odašiljač šalje signal više puta u sekundi, nakon nekoliko sekundi svaka će lista imati veći broj elemenata.
+Tada se pokreće sljedeći algoritam:
+\begin{itemize}
+    \item iz svih dinamičkih polja izbaci 10\% marginalnih vrijednosti
+    \item sortiraj odašiljače tako da se na prvim mjestima nalaze odašiljači čija dinamička polja imaju najvišu srednju vrijednost
+\end{itemize}
+Izvorni kôd prikazan je u nastavku.
+
+\begin{lstlisting}[language=java, morekeywords={var,function}]
+// pomocna funkcija za izracun srednje vrijednosti
+MathService.mean = function (data) {
+  sum = 0;
+  angular.forEach(data, function (val) {
+    sum += val;
+  });
+  return sum / data.length;
+};
+
+// pomocna funkcija za uklanjanje marginalnih vrijednosti
+MathService.removeMarginals = function (data, percentage) {
+  percentage = angular.isDefined(percentage) ? percentage : 0.9;
+  var average = this.mean(data);
+  
+  // sortiranje tako da se na pocetku nalaze vrijednosti
+  // najblize srednjoj vrijednosti
+  data.sort(function (a, b) {
+  var distance = Math.abs(a - average) - Math.abs(b - average);
+      if (distance < 0) {
+        return -1;
+      } else if (distance > 0) {
+        return 1;
+      }
+      return 0;
+    }
+  });
+  // broj elemenata koji se uklanja
+  var numOfElToRm = Math.floor((1 - percentage) * data.length);
+  // uklanjanje elemenata
+  data.splice(data.length - numOfElToRm, numOfElToRm);
+};
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, morekeywords={var,function}]
+// uklanjanje marginalnih vrijednosti svih odasiljaca
+angular.forEach(devices, function (device) {
+  MathUtilities.removeMarginals(device.data, 0.9);
+  device.averageRSSI = MathUtilities.mean(device.data);
+  device.data = [];
+});
+
+// sortiranje odasiljaca
+devices.sort(function (a, b) {
+    if (a.averageRSSI < b.averageRSSI) {
+      return 1;
+    } else if (a.averageRSSI > b.averageRSSI) {
+      return -1;
+    }
+    return 0;
+  }
+});
+\end{lstlisting}
+
+Ukoliko se koristi prva funkcionalnost, poslužitelju se šalje zahtjev za podacima i u parametrima se navodi \textit{minor value} identifikator prvog (najboljega) odašiljača. 
+Ukoliko se koristi druga funkcionalnost, \textit{minor value} identifikatori dva najbolja odašiljača se mapiraju u broj koji se šalje poslužitelju prilikom dohvata podataka. 
+Nakon toga se prazne liste svih odašiljača te se ciklus skeniranja obližnjih uređaja nastavlja.
+
+
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.15]{pictures/spreeMobile1}
+        \caption{Prikaz jedne kategorije proizvoda}
+        \label{fig:spreeMobile1}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.15]{pictures/spreeMobile2}
+        \caption{Prikaz glavnog menija}
+        \label{fig:spreeMobile2}
+    \end{subfigure}
+    
+    \caption{Spree mobilna aplikacija}
+\end{figure}
