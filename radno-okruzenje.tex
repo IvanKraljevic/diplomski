@@ -6,7 +6,7 @@ U kombinaciji sa radnim okruženjima poput Sencha Touch, Dojo Mobile i Ionic apl
 \\
 
 Korištenjem Apache Cordove programer je oslobođen pisanja aplikacija u nativnim jezicima uređaja (npr. Java za Android, Objective-C za iOS), već se koriste isključivo prethodno spomenute web tehnologije. 
-Bez obzira na to što aplikacije nisu napisane u nativnim jezicima, Apache Cordova aplikacije se prevode i pakiraju pomoću biblioteke za razvoj programske potpore \engl{software development kit, SDK} željene platforme stoga se aplikacije mogu i postaviti na trgovine aplikacija \engl{app store} dotične platforme. 
+Bez obzira na to što aplikacije nisu napisane u nativnim jezicima, Apache Cordova aplikacije se prevode i pakiraju pomoću biblioteke za razvoj programske potpore \engl{software development kit, SDK} željene platforme stoga se aplikacije mogu postaviti na trgovine aplikacija \engl{app store} dotične platforme. 
 \\
 
 Cordova nudi skup uniformnih JavaScript biblioteka čije funkcije programer može pozivati. 
@@ -57,8 +57,8 @@ Službene Cordova JavaScript biblioteke koje održava Cordova tim su:
 \section{Biblioteka Cordova BLE}
 
 Neslužbena Cordova BLE biblioteka omogućava hibridnim mobilnim aplikacijama koje se temelje na Cordovi korištenje BLE funkcionalnosti mobilne platforme bez potrebe za pisanjem nativnog programskog kôda. 
-Preko biblioteke moguće je korištenjem JavaScript programskog jezika skenirati obližnje BLE odašiljače, spajati se na njih, čitati service, karakteristike i opisnike te pisati nove vrijednosti karakteristika i opisnika (ukoliko odašiljač to dopušta). 
-Također, biblioteka omogućava da se aplikacija pretplati na obavijesti od odašiljača te može resetirati Bluetooth sustav mobilnog uređaja. 
+Preko biblioteke moguće je korištenjem JavaScript programskog jezika skenirati obližnje BLE odašiljače, spajati se na njih, čitati servise, karakteristike i opisnike te pisati nove vrijednosti karakteristika i opisnika (ukoliko odašiljač to dopušta). 
+Također, biblioteka omogućava da se aplikacija pretplati na obavijesti odašiljača te može resetirati Bluetooth sustav mobilnog uređaja. 
 Resetiranje Bluetooth sustava osobito je korisno aplikacijama koje se pokreću na Android operacijskom sustavu iz razloga što raniji Android sustavi imaju popriličan broj pogrešaka u svojoj Bluetooth implementaciji. 
 Dobar dio grešaka ispravlja Android 4.4.3 koji je objavljen početkom lipnja 2014. godine, no dotični operacijski sustav imaju imaju samo noviji moderniji uređaji stoga je korištenje funkcije resetiranja nužno kako bi se osigurao ispravan rad mobilne aplikacije i u nešto starijim Android uređajima.
 \\
@@ -77,7 +77,7 @@ var win = function(device) {
   //ucini nesto sa pronadenim uredajem
 };
 
-// povratna funkcija ukoliko dode do pogreske
+// povratna funkcija koja se poziva ukoliko dode do pogreske
 var fail = function(error) {
   // obrada pogreske
 };
@@ -88,7 +88,7 @@ evothings.ble.startScan(win, fail);
 
 Pozvana funkcija poziva nativnu funkciju i prosljeđuje joj predane povratne funkcije:
 \begin{lstlisting}[language=java, morekeywords={var,function}]
-// ovo je zapravo pozvana evothings.ble.startScan funkcija
+// ovo je zapravo prethodno pozvana evothings.ble.startScan funkcija
 exports.startScan = function(win, fail) {
 	exec(win, fail, 'BLE', 'startScan', []);
 };

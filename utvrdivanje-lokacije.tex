@@ -166,22 +166,11 @@ Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indo
 
 Podatke prve skupine uzoraka poslao je kontakt.io odašiljač sa jakosti odašiljanja od \SI{-4}{dBm}. 
 U tablici se može uočiti kako je standardna devijacija za gotovo svaku grupu uzoraka poprilično velika (devijacija grupe na udaljenosti od tri metra iznosi čak 4.053). 
-Uzrok tako velikoj standardnoj devijaciji su prethodno opisane smetnje koje utječu na signal u zatvorenom prostoru. 
-\\
-Promatranjem tablica \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault} možemo primjetiti kako je standardna devijacija visoka i kod gotovo svake grupe druge i treće skupine uzoraka.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.62]{pictures/prva-skupina-uzoraka}
-    \caption{Grafički prikaz srednje vrijednosti primljenog signala prve skupine uzoraka}
-    \label{fig:prva_skupina}
-\end{figure}
-
-%TODO opisati obrazložiti graf
+Uzrok tako velikoj standardnoj devijaciji su prethodno opisane smetnje koje utječu na signal u zatvorenom prostoru.
 
 \begin{table}[H]
 	\centering
-	\caption{TODO}
+	\caption{Druga skupina uzoraka}
 	\label{tbl:indoorKontaktMaxTx}
 	\begin{tabular}{ccccc}
 	\hline 
@@ -207,18 +196,9 @@ Promatranjem tablica \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault} mo�
 	\end{tabular}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.62]{pictures/druga-skupina-uzoraka}
-    \caption{Grafički prikaz srednje vrijednosti primljenog signala druge skupine uzoraka}
-    \label{fig:druga_skupina}
-\end{figure}
-
-%TODO obrazložiti graf
-
 \begin{table}[H]
 	\centering
-	\caption{TODO}
+	\caption{Treća skupina uzoraka}
 	\label{tbl:blucatsDefault}
 	\begin{tabular}{ccccc}
 	\hline
@@ -244,21 +224,48 @@ Promatranjem tablica \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault} mo�
 	\end{tabular}
 \end{table}
 
+Podatke druge skupine uzoraka poslao je kontakt.io odašiljač sa jakosti odašiljanja od \SI{4}{dBm} (najveća jakost odašiljanja odašiljača). 
+Podatke treće skupine uzoraka poslao je Bluecats odašiljač sa jakosti odašiljanja postavljenom na parametar \textit{Talk} (numerička vrijednost koju dotični parametar predstavlja nije poznata). 
+Promatranjem tablica \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault} možemo primijetiti kako je standardna devijacija visoka i kod gotovo svake grupe druge i treće skupine uzoraka.
+\\
+U na slikama \ref{fig:prva_skupina}, \ref{fig:druga_skupina} i \ref{fig:treca_skupina} prikazan je kako se prosječni RRSI mijenja sa povećanjem udaljenosti za svaku skupinu uzoraka.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.62]{pictures/prva-skupina-uzoraka}
+    \caption{Grafički prikaz srednje vrijednosti primljenog signala prve skupine uzoraka}
+    \label{fig:prva_skupina}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.62]{pictures/druga-skupina-uzoraka}
+    \caption{Grafički prikaz srednje vrijednosti primljenog signala druge skupine uzoraka}
+    \label{fig:druga_skupina}
+\end{figure}
+
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.62]{pictures/treca-skupina-uzoraka}
     \caption{Grafički prikaz srednje vrijednosti primljenog signala treće skupine uzoraka}
-    \label{fig:prva_skupina}
+    \label{fig:treca_skupina}
 \end{figure}
 
-%TODO obrazložiti graf
+Teoretski RSSI bi trebao monotono opadati sa povećanjem udaljenosti, no na grafovima se može lako uočiti kako to ovdje nije slučaj. 
+Uzrok tomu su već spomenuta ometanja signala.
+\\
+Posljedično, određivanje precizne udaljenosti na temelju RSSI-a nije moguće jer za primljeni RSSI sustav procjene udaljenosti ne može jednoznačno odrediti na kojoj se udaljenosti odašiljač nalazi. 
+Na primjer, ako pogledamo drugu skupinu uzoraka (tablica \ref{tbl:indoorKontaktMaxTx} i slika \ref{fig:druga_skupina}) uočava se kako je srednja vrijednost signala podjednaka na udaljenostima od 3.5, 5 i 7 metara, stoga ako je ulazni RSSI jednak -72 dBm, sustav neće moći jednoznačno procijeniti udaljenost (tj. radi li se o udaljenosti od 3.5, 5 ili 7 metara).
+\\
 
-
-%TODO mjerenja na većoj udaljenosti - tablica + graf
+Unatoč tome, u nastavku će se pokušati procijeniti udaljenost sa preciznošću od dva metra. 
+Za to je prikupljena nova skupina podataka koji su uzorkovani na udaljenostima od \SI{2}{m} do \SI{18}{m} sa korakom od \SI{2}{m}, po dvije stotine uzoraka za svaku udaljenosti. 
+Prikupljene uzorke (tj. RSSI) poslao je kontakt.io odašiljač sa jakosti odašiljanja od \SI{4}{dBm} (najveća jakost odašiljanja odašiljača). 
+U tablici \ref{tbl:velikaUdaljenost} prikazana su važnija svojstva nove, četvrte, skupine uzoraka, a na slici \ref{fig:velikaUdaljenost} je prikazano kretanje srednje vrijednosti primljenog signala za svaku udaljenost.
 
 \begin{table}[H]
     \centering
-    \caption{TODO}
+    \caption{Četvrta skupina uzoraka}
     \label{tbl:velikaUdaljenost}
     \begin{tabular}{ccccc}
     \hline 
@@ -273,21 +280,53 @@ Promatranjem tablica \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault} mo�
     14 & -85.580 & 2.430 & -90 & -81 \\ 
     16 & -90.560 & 2.846 & -97 & -85 \\ 
     18 & -92.555 & 1.787 & -98 & -88 \\ 
-    20 & -87.395 & 3.157 & -93 & -83 \\ 
-    22 & -92.375 & 2.7988 & -99 & -86 \\ 
-    24 & -91.53 & 1.407 & -95 & -88 \\ 
     \hline 
     \end{tabular} 
 \end{table}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.62]{pictures/cetvrta-skupina-uzoraka}
+    \caption{Četvrta skupina uzoraka}
+    \label{fig:velikaUdaljenost}
+\end{figure}
 
-%TODO postupci: matematički, best fit curve, neuronska mreža i poteškoće, spomeniti genetsko programiranje
-%TODO zaključak
+Na slici je očito kako prosječni RSSI monotono opada sa povećanjem udaljenosti, no iako je to dobar znak, ono ne garantira da će se udaljenost moći jednoznačno procijeniti jer je standardna devijacija pri svakoj udaljenosti poprilično velika.
 
+Neuronska mreža će se trenirati nad četvrtom skupinom uzoraka. 
+Neuronska mreža se sastoji od tri sloja:
+\begin{itemize}
+ \item ulazi sloj - ne obavlja nikakvu funkciju već preslikava dovedene ulazne podatke i čini ih dostupnim ostatku mreže
+ \item skriveni sloj - sastoji se od devet neurona (broj neurona je jednak broju grupa podataka), svaki neuron na svoj ulaz dobiva isključivo vrijednosti od neurona iz ulaznog sloja; prijenosna funkcija svakog neurona je sigmoidalna funkcija
+ \item izlazni sloj - sastoji se od jednog neurona koji na ulaze dobiva vrijednosti izlaza neurona skrivenog sloja
+\end{itemize}
+Pojedini neuron skrivenog sloja ima dva parametra (težina), dok je broj parametara izlaznog neurona jednak broju neurona skrivenog sloja i ima dodatni parametar koji čini prag okidanja\engl{threshold}. 
+Ukupni broj parametara neuronske mreže je 28.
+\\
 
+Neuronsku mrežu će \textit{trenirati} genetski algoritam iz razloga što su evolucijski algoritmi kao univerzalni optimizacijski algoritmi primjenjivi na evoluciju parametara raznih arhitektura neuronskih mreža stoga nije potrebno izvoditi algoritme koji su prilagođeni pojedinim arhitekturama. %TODO referencirati skriptu iz NENR-a
+\\
+Parametri neuronske mreže su pohranjeni u vektor realnih brojeva stoga će se vektor realnih brojeva koristiti i za prikaz rješenja genetskog algoritma. 
+Korišten je generacijski genetski algoritam, a od genetskih operatora korišteno je $BLX\text{-}\alpha$ križanje, turnirska selekcija te normalna mutacija. 
+Funkcija za evaluaciju rješenja je:
+\begin{equation}
+    fitness = \frac{1}{N}\sum_{i=1}^{N}{(o_i - y_i)^2}
+\end{equation}
+gdje je $N$ ukupni broj uzoraka, $o_i$ je izlaz neuronske mreže za uzorak $i$, a $y_i$ označava ispravni rezultat. 
+Cilj genetskog algoritma je pronaći parametre tako da $fitness$ bude što manji, odnosno radi se o minimizacijskom problemu.
+\\
+
+Nakon \textit{treniranja} neuronske mreže i provedenog testiranja zaključujem kako rezultat neuronske mreže nije zadovoljavajući. 
+Unatoč tome što se tijekom \textit{treniranja}, odnosno evolucije parametara, greška postupno smanjivala, testiranjem neuronske mreže pokazalo se da nije naučila podatke kao što se očekivalo. 
+Uzrok tomu je prevelika standardna devijacija stoga neuronska mreža ne može ispravno procjenjivati udaljenost.
+\\
+Smatram da bi sustav kombinacije neuronske mreže i sustava neizrazitog zaključivanja možda mogao pokazati kao precizniji sustav procjene, no to nadilazi temu ovog rada.
+\\
+Iz svega ovoga zaključujem kako je zbog djelovanja raznih smetnji koje djeluju na signal koji putuje zatvorenim prostorom, određivanje lokacije u zatvorenom prostoru pomoću BLE odašiljača poprilično nepouzdano.
 
 \section{Utvrđivanje apsolutne lokacije}
-%TODO općenito o utvrđivanju apsolutne lokacije
+
+Unatoč tome što u prethodnom potpoglavlju nije pronađeno zadovoljavajuće rješenje za određivanje relativne udaljenosti od odašiljača, u nastavku su opisane dvije najpoznatije i najkorištenije metode za određivanje apsolutne lokacije. 
 
 \subsection{Triangulacija}
 
