@@ -206,8 +206,8 @@ $ cordova run android # za pokretanje na android uredaju
 
 Za istraživanje i testiranje iBeacon odašiljača razvijena je posebna aplikacija. 
 Aplikacija detektira obližnje iBeacon odašiljače, obrađuje primljene \textit{advertising} pakete i ispisuje osnovne informacije o odašiljaču, a može ispisati sve servise, karakteristike i opisnike odašiljača. 
-Uz to, pomoću aplikacije se mogu prikupljati podaci od određenog odašiljača i ta funkcionalnost se može iskoristiti za kalibriranje određenog odašiljača, a i za izračun određenih informacija (poput srednje vrijednosti, standardne devijacije te minimalne i maksimalne jakosti primljenog signala). 
-Također, određeni odašiljači se mogu blokirati tako da se informacije o njima ne prikazuju korisniku te u aplikaciju su ugrađene funkcije \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} koje se mogu iskoristiti za (nepouzdanu) procjenu udaljenosti.
+Uz to, pomoću aplikacije mogu se prikupljati podaci od određenog odašiljača i ta funkcionalnost se može iskoristiti za kalibriranje određenog odašiljača, a i za izračun određenih informacija (poput srednje vrijednosti, standardne devijacije te minimalne i maksimalne jakosti primljenog signala). 
+Također, određeni odašiljači mogu se blokirati tako da se informacije o njima ne prikazuju korisniku te u aplikaciju su ugrađene funkcije \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} koje se mogu iskoristiti za (nepouzdanu) procjenu udaljenosti.
 
 \begin{figure}[H]
     \centering
@@ -225,7 +225,7 @@ Također, određeni odašiljači se mogu blokirati tako da se informacije o njim
         \label{fig:exp2}
     \end{subfigure}
     
-    \caption{Dio implementiranih pogleda eksperimentalne aplikaciej}
+    \caption{Dio implementiranih pogleda eksperimentalne aplikacije}
 \end{figure}
 
 \begin{figure}[H]
@@ -243,7 +243,7 @@ Također, određeni odašiljači se mogu blokirati tako da se informacije o njim
         \label{fig:exp4}
     \end{subfigure}
     
-    \caption{Dio implementiranih pogleda eksperimentalne aplikaciej}
+    \caption{Dio implementiranih pogleda eksperimentalne aplikacije}
 \end{figure}
 
 \subsection{Spree mobilna aplikacija}
@@ -254,8 +254,8 @@ Svi elementi trgovine (popis proizvoda, kategorija i slično) dohvaćaju se sa p
 Uz to u aplikaciju je integrirana i Cordova BLE biblioteka te BLE funkcionalnost.
 Ugrađene su dvije BLE funkcije:
 \begin{enumerate}
-    \item uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te od poslužitelja dohvaća sadržaj kojega referencira najbolji odašiljač
-    \item uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te na temelju dva najbliža odašiljača od poslužitelja dohvaća referencirani sadržaj 
+    \item Uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te od poslužitelja dohvaća sadržaj kojega referencira najbolji odašiljač.
+    \item Uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te na temelju dva najbliža odašiljača od poslužitelja dohvaća referencirani sadržaj.
 \end{enumerate}
 
 Prva funkcionalnost može se iskoristiti u slučajevima gdje je velika trgovina raspoređena u manje odjele, a jedan odašiljač pokriva jedan odjel. 
@@ -294,7 +294,7 @@ Tada se pokreće sljedeći algoritam:
     \item iz svih dinamičkih polja izbaci 10\% marginalnih vrijednosti
     \item sortiraj odašiljače tako da se na prvim mjestima nalaze odašiljači čija dinamička polja imaju najvišu srednju vrijednost
 \end{itemize}
-Izvorni kôd prikazan je u nastavku.
+Izvorni kôd je prikazan u nastavku.
 
 \begin{lstlisting}[language=java, morekeywords={var,function}]
 // pomocna funkcija za izracun srednje vrijednosti
@@ -328,9 +328,7 @@ MathService.removeMarginals = function (data, percentage) {
   // uklanjanje elemenata
   data.splice(data.length - numOfElToRm, numOfElToRm);
 };
-\end{lstlisting}
 
-\begin{lstlisting}[language=java, morekeywords={var,function}]
 // uklanjanje marginalnih vrijednosti svih odasiljaca
 angular.forEach(devices, function (device) {
   MathUtilities.removeMarginals(device.data, 0.9);

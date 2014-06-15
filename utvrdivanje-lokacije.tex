@@ -132,7 +132,6 @@ Smatram da su neuronske mreže dobar model za rješavanje problema iz razloga š
 
 Neuronska mreža će se trenirati na prethodno prikupljenim podacima. 
 Prve tri skupine podataka uzorokovane su na na udaljenostima od \SI{50}{cm} do \SI{8}{m} s korakom od \SI{50}{cm}, po dvije stotine uzoraka za svaku udaljenosti. 
-Ukupno prve tri skupine sastoje se od $brojSkupina \cdot brojUdaljenosti \cdot brojUzoraka = 3 \cdot 16 \cdot 200 = 9600$ nezavisnih uzoraka. 
 Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indoorKontaktDefaultTx}, \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault}.
 
 \begin{table}[H]
@@ -291,6 +290,7 @@ U tablici \ref{tbl:velikaUdaljenost} prikazana su važnija svojstva nove, četvr
 \end{figure}
 
 Na slici je očito kako prosječni RSSI monotono opada sa povećanjem udaljenosti, no iako je to dobar znak, ono ne garantira da će se udaljenost moći jednoznačno procijeniti jer je standardna devijacija pri svakoj udaljenosti poprilično velika.
+\\
 
 Neuronska mreža će se trenirati nad četvrtom skupinom uzoraka. 
 Neuronska mreža se sastoji od tri sloja:
@@ -303,7 +303,7 @@ Pojedini neuron skrivenog sloja ima dva parametra (težina), dok je broj paramet
 Neuronska mreža ima ukupno 28 parametara.
 \\
 
-Neuronsku mrežu će \textit{trenirati} genetski algoritam iz razloga što su evolucijski algoritmi kao univerzalni optimizacijski algoritmi primjenjivi na evoluciju parametara raznih arhitektura neuronskih mreža stoga nije potrebno izvoditi algoritme koji su prilagođeni pojedinim arhitekturama \citep{nenr}.
+Neuronsku mrežu će trenirati genetski algoritam iz razloga što su evolucijski algoritmi kao univerzalni optimizacijski algoritmi primjenjivi na evoluciju parametara raznih arhitektura neuronskih mreža stoga nije potrebno izvoditi algoritme koji su prilagođeni pojedinim arhitekturama \citep{nenr}.
 \\
 Parametri neuronske mreže su pohranjeni u vektor realnih brojeva stoga će se vektor realnih brojeva koristiti i za prikaz rješenja genetskog algoritma. 
 Korišten je generacijski genetski algoritam, a od genetskih operatora korišteno je $BLX\text{-}\alpha$ križanje, turnirska selekcija te normalna mutacija. 
@@ -315,8 +315,8 @@ gdje je $N$ ukupni broj uzoraka, $o_i$ je izlaz neuronske mreže za uzorak $i$, 
 Cilj genetskog algoritma je pronaći parametre tako da $fitness$ bude što manji, odnosno radi se o minimizacijskom problemu.
 \\
 
-Nakon \textit{treniranja} neuronske mreže i provedenog testiranja zaključujem kako rezultat neuronske mreže nije zadovoljavajući. 
-Unatoč tome što se tijekom \textit{treniranja}, odnosno evolucije parametara, greška postupno smanjivala, testiranjem neuronske mreže pokazalo se da nije naučila podatke kao što se očekivalo. 
+Nakon treniranja neuronske mreže i provedenog testiranja zaključujem kako rezultat neuronske mreže nije zadovoljavajući. 
+Unatoč tome što se tijekom treniranja, odnosno evolucije parametara, greška postupno smanjivala, testiranjem neuronske mreže pokazalo se da nije naučila podatke kao što se očekivalo. 
 Uzrok tomu je prevelika standardna devijacija stoga neuronska mreža ne može ispravno procjenjivati udaljenost.
 \\
 Smatram da bi se sustav kombinacije neuronske mreže i sustava neizrazitog zaključivanja možda mogao pokazati kao precizniji sustav procjene, no to nadilazi temu ovog rada.
