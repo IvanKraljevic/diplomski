@@ -35,15 +35,14 @@ Uz to, prvi prototipovi mobilnih uređaja i tableta već su dostupni partnerima 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.24]{pictures/tango1}
-    \caption{Google Project Tango - prepoznavanje predmeta u okolini}
+    \caption{Google Project Tango - prepoznavanje predmeta u okolini \citep{ytTango}}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.24]{pictures/tango2}
-    \caption{Google Project Tango - prikaz mapirane okoline}
+    \caption{Google Project Tango - prikaz mapirane okoline \citep{ytTango}}
 \end{figure}
-%TODO referencirati youtube video u captionu
 
 U nastavku su opisane relativno nove metode za određivanje lokacije u zatvorenom prostoru koje se temelje na BLE tehnologiji i iBeacon odašiljačima.
 Za rješavanje problema prvo je potrebno sa što većom preciznošću odrediti relativnu poziciju uređaja u odnosu na odašiljač/odašiljače stoga je glavni fokus istraživanja usmjeren baš na taj dio. 
@@ -301,10 +300,10 @@ Neuronska mreža se sastoji od tri sloja:
  \item izlazni sloj - sastoji se od jednog neurona koji na ulaze dobiva vrijednosti izlaza neurona skrivenog sloja
 \end{itemize}
 Pojedini neuron skrivenog sloja ima dva parametra (težina), dok je broj parametara izlaznog neurona jednak broju neurona skrivenog sloja i ima dodatni parametar koji čini prag okidanja\engl{threshold}. 
-Ukupni broj parametara neuronske mreže je 28.
+Neuronska mreža ima ukupno 28 parametara.
 \\
 
-Neuronsku mrežu će \textit{trenirati} genetski algoritam iz razloga što su evolucijski algoritmi kao univerzalni optimizacijski algoritmi primjenjivi na evoluciju parametara raznih arhitektura neuronskih mreža stoga nije potrebno izvoditi algoritme koji su prilagođeni pojedinim arhitekturama. %TODO referencirati skriptu iz NENR-a
+Neuronsku mrežu će \textit{trenirati} genetski algoritam iz razloga što su evolucijski algoritmi kao univerzalni optimizacijski algoritmi primjenjivi na evoluciju parametara raznih arhitektura neuronskih mreža stoga nije potrebno izvoditi algoritme koji su prilagođeni pojedinim arhitekturama \citep{nenr}.
 \\
 Parametri neuronske mreže su pohranjeni u vektor realnih brojeva stoga će se vektor realnih brojeva koristiti i za prikaz rješenja genetskog algoritma. 
 Korišten je generacijski genetski algoritam, a od genetskih operatora korišteno je $BLX\text{-}\alpha$ križanje, turnirska selekcija te normalna mutacija. 
@@ -377,7 +376,8 @@ Izlučivanjem varijable $y$ dobiva se:
 \label{eq:bcy}
     y = \frac{-2x(x_1 - x_2) + (x_1^2+x_2^2) + (y_1^2 - y_2^2) - (r_1^2 - r_2^2)}{-2(y_1 - y_2)}
 \end{equation}
-Izjednačavanjem $y$ varijabli iz \eqref{eq:aby} i \eqref{eq:bcy} se dobiva jednadžba samo po $x$ varijabli na temelju koje se može izračunati nepoznata $x$ koordinata.
+Izjednačavanjem $y$ varijabli iz \eqref{eq:aby} i \eqref{eq:bcy} dobiva se jednadžba samo po $x$ varijabli iz koje se zatim dotična varijabla može izračunati. 
+Nakon toga se uvrštavanjem $x$ varijable u \eqref{eq:aby} ili \eqref{eq:bcy} jednadžbu može izračunati nepoznata $y$ koordinata.
 %\\
 %Prikažimo opisani postupak na primjeru gdje su koordinate poznatih objekata $A(0,0)$, $B(50,100)$ i C$(200,40)$. Udaljenost nepoznatog objekta od poznatih objekata je $80m$, $40m$ i $150m$.
 
