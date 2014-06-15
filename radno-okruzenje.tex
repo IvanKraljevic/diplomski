@@ -63,7 +63,7 @@ Resetiranje Bluetooth sustava osobito je korisno aplikacijama koje se pokreću n
 Dobar dio grešaka ispravlja Android 4.4.3 koji je objavljen početkom lipnja 2014. godine, no dotični operacijski sustav imaju imaju samo noviji moderniji uređaji stoga je korištenje funkcije resetiranja nužno kako bi se osigurao ispravan rad mobilne aplikacije i u nešto starijim Android uređajima.
 \\
 
-Biblioteka funkcionira na način da se ravijatelju aplikacije nudi skup uniformnih funkcija za pristup BLE funkcionalnosti mobilnog uređaja preko JavaScript programskog jezika. 
+Biblioteka funkcionira na način da se razvijatelju aplikacije nudi skup uniformnih funkcija za pristup BLE funkcionalnosti mobilnog uređaja preko JavaScript programskog jezika. 
 U pozadini dotične JavaScript funkcije pozivaju funkcije koje su napisane u nativnom jeziku platforme (tj. operacijskog sustava) mobilnog uređaja na kojem je aplikacija pokrenuta. 
 Nadalje, dotične nativne funkcije pristupaju samoj BLE funkcionalnosti uređaja koje u konačnici obave zadani posao. 
 Na kraju, nativne funkcije šalju odgovore JavaScript sloju preko prethodno predanih asinkronih povratnih\engl{callback} funkcija.
@@ -116,7 +116,7 @@ public class BLE extends CordovaPlugin implements LeScanCallback {
 Svaka Cordova biblioteka mora naslijediti razred \texttt{CordovaPlugin} i nadjačati\engl{override} neku od   izvršnih metoda, odnosno u ovom slučaju nasljeđuje se \texttt{execute} metoda. 
 Sučelje \texttt{LeScanCallback} je nužno zbog pristupa BLE funkcionalnosti Android platforme.
 
-Ako funkcija uspješno obradi zadatak pozvati će se povratna funkcija \texttt{win}, a ako je došlo do pogreške pozvati će se povratna funckija \texttt{fail}. 
+Ako funkcija uspješno obradi zadatak pozvat će se povratna funkcija \texttt{win}, a ako je došlo do pogreške pozvati će se povratna funckija \texttt{fail}. 
 Obe funkcije su pohranjene instancu \texttt{CallbackContext} razreda.
 \\
 

@@ -296,7 +296,7 @@ Na slici je očito kako prosječni RSSI monotono opada sa povećanjem udaljenost
 Neuronska mreža će se trenirati nad četvrtom skupinom uzoraka. 
 Neuronska mreža se sastoji od tri sloja:
 \begin{itemize}
- \item ulazi sloj - ne obavlja nikakvu funkciju već preslikava dovedene ulazne podatke i čini ih dostupnim ostatku mreže
+ \item ulazni sloj - ne obavlja nikakvu funkciju već preslikava dovedene ulazne podatke i čini ih dostupnima ostatku mreže
  \item skriveni sloj - sastoji se od devet neurona (broj neurona je jednak broju grupa podataka), svaki neuron na svoj ulaz dobiva isključivo vrijednosti od neurona iz ulaznog sloja; prijenosna funkcija svakog neurona je sigmoidalna funkcija
  \item izlazni sloj - sastoji se od jednog neurona koji na ulaze dobiva vrijednosti izlaza neurona skrivenog sloja
 \end{itemize}
@@ -320,22 +320,68 @@ Nakon \textit{treniranja} neuronske mreže i provedenog testiranja zaključujem 
 Unatoč tome što se tijekom \textit{treniranja}, odnosno evolucije parametara, greška postupno smanjivala, testiranjem neuronske mreže pokazalo se da nije naučila podatke kao što se očekivalo. 
 Uzrok tomu je prevelika standardna devijacija stoga neuronska mreža ne može ispravno procjenjivati udaljenost.
 \\
-Smatram da bi sustav kombinacije neuronske mreže i sustava neizrazitog zaključivanja možda mogao pokazati kao precizniji sustav procjene, no to nadilazi temu ovog rada.
+Smatram da bi se sustav kombinacije neuronske mreže i sustava neizrazitog zaključivanja možda mogao pokazati kao precizniji sustav procjene, no to nadilazi temu ovog rada.
 \\
 Iz svega ovoga zaključujem kako je zbog djelovanja raznih smetnji koje djeluju na signal koji putuje zatvorenim prostorom, određivanje lokacije u zatvorenom prostoru pomoću BLE odašiljača poprilično nepouzdano.
 
 \section{Utvrđivanje apsolutne lokacije}
 
-Unatoč tome što u prethodnom potpoglavlju nije pronađeno zadovoljavajuće rješenje za određivanje relativne udaljenosti od odašiljača, u nastavku su opisane dvije najpoznatije i najkorištenije metode za određivanje apsolutne lokacije. 
+Unatoč tome što u prethodnom potpoglavlju nije pronađeno zadovoljavajuće rješenje za određivanje relativne udaljenosti od odašiljača, u nastavku je opisan postupak trilateracije pomoću kojega se može odrediti apsolutna lokacija u prostoru.
+\\
 
-\subsection{Triangulacija}
+Trilateracija je postupak određivanja relativne ili apsolutne lokacije objekta u prostoru pomoću mjerenja udaljenosti od objekata čija je lokacija poznata. 
+Za određivanje lokacije nekog objekta u 2D prostoru potrebne su koordinate tri poznata objekta i njihova udaljenost od objekta čija se lokacija pokušava odrediti. 
+Iz tih podataka mogu postaviti sljedeće tri jednadžbe:
+%\begin{subequations}
+%    \begin{align}
+%        A: (x-x_0)^2 + (y-y_0)=r_0^2 \\
+%        B: (x-x_1)^2 + (y-y_1)=r_1^2 \\
+%        C: (x-x_2)^2 + (y-y_2)=r_2^2
+%    \end{align}
+%\end{subequations}
+\begin{equation}
+    A: (x-x_0)^2 + (y-y_0)=r_0^2
+\end{equation}
+\begin{equation}
+    B: (x-x_1)^2 + (y-y_1)=r_1^2
+\end{equation}
+\begin{equation}
+    C: (x-x_2)^2 + (y-y_2)=r_2^2
+\end{equation}
+gdje su $(x,y)$ koordinate objekta čija je lokacija nepoznata, $(x_1,y_1)$, $(x_1,y_1)$ i $(x_1,y_1)$ koordinate tri objekta čija je lokacija poznata, a $r_0$, $r_1$ i $r_2$ udaljenost pojedinog poznatog objekta od nepoznatog. 
+Proširenjem dotičnih jednadžbi dobivaju se sljedeće tri jednadžbe:
+\begin{equation}
+    A: x^2 - 2xx_0 + x_0^2=r_0^2
+\end{equation}
+\begin{equation}
+    B: x^2 - 2xx_1 + x_1^2=r_1^2
+\end{equation}
+\begin{equation}
+    C: x^2 - 2xx_2 + x_2^2=r_2^2
+\end{equation}
+Ako se izračuna $A-B$ dobiva se sljedeće:
+\begin{equation}
+    -2x(x_0 - x_1) + (x_0^2 + x_1^2) - 2y(y_0 - y_1) + (y_0^2 - y_1^2) = (r_0^2 - r_1^2)
+\end{equation}
+Izlučivanjem varijable $y$ dobiva se:
+\begin{equation}
+\label{eq:aby}
+    y = \frac{-2x(x_0 - x_1) + (x_0^2+x_1^2) + (y_0^2 - y_1^2) - (r_0^2 - r_1^2)}{-2(y_0 - y_1)}
+\end{equation}
+Ako se izračuna $B-C$ dobiva se sljedeće:
+\begin{equation}
+    -2x(x_1 - x_2) + (x_1^2+x_2^2) - 2y(y_1 - y_2) + (y_1^2 - y_2^2) = (r_1^2 - r_2^2)
+\end{equation}
+Izlučivanjem varijable $y$ dobiva se:
+\begin{equation}
+\label{eq:bcy}
+    y = \frac{-2x(x_1 - x_2) + (x_1^2+x_2^2) + (y_1^2 - y_2^2) - (r_1^2 - r_2^2)}{-2(y_1 - y_2)}
+\end{equation}
+Izjednačavanjem $y$ varijabli iz \eqref{eq:aby} i \eqref{eq:bcy} se dobiva jednadžba samo po $x$ varijabli na temelju koje se može izračunati nepoznata $x$ koordinata.
+%\\
+%Prikažimo opisani postupak na primjeru gdje su koordinate poznatih objekata $A(0,0)$, $B(50,100)$ i C$(200,40)$. Udaljenost nepoznatog objekta od poznatih objekata je $80m$, $40m$ i $150m$.
 
-Postupak triangulacije
-%TODO objasniti postupak triangulacije
-%TODO matematički postupak kod triangulacije
-%TODO iBeacon i triangulacija
 
-\subsection{Trilateracija}
-%TODO objasniti postupak trilateracije
-%TODO matematički postupak trilateracije
-%TODO iBeacon i trilateracija
+
+
+
