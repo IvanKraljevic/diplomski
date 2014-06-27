@@ -1,36 +1,37 @@
 \chapter{Odašiljači iBeacon}
 \label{chap:ibeacon}
 
-Odašiljači iBeacon su jeftini uređaji, niske potrošnje energije koji korištenjem BLE tehnologije obavještavaju obližnje uređaje o svojoj prisutnosti. 
+Odašiljači iBeacon su jeftini uređaji, niske potrošnje energije koji korištenjem tehnologije BLE obavještavaju obližnje uređaje o svojoj prisutnosti. 
 Obližnji uređaji (poput mobilnih uređaja i tableta) mogu se pretplatiti na obavijesti (notifikacije, engl. \textit{notifications}) odašiljača te mogu primati razne sadržaje (poput teksta, slika ili URL adresa) od njih. 
-Krajem 2013. godine iBeacon tehnologiju patentirala je američka multinacionalna korporacija Apple Inc.
+Krajem 2013. godine tehnologiju iBeacon patentirala je američka multinacionalna korporacija Apple Inc.
 \\
 
-Neki od zanimljivih načina primjene iBeacon tehnologije su u muzejima, trgovinama, bolnicama i ostalim ustanovama gdje se sadržaj mijenja ovisno o položaju u prostoriji. 
+Neki od zanimljivih načina primjene tehnologije iBeacon su u muzejima, trgovinama, bolnicama i ostalim ustanovama gdje se sadržaj mijenja ovisno o položaju u prostoriji. 
 Posjetitelj muzeja može na mobilni uređaj ili tablet primiti sadržaj o objektu kojega trenutno promatra (npr. informacije o skulpturi ili slici). Uz to, osoblje muzeja može pratiti koji su objekti najgledaniji i slično. 
 U bolnici se može primijeniti tako da liječnik na prijenosni tablet dobije sve podatke o pacijentu, od povijesti bolesti do trenutne dijagnoze, kada se približi njegovoj sobi ili krevetu. 
 U trgovini se može iskoristiti tako da kupca obavijesti o predmetima na popustu u blizini i sličnim scenarijima. 
-Također, iBeacon odašiljači mogu se iskoristiti i kao sustav beskontaktnog plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}, bežična tehnologija jako kratkog dometa korištena za komunikaciju između dva krajnja uređaja} tehnologija koristi.
-Ovo su samo najjednostavniji i najopćenitiji slučajevi gdje se iBeacon tehnologija može ukomponirati, broj načina korištenja tehnologije je ogroman.
+Također, odašiljači iBeacon mogu se iskoristiti i kao sustav beskontaktnog plaćanja na sličan način kako se i NFC\footnote{\textit{Near field communication}, bežična tehnologija jako kratkog dometa korištena za komunikaciju između dva krajnja uređaja} tehnologija koristi.
+Ovo su samo najjednostavniji i najopćenitiji slučajevi gdje se tehnologija iBeacon može ukomponirati, broj načina korištenja tehnologije je ogroman.
 \\
 
-iBeacon se može konfigurirati tako da se sadržaj šalje samo kad se uređaj približi odašiljaču na određenu udaljenost. 
+Uređaj iBeacon se može konfigurirati tako da se sadržaj šalje samo kad se uređaj približi odašiljaču na određenu udaljenost. 
 Pri tome su definirana tri parametra udaljenosti: neposredna (\textit{immediate}), mala (\textit{near}) i velika (\textit{far}) udaljenost. 
 Neposredna udaljenost je do nekoliko centimetara, mala do nekoliko metara, dok je velika udaljenost iznad deset metara. 
 Ove vrijednosti su aproksimativne jer ovisno o stvarnim uvjetima u kojima su odašiljači postavljeni signal može dosta varirati pa precizne vrijednosti nisu upotrebljive.
 \\
 
-Pošto je iBeacon tehnologija relativno nova, detaljna specifikacija nije javno dostupna stoga su gotovo svi proizvođači iBeacon odašiljača reverznim inženjeringom otkrili značajan dio iBeacon Bluetooth profila.
+Budući da je tehnologija iBeacon relativno nova, detaljna specifikacija nije javno dostupna stoga su gotovo svi proizvođači odašiljača iBeacon reverznim inženjeringom otkrili značajan dio iBeacon Bluetooth profila.
 \\
-Kada je Apple predstavio iBeacon tehnologiju objavili su aplikaciju AirLocate pomoću koje se iPhone ili iPad koji podržava BLE može ponašati kao iBeacon odašiljač. 
+Kada je Apple predstavio tehnologiju iBeacon objavili su aplikaciju AirLocate pomoću koje se iPhone ili iPad koji podržava BLE može ponašati kao odašiljač iBeacon. 
 Također, pomoću iste aplikacije moguće je podesiti sve parametre odašiljača. 
 Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaja koji može snimati Bluetooth Low Energy pakete (poput računala sa ugrađenim Texas Instruments CC2540 čipom) istraživači uključujući i \citep
 {radiusReverseEng} su došli do strukture \textit{advertising} paketa koja je prikazana u tablici \ref{tbl:iBeacon}.
 
 \begin{table}[H]
-\centering
-\caption{Struktura \textit{advertising} paketa iBeacon odašiljača}
-\label{tbl:iBeacon}
+	\centering
+	\caption{Struktura \textit{advertising} paketa iBeacon odašiljača}
+	\label{tbl:iBeacon}
+	\small
 	\begin{tabular}{*{3}{c}}
 	\hline 
 	Bajt & Vrijednost & Opis \\ 
@@ -71,8 +72,8 @@ Kombinacijom te aplikacije pokrenute na nekom iPhone ili iPad uređaju i uređaj
 	\caption*{X - vrijednosti ovise o postavkama konkretnog odašiljača}
 \end{table}
 
-Izuzev trećeg bajta sa LE\footnote{\textit{Low Energy}} i BR/EDR\footnote{\textit{Bluetooth Radio/Enhanced Data Rate}} zastavicama prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
-Nakon toga slijedi šesnaest bajtova koji čine \textit{Proximity UUID\footnote{\textit{Universally unique identifier}}} parametar, dva bajta koji čine \textit{Major value} parametar, dva bajta koja čine \textit{Minor value} parametar te posljednji, trideseti, bajt koji sadrži RSSI\footnote{\textit{received signal strength indicator}, mjera jakosti primljenog signala} izmjeren na udaljenosti od jednog metra.
+Izuzev trećeg bajta sa zastavicama LE\footnote{\textit{Low Energy}} i BR/EDR\footnote{\textit{Bluetooth Radio/Enhanced Data Rate}}, prvih devet bajtova svakog paketa su jednaki kod svakog odašiljača. 
+Nakon toga slijedi šesnaest bajtova koji čine \textit{Proximity UUID\footnote{\textit{Universally unique identifier}}} parametar, dva bajta koji čine \textit{Major value} parametar, dva bajta koja čine \textit{Minor value} parametar te posljednji, trideseti, bajt koji sadrži RSSI (mjera jakosti primljenog signala, engl. \textit{received signal strength indicator}) izmjeren na udaljenosti od jednog metra.
 \\
 Konfigurabilni parametari \textit{Proximity UUID}, \textit{Major value} i \textit{Minor value} koriste se za identifikaciju pojedinog odašiljača. 
 Preporuča se korištenje tih vrijednosti na način da \textit{Proximity UUID} bude nekakav globalni identifikator, a \textit{Major value} i \textit{Minor value} specifičniji identifikatori. 
@@ -84,18 +85,18 @@ Pošto jakost signala na nekoj udaljenosti ovisi o okolini u kojoj je uređaj po
 \\
 
 Za određivanje lokacije korišteni su Kontakt.io\footnote{\url{http://kontakt.io}} i Bluecats\footnote{\url{http://www.bluecats.com}} iBeacon odašiljači. 
-U nastavku je navedena specifikacija Kontakt.io odašiljača, dok za vrijeme pisanja rada detaljna specifikacija Bluecats odašiljača nije uopće objavljena. 
-Iz tog razloga kod većeg dijela istraživanja koristili su se Kontakt.io odašiljači jer su vrijednosti nekih parametara Bluecats odašiljača nepoznate. 
-Npr. jakost odašiljanja signala \engl{transmisssion power level} se može postaviti na vrijednosti poput \textit{loud} i \textit{silent}, ali numeričke vrijednosti koju ti izrazi opisuju su nepoznati stoga nam je taj parametar neprimjenjiv.
+U nastavku je navedena specifikacija odašiljača Kontakt.io, dok za vrijeme pisanja rada detaljna specifikacija odašiljača Bluecats nije uopće objavljena. 
+Iz tog razloga su se kod većeg dijela istraživanja koristili odašiljači Kontakt.io jer su vrijednosti nekih parametara odašiljača Bluecats nepoznate. 
+Npr. jakost odašiljanja signala \engl{transmisssion power level} se može postaviti na vrijednosti poput \textit{loud} i \textit{silent}, ali numeričke vrijednosti koju ti izrazi opisuju su nepoznati stoga je taj parametar neprimjenjiv.
 
-\section{Kontakt.io Beacon}
+\section{Odašiljač Kontakt.io Beacon}
 
-Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem BLE tehnologije te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
+Glavne značajke uređaja su odašiljanje podatkovnih paketa korištenjem tehnologije BLE te kompatibilnost sa svim uređajima koji podražavaju Bluetooth 4.0. 
 Uz to, uređaji se mogu jednostavno klonirati i nadograditi, imaju visoku razinu sigurnosti te malu energetsku potrošnju.
 \\
 Pojedini uređaj ima nekoliko konfigurabilnih parametara: \textit{Proximity UUID}, \textit{major} i \textit{minor} vrijednosti, ime uređaja, jakost odašiljanja signala te interval odašiljanja poruka.
 Uređaj napaja jedna CR2477 baterija s kojom uređaj može konstantno raditi više od 24 mjeseca \citep{kontaktDatasheet}.  
-Pri standardnoj (tvorničkoj) snazi odašiljanja iznosa -4 dBm, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa 4 dBm, odašiljač se može prepoznati i na udaljenosti većoj od dvadeset metara.
+Pri standardnoj (tvornički podešenoj) snazi odašiljanja iznosa -4 dBm, mobilni uređaj (ili bilo koji drugi uređaj sa podruškom za BLE) može prepoznati odašiljač do oko šest metara udaljenosti, dok na najjačoj snazi odašiljanja iznosa 4 dBm, odašiljač se može prepoznati i na udaljenosti većoj od dvadeset metara.
 % \SI{-4}{dBm} \SI{4}{dBm}
 
 \subsection{Tehnička specifikacija}
@@ -129,7 +130,7 @@ Dozvoljene vrijednosti jakosti odašiljanja su: -30, -20, -16, -12, -8, -4, 0 i 
 
 Uređaj odašilje dvije vrste paketa podataka: \textit{advertising} i \textit{scan response}.
 \\
-Tokom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj obavještava okolne uređaje o svojoj prisutnosti. 
+Tijekom rada uređaj kontinuriano odašilje \textit{advertising} pakete i na taj obavještava okolne uređaje o svojoj prisutnosti. 
 Drugi tip paketa, \textit{scan response} paket, šalje se odmah nakon \textit{advertising} paketa i sadrži dodatne informacije o odašiljaču, poput imena odašiljača, stanja baterije i slično.
 \\
 
@@ -141,6 +142,7 @@ Struktura \textit{advertising} paketa odgovara strukturi iBeacon \textit{adverti
     \centering
     \caption{Struktura \textit{scan response} paketa}
     \label{tbl:scanResponse}
+    \small
     \begin{tabular}{ccc}
     \hline 
     Bajt & Vrijednost & Opis \\ 

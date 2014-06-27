@@ -1,11 +1,11 @@
 \chapter{Praktični rad}
 
-U iBeacon poglavlju spomenuto je kako se tehnologija iBeacon može iskoristiti u gotovo svim situacijama gdje se sadržaj mijenja ovisno o kontekstu prostora, npr. trgovinama, muzejima, bolnicama i sličnim objektima. 
+U poglavlju o odašiljačima iBeacon spomenuto je kako se tehnologija iBeacon može iskoristiti u gotovo svim situacijama gdje se sadržaj mijenja ovisno o kontekstu prostora, npr. trgovinama, muzejima, bolnicama i sličnim objektima. 
 \\
 U nastavku poglavlja opisano je kako se tehnologija iBeacon može integrirati u trgovine. 
 \\
 
-Za integraciju je potrebno imati postavljene iBeacon uređaje u prostoru, mobilni uređaj sa podrškom za BLE i instaliranom aplikacijom koja može prepoznati BLE, odnosno iBeacon, odašiljače te poslužiteljsku aplikaciju s koje će mobilni uređaj dohvaćati relevantne podatke.  
+Za integraciju je potrebno imati postavljene odašiljače iBeacon u prostoru, mobilni uređaj sa podrškom za BLE i instaliranom aplikacijom koja može prepoznati BLE, odnosno iBeacon, odašiljače te poslužiteljsku aplikaciju s koje će mobilni uređaj dohvaćati relevantne podatke.  
 
 \section{Poslužiteljska aplikacija - Spree Commerce}
 \label{sec:server}
@@ -14,7 +14,7 @@ Spree Commerce (u daljnjem tekstu Spree) je elektronička trgovina \engl{e-comme
 Rad na Spreeu je počeo 2007. godine, a danas je jedna od najpopularnijih platformi za elektroničku trgovinu. 
 Trenutno više od 45 tisuća trgovina koristi Spree. %TODO reff http://spreecommerce.com/storefront 
 \\
-Odlike Spree rješenja su ogroman broj već implementiranih funkcija koje imaju sve moderne elektroničke trgovine, modularan programski kôd, lakoća dodavanja novih funkcionalnosti te izmjena i konfiguracija postojećih te brojne druge. 
+Odlike Spree rješenja su ogroman broj već implementiranih funkcija koje imaju sve moderne elektroničke trgovine, modularan izvorni tekst programa, lakoća dodavanja novih funkcionalnosti te izmjena i konfiguracija postojećih te brojne druge. 
 Uz to, za gotovo svaki aspekt sustava dostupan je skup aplikacijsko programskih sučelja što pojednostavljuje integraciju sustava sa drugim tehnologijama (poput integracije sa mobilnim platformama).
 \\
 U 2013. godini objavljen je Spree Hub čija je funkcija rješavanje dodatnih poslova vezanih za elektroničku trgovinu. 
@@ -31,7 +31,7 @@ Spree Hub se može integrirati skupa sa postojećim elektroničkim trgovinama i 
 
 Spree je podijeljen na nekoliko ključnih komponenti (tj. Ruby gemova):
 \begin{description}[style=nextline]
-    \item[spree\_api] Skup aplikacijsko programskih sučelja koji zadovoljavaju REST\footnote{\textit{Representational State Transfer}} principe.
+    \item[spree\_api] Skup aplikacijsko programskih sučelja koji zadovoljavaju REST \engl{Representational State Transfer} principe.
     \item[spree\_frontend] Komponente korisničkog sučelja.
     \item[spree\_backend] Komponente korisničkog sučelja administratora aplikacije.
     \item[spree\_cmd] Komponente sučelja naredbenog retka \engl{command-line interface, CLI}.
@@ -58,14 +58,14 @@ $ rails server
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.65]{pictures/spree-small}
+    \includegraphics[scale=0.66]{pictures/spree-small}
     \caption{Početni ekran Spree korisničkog sučelja}
     \label{pic:spree}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.65]{pictures/spree-admin-small}
+    \includegraphics[scale=0.66]{pictures/spree-admin-small}
     \caption{Početni ekran Spree administratorskog sučelja}
     \label{pic:spreeAdmin}
 \end{figure}
@@ -81,7 +81,7 @@ $ rails server
 Modularna arhitektura Spree platforme omogućava jednostavno izmjenu, uklanjanje ili dodavanje novih funkcija u sustav, a kako bi korisničko sučelje bilo optimalno prikazano krajnjim korisnicima Spree nudi i osjetljivi dizajn. 
 Postojeći dizajn je također modularan i željeno korisničko sučelje se može jednostavno ostvariti.
 \\
-Razvijatelji Spree sustava ne preporučuju prethodno spomenuti način prilagođavanja Spreea svojim potrebama, odnosno ne preporuča se izravna izmjena postojećeg programskog kôda Spreea \citep{spreeExt}. 
+Razvijatelji Spree sustava ne preporučuju prethodno spomenuti način prilagođavanja Spreea svojim potrebama, odnosno ne preporuča se izravna izmjena postojećeg izvornog tekst Spree programa \citep{spreeExt}. 
 Preporučeni način prilagođavanja i nadogradnje Spree sustava je korištenjem takozvanih Spree ekstenzija.
 \\
 Spree ekstenzija nije ništa drugo nego zasebni Ruby gem kojega se dodaje u Gemfile postojećeg projekta. 
@@ -111,12 +111,12 @@ Deface je biblioteka za jednostavno nadograđivanje, izmjenu i uklanjanje kompon
 Instaliranjem Spree gema, automatski se instalira i Deface. 
 Korištenjem Deface biblioteke programer ne mora kompletno mijenjati sve predloške koje njegova ekstenzija nadograđuje, već na elegantan način može dohvaćati pojedine komponente predloška i mijenjati njihov sadržaj.
 \\
-Prednost ektenzija nad izravnom izmjenom izvornog kôda Spreea je ta što se ostvaruje bolja modularnost kôda, olakšano je ponovno korištenje ekstenzija u drugim projektima te održavanje i nadogradnja sustava sa novim verzijama Spreea je puno jednostavnija. 
+Prednost ektenzija nad izravnom izmjenom izvornog teksta programa je ta što se ostvaruje bolja modularnost, olakšano je ponovno korištenje ekstenzija u drugim projektima te održavanje i nadogradnja sustava sa novim verzijama Spreea je puno jednostavnija. 
 Uz to, Spree tim održava i službeni repozitorij\footnote{\url{http://spreecommerce.com/extensions}} gdje se može pronaći veliki broj besplatnih ekstenzija.
 \\
 
 Za integraciju iBeacon funkcionalnosti u Spree projekt razvijena je \textit{Spree Taxon Webservice} ekstenzija koja svakoj kategoriji proizvoda dodaje \textit{reference id} atribut. 
-Na taj način će se ovisno o vrijednostima identifikatora obližnjeg iBeacon odašiljača prikazivati određena kategorija proizvoda.
+Na taj način će se ovisno o vrijednostima identifikatora obližnjeg odašiljača iBeacon prikazivati određena kategorija proizvoda.
 \\
 
 Sada mobilni uređaj nakon identifikacije obližnjeg odašiljača može poslati poslužitelju HTTP zahtjev sa pripadnim sadržajem:
@@ -134,7 +134,7 @@ Poslužitelj će kao odgovor poslati JSON objekt sa proizvodima koje pripadni od
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.36]{pictures/spree_taxon_webservice}
+    \includegraphics[scale=0.37]{pictures/spree_taxon_webservice}
     \caption{Sučelje za izmjenu \textit{reference id} atributa kategorije proizvoda}
 \end{figure}
 
@@ -148,7 +148,7 @@ $ spree install spree_server_app
 $ cd spree_server_app
 \end{lstlisting}
 
-Nakon toga je potrebno dodati Spree Taxon Webservice ekstenziju u Gemfile projekta:
+Nakon toga je potrebno dodati ekstenziju Spree Taxon Webservice u Gemfile projekta:
 \begin{lstlisting}[language=ruby]
 gem 'spree_taxon_webservice', path: '../spree_taxon_webservice'
 \end{lstlisting}
@@ -159,7 +159,7 @@ $ bundle install
 $ bundle exec rails g spree_taxon_webservice:install
 \end{lstlisting}
 
-Nakon toga, potrebno je dodati CORS\footnote{\textit{Cross-origin resource sharing}} mehanizam u aplikaciju, kako bi se sadržaj poslužiteljske aplikacije mogao slati vanjskim aplikacijama (tj. aplikacijama iz druge domene). 
+Nakon toga, potrebno je dodati mehanizam CORS \engl{cross-origin resource sharing} u aplikaciju, kako bi se sadržaj poslužiteljske aplikacije mogao slati vanjskim aplikacijama (tj. aplikacijama iz druge domene). 
 Najlakši način za rješavanje dotičnog problema je instalacija \textit{Rack CORS Middleware}\footnote{\url{https://github.com/cyu/rack-cors}} gema:
 \begin{lstlisting}[language=bash]
 $ gem install rack-cors
@@ -190,7 +190,7 @@ $ rails server
 
 Za prevođenje neke od klijentskih aplikacija potrebno je imati instaliranu i konfiguriranu biblioteku za razvoj programske podrške željene mobilne platforme te Cordova sučelje naredbenog retka.
 \\
-Za instalaciju biblioteke za razvoj programske podrške dostupne su službene Cordova upute\footnote{http://cordova.apache.org/docs/en/edge/guide\_platforms\_index.md.html\#Platform\%20Guides}, a mogu se koristiti i službene upute proizvođača mobilne platforme.
+Za instalaciju biblioteke za razvoj programske podrške dostupne su službene Cordova upute\footnote{http://cordova.apache.org/docs/en/edge/guide\_platforms\_index.md.html\#Platform\%20Guides}, a mogu se koristiti i službene upute proizvođača mobilne platforme. %TODO u reference
 \\
 Cordova sučelje naredbenog retka može se instalirati sljedećom naredbom (pretpostavlja se da je \texttt{npm} instaliran i ispravno konfiguriran):
 \begin{lstlisting}[language=bash]
@@ -204,8 +204,8 @@ $ cordova run android # za pokretanje na android uredaju
 
 \subsection{Eksperimentalna aplikacija}
 
-Za istraživanje i testiranje iBeacon odašiljača razvijena je posebna aplikacija. 
-Aplikacija detektira obližnje iBeacon odašiljače, obrađuje primljene \textit{advertising} pakete i ispisuje osnovne informacije o odašiljaču, a može ispisati sve servise, karakteristike i opisnike odašiljača. 
+Za istraživanje i ispitivanje odašiljača iBeacon razvijena je posebna aplikacija. 
+Aplikacija detektira obližnje odašiljače iBeacon, obrađuje primljene \textit{advertising} pakete i ispisuje osnovne informacije o odašiljaču, a može ispisati sve usluge (servise), karakteristike i opisnike odašiljača. 
 Uz to, pomoću aplikacije mogu se prikupljati podaci od određenog odašiljača i ta funkcionalnost se može iskoristiti za kalibriranje određenog odašiljača, a i za izračun određenih informacija (poput srednje vrijednosti, standardne devijacije te minimalne i maksimalne jakosti primljenog signala). 
 Također, određeni odašiljači mogu se blokirati tako da se informacije o njima ne prikazuju korisniku te u aplikaciju su ugrađene funkcije \eqref{eq:procjenaUdaljenosti} i \eqref{eq:rnFunkcija} koje se mogu iskoristiti za (nepouzdanu) procjenu udaljenosti.
 
@@ -225,7 +225,7 @@ Također, određeni odašiljači mogu se blokirati tako da se informacije o njim
         \label{fig:exp2}
     \end{subfigure}
     
-    \caption{Dio implementiranih pogleda eksperimentalne aplikacije}
+    \caption{Dio ostvarenih pogleda eksperimentalne aplikacije}
 \end{figure}
 
 \begin{figure}[H]
@@ -243,19 +243,19 @@ Također, određeni odašiljači mogu se blokirati tako da se informacije o njim
         \label{fig:exp4}
     \end{subfigure}
     
-    \caption{Dio implementiranih pogleda eksperimentalne aplikacije}
+    \caption{Dio ostvarenih pogleda eksperimentalne aplikacije}
 \end{figure}
 
-\subsection{Spree mobilna aplikacija}
+\subsection{Mobilna aplikacija Spree}
 
-U Spree mobilnu aplikaciju ugrađene su osnovne funkcionalnosti bilo koje elektroničke trgovine, poput pregledavanja proizvoda i kategorija proizvoda, košarica za kupnju te sam proces naplate. 
+U mobilnu aplikaciju Spree ugrađene su osnovne funkcionalnosti bilo koje elektroničke trgovine, poput pregledavanja proizvoda i kategorija proizvoda, košarica za kupnju te sam proces naplate. 
 Svi elementi trgovine (popis proizvoda, kategorija i slično) dohvaćaju se sa poslužitelja na kojemu je pokrenuta Spree aplikacija obrađena u potpoglavlju \ref{sec:server}.
 \\
 Uz to u aplikaciju je integrirana i Cordova BLE biblioteka te BLE funkcionalnost.
 Ugrađene su dvije BLE funkcije:
 \begin{enumerate}
-    \item Uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te od poslužitelja dohvaća sadržaj kojega referencira najbolji odašiljač.
-    \item Uređaj nekoliko sekundi skenira obližnje iBeacon odašiljače te na temelju dva najbliža odašiljača od poslužitelja dohvaća referencirani sadržaj.
+    \item Uređaj nekoliko sekundi skenira obližnje odašiljače iBeacon te od poslužitelja dohvaća sadržaj kojega referencira najbolji odašiljač.
+    \item Uređaj nekoliko sekundi skenira obližnje odašiljače iBeacon te na temelju dva najbliža odašiljača od poslužitelja dohvaća referencirani sadržaj.
 \end{enumerate}
 
 Prva funkcionalnost može se iskoristiti u slučajevima gdje je velika trgovina raspoređena u manje odjele, a jedan odašiljač pokriva jedan odjel. 
@@ -270,7 +270,7 @@ Druga funkcionalnost može se iskoristiti kod svakodnevnih trgovina gdje se proi
     \label{pic:bleShop}
 \end{figure}
 Na slici \ref{pic:bleShop} pravokutnici predstavljaju police gdje se na desnoj strani lijeve police nalaze torbe, lijevoj strani srednje police šalice, desnoj strane srednje police čaše, a na lijevoj strani desne police obuća. 
-Na svakoj polici se nalazi jedan iBeacon odašiljač. 
+Na svakoj polici se nalazi jedan odašiljač iBeacon. 
 Kupac sa mobilnim uređajem se nalazi između desne i srednje police, s tim da mu je bliža srednja polica, stoga će mu aplikacija prikazati kategoriju sa čašama.
 \\
 
@@ -294,7 +294,7 @@ Tada se pokreće sljedeći algoritam:
     \item iz svih dinamičkih polja izbaci 10\% marginalnih vrijednosti
     \item sortiraj odašiljače tako da se na prvim mjestima nalaze odašiljači čija dinamička polja imaju najvišu srednju vrijednost
 \end{itemize}
-Izvorni kôd je prikazan u nastavku.
+Izvorni tekst programa je prikazan u nastavku.
 
 \begin{lstlisting}[language=java, morekeywords={var,function}]
 // pomocna funkcija za izracun srednje vrijednosti
@@ -367,5 +367,5 @@ Nakon toga se prazne liste svih odašiljača te se ciklus skeniranja obližnjih 
         \label{fig:spreeMobile2}
     \end{subfigure}
     
-    \caption{Spree mobilna aplikacija}
+    \caption{Mobilna aplikacija Spree}
 \end{figure}

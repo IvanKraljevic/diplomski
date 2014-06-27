@@ -1,24 +1,24 @@
 \chapter{Utvrđivanje relativne i apsolutne lokacije u zatvorenom prostoru}
 \label{chap:procjenaLokacije}
 
-Tehnologije navigacije i pozicioniranja koje se oslanjaju na udaljene satelite (poput GPS i GNSS tehnologija) nisu pogodne za korištenje u zatvorenim prostorima iz razloga što njihove signale apsorbiraju i reflektiraju krovovi, zidovi i ostali objekti u okolini. 
+Tehnologije navigacije i pozicioniranja koje se oslanjaju na udaljene satelite (poput tehnologija GPS i GNSS) nisu pogodne za korištenje u zatvorenim prostorima iz razloga što njihove signale apsorbiraju i reflektiraju krovovi, zidovi i ostali objekti u okolini. 
 Iz istih razloga određivanje lokacije preko mobilnih signala, odnosno preko radio tornjeva nije moguće. 
 \\
 Stoga su za utvrđivanje lokacije u zatvorenom prostoru potrebni sasvim novi i drugačiji pristupi problemu te shodno tome, sasvim nove metode određivanja lokacije. 
-Zbog ogromnog porasta pristupačnosti i popularnosti pametnih telefona, posljednjih nekoliko godina sve je veća potražnja za pouzdanim rješenjem problema. 
+Zbog velikog porasta pristupačnosti i popularnosti pametnih telefona, posljednjih nekoliko godina sve je veća potražnja za pouzdanim rješenjem problema. 
 Kako ne postoji nikakav \textit{de facto} standard, gotovo sva ponuđena rješenja su međusobno različita i koriste cijeli niz različitih tehnologija, od optičkih (npr. kamera uređaja) i radio (npr. signali obližnje bežične mreže) skroz do akustičnih (npr. akustični sljednici koji se često koriste sustavima virtualne stvarnosti) tehnologija.
 \\
 
 Vjerojatno najznačajniji uspjeh je postignut sa praćenjem signala kojega odašilje obližnja bežična Wi-fi mreža. 
 Velika prednost ove metode je značajan porast bežičnih pristupnih točaka na koje se mobilni i drugi uređaji mogu spojiti. 
 Da bi se ovom metodom odredila lokacija uređaja potrebno je na neki način mapirati dotičnu pristupnu točku te zatim na temelju jakosti primljenog signala utvrditi poziciju mobilnog uređaja u odnosu na nju. 
-Parametri mapiranja uključuju apsolutnu poziciju, SSID\footnote{\textit{service set identification}} i MAC\footnote{\textit{media access control address}} adresu pristupne točke (tj. WLAN uređaja). 
+Parametri mapiranja uključuju apsolutnu poziciju, SSID \engl{service set identification} i MAC adresu \engl{media access control address} pristupne točke (tj. WLAN uređaja). 
 Neke od poznatijih web aplikacija poput WeFi\footnote{\url{http://www.wefi.com/maps/}} i WiGLE\footnote{\url{https://wigle.net}} sadrže više od sto milijuna mapiranih bežičnih pristupnih točaka. 
 \\
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.3]{pictures/WiGLE}
+    \includegraphics[scale=0.305]{pictures/WiGLE}
     \caption{Prikaz mapiranih bežičnih pristupnih točaka preko sučelja WiGLE web aplikacije}    
 \end{figure}
 
@@ -44,8 +44,8 @@ Uz to, prvi prototipovi mobilnih uređaja i tableta već su dostupni partnerima 
     \caption{Google Project Tango - prikaz mapirane okoline \citep{ytTango}}
 \end{figure}
 
-U nastavku su opisane relativno nove metode za određivanje lokacije u zatvorenom prostoru koje se temelje na BLE tehnologiji i iBeacon odašiljačima.
-Za rješavanje problema prvo je potrebno sa što većom preciznošću odrediti relativnu poziciju uređaja u odnosu na odašiljač/odašiljače stoga je glavni fokus istraživanja usmjeren baš na taj dio. 
+U nastavku su opisane relativno nove metode za određivanje lokacije u zatvorenom prostoru koje se temelje na tehnologiji BLE i odašiljačima iBeacon.
+Za rješavanje problema prvo je potrebno sa što većom preciznošću odrediti relativnu poziciju uređaja u odnosu na odašiljač/odašiljače stoga je glavni fokus istraživanja usmjeren na taj dio. 
 Nakon toga uz poznavanje relativne pozicije uređaja i apsolutne pozicije odašiljača možemo odrediti apsolutni položaj uređaja.
 
 \section{Utvrđivanje relativne udaljenosti od odašiljača}
@@ -60,28 +60,28 @@ Funkcija pomoću koje se može odrediti jakost primljenog signala navedena je u 
 $P_t$ predstavlja jakost odašiljanja signala, $P_r$ jakost primljenog signala, $d$ udaljenost između prijamnika i odašiljača, $\lambda$ je valna duljina elektromagnetskog vala, a $n$ indeks refrakcije (u slobodnom prostoru iznosi 2).
 \\
 
-Ukoliko se ista jednadžba zapiše po varijabli $d$ dobiva se formula koja je prikazana u \eqref{eq:procjenaUdaljenosti}. 
-Uz poznate vrijednosti svih ostalih parametara ta formula se može iskoristiti za procjenu udaljenosti između prijamnika i odašiljača.
-Uz to, zbog relativno niske složenosti dotična formula je idealan kandidat za ugradnju u mobilnu aplikaciju.
+Ukoliko se ista jednadžba zapiše po varijabli $d$ dobiva se izraz \eqref{eq:procjenaUdaljenosti}. 
+Uz poznate vrijednosti svih ostalih parametara taj izraz se može iskoristiti za procjenu udaljenosti između prijamnika i odašiljača.
+Uz to, zbog relativno niske složenosti dotični izraz je idealan kandidat za ugradnju u mobilnu aplikaciju.
 
 \begin{equation}
 	\label{eq:procjenaUdaljenosti}
 	d = 10^{-\frac{P_r - P_t - 20\log{\frac{\lambda}{4\pi}}}{10n}}
 \end{equation}
 
-Problem formule \eqref{eq:procjenaUdaljenosti} je što ona zanemaruje bilo kakva ometanja signala, odnosno ona je ona primjenjiva samo u idealnim uvjetima, a kao što je prethodno već rečeno, na signal u zatvorenom prostoru utječe (tj. ometa ga) velik broj parametara. 
+Problem izraza \eqref{eq:procjenaUdaljenosti} je što ona zanemaruje bilo kakva ometanja signala, odnosno on je primjenjiv samo u idealnim uvjetima, a kao što je prethodno već rečeno, na signal u zatvorenom prostoru utječe (tj. ometa ga) velik broj parametara. 
 Na stabilnost signala koji putuje zatvorenim prostorom najvećim dijelom djeluju apsorpcija i refleksija signala, dok razašiljanje i difrakcija djeluju manjom mjerom.
 \\
 Zbog refleksije signala dio elektromagnetskog vala se odbija (reflektira) od površinu s kojom se sudario, a zbog apsorpcije signala dio elektromagnetskog vala se apsorbira te se val nastavlja gibati sa prigušenjem. 
 %Ukupni gubitak jednak je zbroju pojedinih gubitaka. 
-Smetnje uzrokovane refleksijom mogu se smanjiti povećanjem frekvencije, dok apsorpcija ovisi o dubini prodiranja i udaljenosti granice između dva sredstva. 
+Smetnje uzrokovane refleksijom mogu se smanjiti povećanjem frekvencije, dok apsorpcija ovisi o dubini prodiranja i udaljenosti granice između dva sredstva. %TODO referencirat
 \\
 
 U zatvorenom prostoru smetnje koje uzrokuju prethodno opisani faktori su često prevelike i u velikoj većini slučajeva na to se ne može utjecati. 
 Zaključak je da procjena udaljenosti temeljena na \eqref{eq:procjenaUdaljenosti} nije precizna na tako nestabilnom signalu stoga je za rješavanje problema potreban drugačiji pristup.
 \\
 
-Sustav za procjenu udaljenosti od iBeacon odašiljača može se opisati kao što je prikazano na slici \ref{fig:sustavZaProcjenuUdaljenosti}.
+Sustav za procjenu udaljenosti od odašiljača iBeacon može se opisati kao što je prikazano na slici \ref{fig:sustavZaProcjenuUdaljenosti}.
 
 \begin{figure}[H]
     \centering
@@ -97,14 +97,14 @@ Sustav procjene udaljenosti može biti funkcija \eqref{eq:procjenaUdaljenosti} i
 Kako na signal djeluje velik broj vanjskih smetnji, predloženi sustav će morati biti otporan na šum u podacima, a također će morati biti i relativno brz te imati nisku složenost zbog toga što mu je primarna namjena korištenje u mobilnim uređajima i tabletima ograničene procesorske snage. 
 \\
 
-Kao što je navedeno u iBeacon poglavlju, Apple je za procjenu udaljenosti od odašiljača namijenio tri izraza: neposredna blizina (\textit{immediate}), mala (\textit{near}) i velika \textit{far} udaljenost.
+Kao što je navedeno u poglavlju o odašiljačima iBeacon, Apple je za procjenu udaljenosti od odašiljača namijenio tri izraza: neposredna blizina (\textit{immediate}), mala (\textit{near}) i velika \textit{far} udaljenost.
 Zajedno s tim u radno okruženje Apple Core Location dodana je funkcija koja na temelju jakosti primljenog signala (RSSI) i jakosti signala na udaljenosti jednog metra od odašiljača (trideseti bajt \textit{advertising} paketa iBeacon odašiljača) određuje relativnu udaljenost od odašiljača. 
-Sam kôd funkcije nije javno dostupan i nije poznata metoda koju su Appleovi inženjeri upotrijebili, no \textbf{ne preporučuju} da se ona koristi u situacijama gdje je potreban precizan rezultat, odnosno precizna procjena udaljenosti. 
+Sam izvorni tekst funkcije nije javno dostupan i nije poznata metoda koju su Appleovi inženjeri upotrijebili, no \textbf{ne preporučuju} da se ona koristi u situacijama gdje je potreban precizan rezultat, odnosno precizna procjena udaljenosti. 
 Stoga se nameće zaključak kako ni Appleovi inženjeri nisu uspjeli zaobići prethodno spomenute smetnje koje djeluju na signal.
 \\
 
 Inženjeri američke kompanije Radius Networks su za vrijeme izrade svoje neslužbene slobodno dostupne Android iBeacon biblioteke\footnote{\url{https://github.com/RadiusNetworks/android-ibeacon-service}} pristupili problemu procjene udaljenosti tako da su napravili veliki broj RSSI mjerenja na poznatim udaljenostima i rezultate opisali funkcijom najbolje sličnosti \citep{stackoverflowRadiusDistancing}. 
-Dotična funkcija navedena je u \eqref{eq:rnFunkcija}.
+Dotična funkcija opisana je izrazom \eqref{eq:rnFunkcija}.
 
 \begin{equation}
 	\label{eq:rnFunkcija}
@@ -122,12 +122,12 @@ Parametar $x$ je RSSI primljenog signala, dok $y$ predstavlja RSSI na udaljenost
 
 Njihovo rješenje može se isprobati tako da se funkciju \eqref{eq:rnFunkcija} ugradi u vlastitu aplikaciju, a može se iskoristiti i njihova besplatna Android aplikacija koja je dostupna na Google Play Storeu\footnote{\url{https://play.google.com/store/apps/details?id=com.radiusnetworks.ibeaconlocate}}.
 \\
-Empirijskim testiranjem aplikacije primjetio sam kako i za male pomake u iznosu od nekoliko desetaka centimetara detektirani pomak aplikacije nerijetko bio u iznosu većem od deset metara. 
+Empirijskim ispitivanjem aplikacije primjetio sam kako i za male pomake u iznosu od nekoliko desetaka centimetara detektirani pomak aplikacije nerijetko bio u iznosu većem od deset metara. 
 Stoga se može zaključiti kako ni rješenje koje su ponudili inženjeri Radius Networksa nije pouzdano, a ni primjenjivo na stvarnim problemima. 
 Bez obzira na to, njihova Android iBeacon biblioteka, objašnjenja na službenim stranicama te rasprave njihovog inženjera David Younga na stranicama Stackoverflowa su izuzetno pomogle oko shvaćanja cjelokupne problematike određivanja lokacije korištenjem iBeacon odašiljača.
 \\
 
-Kao model sustava možemo iskoristiti umjetnu neuronsku mrežu \engl{artificial neural network}.  
+Za modeliranje sustava može se iskoristiti umjetna neuronska mreža \engl{artificial neural network}.  
 Smatram da su neuronske mreže dobar model za rješavanje problema iz razloga što one mogu uspješno rješavati zahtjevne probleme gdje je tražena funkcija nepoznata, a uz to otporne su otporne na šum u podacima. 
 
 Neuronska mreža će se trenirati na prethodno prikupljenim podacima. 
@@ -138,6 +138,7 @@ Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indo
 	\centering
 	\caption{Prva skupina uzoraka}
 	\label{tbl:indoorKontaktDefaultTx}
+	\small
 	\begin{tabular}{ccccc}
 	\hline
 	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\
@@ -163,6 +164,7 @@ Važnija svojstva sve tri skupine uzoraka prikazane su u tablicama \ref{tbl:indo
 \end{table}
 
 Podatke prve skupine uzoraka poslao je kontakt.io odašiljač sa jakosti odašiljanja od \SI{-4}{dBm}. 
+Na udaljenosti većoj od 6.5 metara mobilni uređaj nije uspio detektirati dotični odašiljač, stoga su podaci za te udaljenosti nedostupne. 
 U tablici se može uočiti kako je standardna devijacija za gotovo svaku grupu uzoraka poprilično velika (devijacija grupe na udaljenosti od tri metra iznosi čak 4.053). 
 Uzrok tako velikoj standardnoj devijaciji su prethodno opisane smetnje koje utječu na signal u zatvorenom prostoru.
 
@@ -170,6 +172,7 @@ Uzrok tako velikoj standardnoj devijaciji su prethodno opisane smetnje koje utje
 	\centering
 	\caption{Druga skupina uzoraka}
 	\label{tbl:indoorKontaktMaxTx}
+	\small
 	\begin{tabular}{ccccc}
 	\hline 
 	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\ 
@@ -198,6 +201,7 @@ Uzrok tako velikoj standardnoj devijaciji su prethodno opisane smetnje koje utje
 	\centering
 	\caption{Treća skupina uzoraka}
 	\label{tbl:blucatsDefault}
+	\small
 	\begin{tabular}{ccccc}
 	\hline
 	Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\
@@ -222,8 +226,9 @@ Uzrok tako velikoj standardnoj devijaciji su prethodno opisane smetnje koje utje
 	\end{tabular}
 \end{table}
 
-Podatke druge skupine uzoraka poslao je kontakt.io odašiljač sa jakosti odašiljanja od \SI{4}{dBm} (najveća jakost odašiljanja odašiljača). 
+Podatke druge skupine uzoraka poslao je odašiljač Kontakt.io sa jakosti odašiljanja od \SI{4}{dBm} (najveća jakost odašiljanja odašiljača). 
 Podatke treće skupine uzoraka poslao je Bluecats odašiljač sa jakosti odašiljanja postavljenom na parametar \textit{Talk} (numerička vrijednost koju dotični parametar predstavlja nije poznata). 
+Na udaljenosti većoj od tri metra mobilni uređaj nije uspio detektirati treći odašiljač, stoga su podaci za te udaljenosti nedostupne. 
 Promatranjem tablica \ref{tbl:indoorKontaktMaxTx} i \ref{tbl:blucatsDefault} možemo primijetiti kako je standardna devijacija visoka i kod gotovo svake grupe druge i treće skupine uzoraka.
 \\
 U na slikama \ref{fig:prva_skupina}, \ref{fig:druga_skupina} i \ref{fig:treca_skupina} prikazan je kako se prosječni RRSI mijenja sa povećanjem udaljenosti za svaku skupinu uzoraka.
@@ -249,7 +254,7 @@ U na slikama \ref{fig:prva_skupina}, \ref{fig:druga_skupina} i \ref{fig:treca_sk
     \label{fig:treca_skupina}
 \end{figure}
 
-Teoretski RSSI bi trebao monotono opadati sa povećanjem udaljenosti, no na grafovima se može lako uočiti kako to ovdje nije slučaj. 
+U teoriji RSSI bi trebao monotono opadati sa povećanjem udaljenosti, no na grafovima se može lako uočiti kako to ovdje nije slučaj. 
 Uzrok tomu su već spomenuta ometanja signala.
 \\
 Posljedično, određivanje precizne udaljenosti na temelju RSSI-a nije moguće jer za primljeni RSSI sustav procjene udaljenosti ne može jednoznačno odrediti na kojoj se udaljenosti odašiljač nalazi. 
@@ -258,13 +263,14 @@ Na primjer, ako pogledamo drugu skupinu uzoraka (tablica \ref{tbl:indoorKontaktM
 
 Unatoč tome, u nastavku će se pokušati procijeniti udaljenost sa preciznošću od dva metra. 
 Za to je prikupljena nova skupina podataka koji su uzorkovani na udaljenostima od \SI{2}{m} do \SI{18}{m} sa korakom od \SI{2}{m}, po dvije stotine uzoraka za svaku udaljenosti. 
-Prikupljene uzorke (tj. RSSI) poslao je kontakt.io odašiljač sa jakosti odašiljanja od \SI{4}{dBm} (najveća jakost odašiljanja odašiljača). 
+Prikupljene uzorke (tj. RSSI) poslao je odašiljač Kontakt.io sa jakosti odašiljanja od \SI{4}{dBm} (najveća jakost odašiljanja odašiljača). 
 U tablici \ref{tbl:velikaUdaljenost} prikazana su važnija svojstva nove, četvrte, skupine uzoraka, a na slici \ref{fig:velikaUdaljenost} je prikazano kretanje srednje vrijednosti primljenog signala za svaku udaljenost.
 
 \begin{table}[H]
     \centering
     \caption{Četvrta skupina uzoraka}
     \label{tbl:velikaUdaljenost}
+    \small
     \begin{tabular}{ccccc}
     \hline 
     Udaljenost & $\mu_{RSSI}$ & $\sigma_{RSSI}$ & $min_{RSSI}$ & $max_{RSSI}$ \\ 
@@ -315,13 +321,13 @@ gdje je $N$ ukupni broj uzoraka, $o_i$ je izlaz neuronske mreže za uzorak $i$, 
 Cilj genetskog algoritma je pronaći parametre tako da $fitness$ bude što manji, odnosno radi se o minimizacijskom problemu.
 \\
 
-Nakon treniranja neuronske mreže i provedenog testiranja zaključujem kako rezultat neuronske mreže nije zadovoljavajući. 
+Nakon treniranja neuronske mreže i provedenog ispitivanja zaključujem kako rezultat neuronske mreže nije zadovoljavajući. 
 Unatoč tome što se tijekom treniranja, odnosno evolucije parametara, greška postupno smanjivala, testiranjem neuronske mreže pokazalo se da nije naučila podatke kao što se očekivalo. 
 Uzrok tomu je prevelika standardna devijacija stoga neuronska mreža ne može ispravno procjenjivati udaljenost.
 \\
 Smatram da bi se sustav kombinacije neuronske mreže i sustava neizrazitog zaključivanja možda mogao pokazati kao precizniji sustav procjene, no to nadilazi temu ovog rada.
 \\
-Iz svega ovoga zaključujem kako je zbog djelovanja raznih smetnji koje djeluju na signal koji putuje zatvorenim prostorom, određivanje lokacije u zatvorenom prostoru pomoću BLE odašiljača poprilično nepouzdano.
+Iz svega ovoga zaključujem kako je zbog djelovanja raznih smetnji koje djeluju na signal koji putuje zatvorenim prostorom, određivanje lokacije u zatvorenom prostoru pomoću odašiljača temeljenog na tehnologiji BLE poprilično nepouzdano.
 
 \section{Utvrđivanje apsolutne lokacije}
 
