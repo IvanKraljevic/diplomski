@@ -94,7 +94,7 @@ exports.startScan = function(win, fail) {
 };
 \end{lstlisting}
 
-Na Android platformi gore navedena \texttt{exec} funckija je zapravo \texttt{execute} metoda razreda \texttt{BLE} koji nasljeđuje \texttt{CordovaPlugin} razred te implementira funkcionalnost \texttt{LeScanCallback} sučelja. 
+Na Android platformi gore navedena \texttt{exec} funkcija je zapravo \texttt{execute} metoda razreda \texttt{BLE} koji nasljeđuje \texttt{CordovaPlugin} razred te implementira funkcionalnost \texttt{LeScanCallback} sučelja. 
 \begin{lstlisting}[language=java]
 public class BLE extends CordovaPlugin implements LeScanCallback {
   @Override
